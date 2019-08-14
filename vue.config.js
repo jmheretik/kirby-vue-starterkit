@@ -1,6 +1,8 @@
+const backend = require('./backend.js')
+
 module.exports = {
-  publicPath: '/BACKUP/subdom/medo/vue/',
+  publicPath: '/',
   devServer: {
-    proxy: 'http://localhost/vue'
+    proxy: `http://${backend.hostname}:${backend.port}`
   }
 }
