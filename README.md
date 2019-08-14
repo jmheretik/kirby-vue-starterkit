@@ -1,13 +1,23 @@
-# vue
+# kirby-vue-starterkit
 
 ## Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Runs Kirby 3 backend using PHP built-in development server
 ```
-npm run serve
+npm run serve:backend
+```
+
+### Compiles Vue frontend and hot-reloads for development
+```
+npm run serve:frontend
+```
+
+### Serves both backend and frontend
+```
+npm start
 ```
 
 ### Compiles and minifies for production
