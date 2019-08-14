@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "run-p serve:*",
     "serve:backend": "node -e \"require('./backend.js').serve()\"",
     "serve:frontend": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "start": "run-p serve:*"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^2.6.5",
