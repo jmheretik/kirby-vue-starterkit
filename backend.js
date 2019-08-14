@@ -3,7 +3,7 @@ const host = '127.0.0.1'
 const port = 80
 
 module.exports = {
-  hostname: host,
+  host: host,
   port: port,
   serve: () => {
     php.createServer({

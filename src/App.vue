@@ -8,6 +8,8 @@
 <script>
 import Note from './components/Note.vue'
 
+const env = variable => process.env['VUE_APP_' + variable] || ''
+
 export default {
   name: 'app',
   components: {
@@ -19,10 +21,11 @@ export default {
     }
   },
   created() {
-    let self = this
+    const api = window.location.origin + env('BACKEND_PUBLIC_PATH') + '/api'
+    const auth = btoa(env('API_EMAIL') + ':' + env('API_PASSWORD'))
+    const headers = { Authorization: 'Basic ' + auth }
 
-    const api = `${window.location.origin}/api`
-    const headers = { Authorization: 'Basic YXBpQGFwaS5jb206YXBpYXBpYXBp' }
+    let self = this
 
     fetch(`${api}/pages/notes/children`, { headers: headers })
       .then(response => response.json())
