@@ -35,8 +35,3 @@ Icon
 # License
 # ---------------
 /site/config/.license
-
-# Kirby folder
-# ---------------
-/kirby/*
-!/kirby/.gitkeep
