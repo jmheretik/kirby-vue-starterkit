@@ -39,4 +39,4 @@ Icon
 # Kirby folder
 # ---------------
 /kirby
-!/kirby/index.html
+!/kirby/.gitkeep
