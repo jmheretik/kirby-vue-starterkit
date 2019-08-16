@@ -19,7 +19,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .header {
   margin-bottom: 1.5rem;
 }
@@ -49,7 +49,8 @@ export default {
   margin: 0 0.75rem;
 }
 
-.menu a[aria-current] {
+.menu a[aria-current],
+.menu a.router-link-active {
   border-bottom: 2px solid #000;
 }
 

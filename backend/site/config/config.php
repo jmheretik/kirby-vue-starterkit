@@ -11,6 +11,19 @@ return [
     'debug' => true,
     'api' => [
         'basicAuth' => true,
-        'allowInsecure' => true
+        'allowInsecure' => true,
+        'routes' => [
+            [
+                'pattern' => '/kirbytext/(:any)/(:any)',
+                'action'  => function ($pageId, $field) {
+                    $pageId = str_replace('+', '/', $pageId);
+                    if ($page = page($pageId)) {
+                        return [
+                            'data' => $page->$field()->kirbytext()
+                        ];
+                    }
+                }
+            ]
+          ]
     ]
 ];

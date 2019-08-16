@@ -1,18 +1,23 @@
 <template>
-  <div id="app" class="page">
-    <Header :site="site" />
-    <router-view :api="api" @change-title="updateTitle" />
+  <div id="app">
+    <div class="page">
+      <Header :site="site" />
+      <router-view :api="api" @change-title="updateTitle" />
+    </div>
+    <Footer :api="api" :site="site" />
   </div>
 </template>
 
 <script>
 import Api from '@/api'
 import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'App',
   components: {
-    Header
+    Header,
+    Footer
   },
   data() {
     return {
@@ -23,7 +28,6 @@ export default {
   async created() {
     const site = await this.api.get('site?select=title,children')
     site.children = site.children.filter(child => child.num)
-    this.site = site
 
     let pageRoutes = []
 
@@ -38,6 +42,7 @@ export default {
       })
     }
 
+    this.site = site
     this.$router.addRoutes(pageRoutes)
   },
   methods: {
@@ -137,34 +142,5 @@ main {
 }
 .text img {
   width: 100%;
-}
-
-.footer {
-  padding: 1.5rem 5vw 10vh;
-  text-align: center;
-  max-width: var(--content-width);
-  margin: 0 auto;
-  line-height: 1.5em;
-}
-.footer a {
-  display: inline-block;
-  font-size: 0.875rem;
-}
-.footer > a {
-  margin-bottom: 1.5rem;
-  border-top: 2px solid #000;
-  width: 16.5rem;
-  padding-top: 0.5rem;
-}
-
-.social a {
-  margin: 0 0.75rem;
-  padding: 0.5rem 1rem;
-  border: 2px solid #000;
-  width: 7.5rem;
-}
-.social a:hover {
-  background: #000;
-  color: #fff;
 }
 </style>
