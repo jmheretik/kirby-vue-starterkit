@@ -1,30 +1,49 @@
 <template>
   <div id="app" class="page">
     <Header :site="site" />
+    <router-view :api="api" @change-title="updateTitle" />
   </div>
 </template>
 
 <script>
-import Api from './api'
-import Header from './components/Header.vue'
+import Api from '@/api'
+import Header from '@/components/Header.vue'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     Header
   },
   data() {
     return {
+      api: new Api(),
       site: {}
     }
   },
   async created() {
-    const api = new Api()
-
-    const site = await api.get('site?select=title,url,children')
-    document.title = site.title
+    const site = await this.api.get('site?select=title,children')
     site.children = site.children.filter(child => child.num)
     this.site = site
+
+    let pageRoutes = []
+
+    for (const page of site.children) {
+      const componentName = page.id.charAt(0).toUpperCase() + page.id.slice(1)
+
+      pageRoutes.push({
+        path: '/' + page.id,
+        name: page.id,
+        component: () =>
+          import(/* webpackChunkName: "page" */ `@/views/${componentName}.vue`)
+      })
+    }
+
+    this.$router.addRoutes(pageRoutes)
+  },
+  methods: {
+    updateTitle(pageTitle) {
+      document.title = `${this.site.title} | ${pageTitle}`
+    }
   }
 }
 </script>
@@ -75,19 +94,6 @@ img {
 
 main {
   min-height: calc(100vh - 10rem);
-}
-
-.intro {
-  padding: 10vh 0;
-  text-align: center;
-}
-
-.intro h1 {
-  position: relative;
-  margin-bottom: 1rem;
-  font-weight: 900;
-  font-size: calc(1vw + 2rem);
-  z-index: 1;
 }
 
 .tags {

@@ -1,11 +1,13 @@
 <template>
   <header class="header">
-    <a class="logo" :href="site.url">{{ site.title }}</a>
+    <router-link to="/" class="logo">
+      {{ site.title }}
+    </router-link>
 
     <nav id="menu" class="menu">
-      <a v-for="page in site.children" :key="page.id" :href="page.url">
+      <router-link v-for="page in site.children" :key="page.id" :to="page.id">
         {{ page.title }}
-      </a>
+      </router-link>
     </nav>
   </header>
 </template>
