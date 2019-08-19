@@ -32,7 +32,7 @@ export default {
   },
   async created() {
     const page = await this.api.get('pages/notes?select=content')
-    this.page = page
+    this.page = page.content
     this.$emit('change-title', this.page.title)
 
     const notes = await this.api.get('pages/notes/children?select=id,num,content')
