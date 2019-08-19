@@ -17,7 +17,7 @@ return [
                 'pattern' => '/kirbytext/(:any)',
                 'action'  => function ($pageId) {
                     $pageId = str_replace('+', '/', $pageId);
-                    $fields = explode(',', get('fields'));
+                    $fields = explode(',', get('field'));
 
                     if ($page = page($pageId)) {
 

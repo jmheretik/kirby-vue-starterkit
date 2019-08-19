@@ -59,7 +59,7 @@ export default {
   },
   async created() {
     const page = await this.api.get('pages/about?select=content')
-    const kirbytexts = await this.api.get('kirbytext/about?fields=address,text')
+    const kirbytexts = await this.api.get('kirbytext/about?field=address,text')
     page.content.address = kirbytexts.address.value
     page.content.text = kirbytexts.text.value
 
