@@ -52,14 +52,14 @@ export default {
     const kt = await this.api.get(`kt/${pageId}?select=description`)
     page.content.description = kt.description.value
 
+    this.page = page.content
+    this.$emit('change-title', this.page.title)
+
     const cover = await this.api.get(`pages/${pageId}/files/${page.content.cover[0].filename}?select=url,content`)
     this.cover = cover
 
     const gallery = await this.api.get(`pages/${pageId}/files?select=url,type,content`)
     this.gallery = gallery.filter(file => file.type === 'image')
-
-    this.page = page.content
-    this.$emit('change-title', this.page.title)
   }
 }
 </script>

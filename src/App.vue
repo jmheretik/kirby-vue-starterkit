@@ -27,19 +27,21 @@ export default {
   },
   async created() {
     const site = await this.api.get('site?select=title')
-    const pages = await this.api.get('site/children?select=id,num,title,children')
+    const children = await this.api.get('site/children?select=id,num,title,children')
 
     // filter out unlisted
-    site.children = pages.filter(child => child.num)
+    site.children = children.filter(child => child.num)
 
     for (const page of site.children) {
       page.children = page.children.filter(child => child.num)
     }
 
+    this.site = site
+
     // set up routes
     let pageRoutes = []
 
-    for (const page of site.children) {
+    for (const page of this.site.children) {
       const componentName = page.id.charAt(0).toUpperCase() + page.id.slice(1)
 
       pageRoutes.push({
@@ -55,7 +57,6 @@ export default {
       }
     }
 
-    this.site = site
     this.$router.addRoutes(pageRoutes)
   },
   methods: {

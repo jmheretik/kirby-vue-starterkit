@@ -1,13 +1,9 @@
 <template>
   <footer class="footer">
-    <router-link to="/">
-      &copy; {{ new Date().getFullYear() }} / {{ site.title }}
-    </router-link>
+    <router-link to="/"> &copy; {{ new Date().getFullYear() }} / {{ site.title }} </router-link>
 
     <nav class="social">
-      <a v-for="social in about.social" :key="social.id" :href="social.url">
-        {{ social.platform }}
-      </a>
+      <a v-for="social in about.social" :key="social.id" :href="social.url"> {{ social.platform }} </a>
     </nav>
   </footer>
 </template>
@@ -18,7 +14,7 @@ export default {
   props: ['api', 'site'],
   data() {
     return {
-      about: []
+      about: {}
     }
   },
   async created() {

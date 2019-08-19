@@ -29,11 +29,11 @@ export default {
   },
   async created() {
     const page = await this.api.get('pages/photography?select=content')
-    const albums = await this.api.get('pages/photography/children?select=id,num,content')
-
-    this.albums = albums.filter(album => album.num)
     this.page = page.content
     this.$emit('change-title', this.page.title)
+
+    const albums = await this.api.get('pages/photography/children?select=id,num,content')
+    this.albums = albums.filter(album => album.num)
   }
 }
 </script>

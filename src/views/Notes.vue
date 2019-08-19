@@ -27,17 +27,17 @@ export default {
   data() {
     return {
       page: {},
-      notes: {}
+      notes: []
     }
   },
   async created() {
-    const page = await this.api.get('pages/notes?select=title')
+    const page = await this.api.get('pages/notes?select=content')
+    this.page = page
+    this.$emit('change-title', this.page.title)
+
     const notes = await this.api.get('pages/notes/children?select=id,num,content')
     notes.sort((a, b) => new Date(b.content.date) - new Date(a.content.date))
-
-    this.page = page
     this.notes = notes.filter(note => note.num)
-    this.$emit('change-title', this.page.title)
   }
 }
 </script>
