@@ -14,13 +14,18 @@ return [
         'allowInsecure' => true,
         'routes' => [
             [
-                'pattern' => '/kirbytext/(:any)/(:any)',
-                'action'  => function ($pageId, $field) {
+                'pattern' => '/kirbytext/(:any)',
+                'action'  => function ($pageId) {
                     $pageId = str_replace('+', '/', $pageId);
+                    $fields = explode(',', get('fields'));
+
                     if ($page = page($pageId)) {
-                        return [
-                            'data' => $page->$field()->kirbytext()
-                        ];
+
+                        foreach ($fields as $field) {
+                            $result['data'][$field] = $page->$field()->kirbytext();
+                        }
+
+                        return $result;
                     }
                 }
             ]

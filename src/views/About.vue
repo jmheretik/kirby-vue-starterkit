@@ -59,10 +59,9 @@ export default {
   },
   async created() {
     const page = await this.api.get('pages/about?select=content')
-    const address = await this.api.get(`kirbytext/about/address`)
-    const text = await this.api.get(`kirbytext/about/text`)
-    page.content.address = address.value
-    page.content.text = text.value
+    const kirbytexts = await this.api.get('kirbytext/about?fields=address,text')
+    page.content.address = kirbytexts.address.value
+    page.content.text = kirbytexts.text.value
 
     this.page = page.content
     this.$emit('change-title', this.page.title)
