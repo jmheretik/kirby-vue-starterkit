@@ -26,9 +26,17 @@ export default {
     }
   },
   async created() {
-    const site = await this.api.get('site?select=title,children')
-    site.children = site.children.filter(child => child.num)
+    const site = await this.api.get('site?select=title')
+    const pgs = await this.api.get('site/children?select=id,num,title,children')
 
+    // filter out unlisted
+    site.children = pgs.filter(child => child.num)
+
+    for (const page of site.children) {
+      page.children = page.children.filter(child => child.num)
+    }
+
+    // set up routes
     let pageRoutes = []
 
     for (const page of site.children) {
@@ -36,10 +44,15 @@ export default {
 
       pageRoutes.push({
         path: '/' + page.id,
-        name: page.id,
-        component: () =>
-          import(/* webpackChunkName: "page" */ `@/views/${componentName}.vue`)
+        component: () => import(`@/views/${componentName}.vue`)
       })
+
+      if (page.children.length) {
+        pageRoutes.push({
+          path: '/' + page.id + '/:id',
+          component: () => import(`@/views/${componentName}Sub.vue`)
+        })
+      }
     }
 
     this.site = site
