@@ -18,7 +18,6 @@ export default {
   props: ['api'],
   data() {
     return {
-      id: this.$route.params.id,
       page: {}
     }
   },
@@ -28,7 +27,7 @@ export default {
     }
   },
   async created() {
-    const pageId = `notes+${this.id}`
+    const pageId = `notes+${this.$route.params.id}`
     const page = await this.api.get(`pages/${pageId}?select=content`)
     const kt = await this.api.get(`kt/${pageId}?select=text`)
     page.content.text = kt.text.value
@@ -52,6 +51,10 @@ export default {
   display: block;
 }
 
+/*  
+    deep selectors for v-html content
+    https://vue-loader.vuejs.org/guide/scoped-css.html#dynamically-generated-content
+*/
 span >>> .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
