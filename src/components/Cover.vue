@@ -1,7 +1,7 @@
 <template>
   <router-link :to="'/' + album.id">
     <figure>
-      <img :src="src" :alt="alt" />
+      <img :src="cover.url" :alt="cover.content.alt" />
       <figcaption>
         {{ album.content.title }}
       </figcaption>
@@ -15,16 +15,16 @@ export default {
   props: ['api', 'album'],
   data() {
     return {
-      src: '',
-      alt: ''
+      cover: {
+        content: {}
+      }
     }
   },
   async created() {
     const pageId = this.album.id.replace('/', '+')
-    const file = await this.api.get(`pages/${pageId}/files/${this.album.content.cover[0].filename}?select=url,content`)
+    const cover = await this.api.get(`pages/${pageId}/files/${this.album.content.cover[0].filename}?select=url,content`)
 
-    this.src = file.url
-    this.alt = file.content.alt
+    this.cover = cover
   }
 }
 </script>

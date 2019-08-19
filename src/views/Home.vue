@@ -4,7 +4,7 @@
 
     <ul class="grid">
       <li v-for="album in albums" :key="album.id">
-        <cover :api="api" :album="album" />
+        <Cover :api="api" :album="album" />
       </li>
     </ul>
   </main>

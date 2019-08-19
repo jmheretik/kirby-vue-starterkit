@@ -5,11 +5,7 @@
     </router-link>
 
     <nav id="menu" class="menu">
-      <router-link
-        v-for="page in site.children"
-        :key="page.id"
-        :to="'/' + page.id"
-      >
+      <router-link v-for="page in site.children" :key="page.id" :to="'/' + page.id">
         {{ page.title }}
       </router-link>
     </nav>
@@ -23,7 +19,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .header {
   margin-bottom: 1.5rem;
 }
