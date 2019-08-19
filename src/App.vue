@@ -27,10 +27,10 @@ export default {
   },
   async created() {
     const site = await this.api.get('site?select=title')
-    const pgs = await this.api.get('site/children?select=id,num,title,children')
+    const pages = await this.api.get('site/children?select=id,num,title,children')
 
     // filter out unlisted
-    site.children = pgs.filter(child => child.num)
+    site.children = pages.filter(child => child.num)
 
     for (const page of site.children) {
       page.children = page.children.filter(child => child.num)
@@ -80,8 +80,8 @@ export default {
 }
 
 html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
 }
 
 li {
