@@ -14,10 +14,10 @@ return [
         'allowInsecure' => true,
         'routes' => [
             [
-                'pattern' => '/kirbytext/(:any)',
+                'pattern' => '/kt/(:any)',
                 'action'  => function ($pageId) {
                     $pageId = str_replace('+', '/', $pageId);
-                    $fields = explode(',', get('field'));
+                    $fields = explode(',', get('select'));
 
                     if ($page = page($pageId)) {
 

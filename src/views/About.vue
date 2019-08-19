@@ -36,9 +36,7 @@
         </section>
       </aside>
 
-      <div class="text">
-        <span v-html="page.text"></span>
-      </div>
+      <div class="text"><span v-html="page.text"></span></div>
     </div>
   </main>
 </template>
@@ -59,9 +57,9 @@ export default {
   },
   async created() {
     const page = await this.api.get('pages/about?select=content')
-    const kirbytexts = await this.api.get('kirbytext/about?field=address,text')
-    page.content.address = kirbytexts.address.value
-    page.content.text = kirbytexts.text.value
+    const kts = await this.api.get('kt/about?select=address,text')
+    page.content.address = kts.address.value
+    page.content.text = kts.text.value
 
     this.page = page.content
     this.$emit('change-title', this.page.title)
