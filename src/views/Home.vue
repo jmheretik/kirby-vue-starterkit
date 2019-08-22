@@ -4,7 +4,7 @@
 
     <ul class="grid">
       <li v-for="album in albums" :key="album.id">
-        <Cover :api="api" :album="album" />
+        <Cover :album="album" />
       </li>
     </ul>
   </main>
@@ -16,7 +16,6 @@ import Cover from '@/components/Cover.vue'
 
 export default {
   name: 'Home',
-  props: ['api'],
   components: {
     Intro,
     Cover
@@ -28,11 +27,11 @@ export default {
     }
   },
   async created() {
-    const page = await this.api.get('pages/home?select=content')
+    const page = await this.$api.get('pages/home?select=content')
     this.page = page.content
     this.$emit('change-title', this.page.title)
 
-    const albums = await this.api.get('pages/photography/children?select=id,num,content')
+    const albums = await this.$api.get('pages/photography/children?select=id,num,content')
     this.albums = albums.filter(album => album.num)
   }
 }

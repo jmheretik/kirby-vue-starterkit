@@ -48,7 +48,6 @@ import Intro from '@/components/Intro.vue'
 
 export default {
   name: 'About',
-  props: ['api'],
   components: {
     Intro
   },
@@ -58,9 +57,9 @@ export default {
     }
   },
   async created() {
-    const page = await this.api.get('pages/about?select=content')
+    const page = await this.$api.get('pages/about?select=content')
 
-    const kts = await this.api.get('kt/about?select=address,text')
+    const kts = await this.$api.get('kt/about?select=address,text')
     page.content.address = kts.address.value
     page.content.text = kts.text.value
 

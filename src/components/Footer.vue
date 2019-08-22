@@ -11,14 +11,14 @@
 <script>
 export default {
   name: 'Header',
-  props: ['api', 'site'],
+  props: ['site'],
   data() {
     return {
       about: {}
     }
   },
   async created() {
-    const about = await this.api.get('pages/about?select=content')
+    const about = await this.$api.get('pages/about?select=content')
     this.about = about.content
   }
 }

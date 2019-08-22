@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'Cover',
-  props: ['api', 'album'],
+  props: ['album'],
   data() {
     return {
       cover: {
@@ -21,7 +21,7 @@ export default {
   },
   async created() {
     const pageId = this.album.id.replace('/', '+')
-    const cover = await this.api.get(`pages/${pageId}/files/${this.album.content.cover[0].filename}?select=url,content`)
+    const cover = await this.$api.get(`pages/${pageId}/files/${this.album.content.cover[0].filename}?select=url,content`)
     this.cover = cover
   }
 }

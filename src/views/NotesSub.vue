@@ -15,7 +15,6 @@
 <script>
 export default {
   name: 'NotesSub',
-  props: ['api'],
   data() {
     return {
       page: {}
@@ -28,8 +27,8 @@ export default {
   },
   async created() {
     const pageId = `notes+${this.$route.params.id}`
-    const page = await this.api.get(`pages/${pageId}?select=content`)
-    const kt = await this.api.get(`kt/${pageId}?select=text`)
+    const page = await this.$api.get(`pages/${pageId}?select=content`)
+    const kt = await this.$api.get(`kt/${pageId}?select=text`)
     page.content.text = kt.text.value
 
     this.page = page.content

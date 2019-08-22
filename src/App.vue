@@ -2,14 +2,13 @@
   <div id="app">
     <div class="page">
       <Header :site="site" />
-      <router-view :api="api" @change-title="updateTitle" />
+      <router-view @change-title="updateTitle" />
     </div>
-    <Footer :api="api" :site="site" />
+    <Footer :site="site" />
   </div>
 </template>
 
 <script>
-import Api from '@/api'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 
@@ -21,13 +20,14 @@ export default {
   },
   data() {
     return {
-      api: new Api(),
       site: {}
     }
   },
   async created() {
-    const site = await this.api.get('site?select=title')
-    const children = await this.api.get('site/children?select=id,num,title,children')
+    const site = await this.$api.get('site?select=title')
+    this.site.title = site.title
+
+    const children = await this.$api.get('site/children?select=id,num,title,children')
 
     // filter out unlisted
     site.children = children.filter(child => child.num)
@@ -36,7 +36,7 @@ export default {
       page.children = page.children.filter(child => child.num)
     }
 
-    this.site = site
+    this.site.children = site.children
 
     // set up routes
     let pageRoutes = []
