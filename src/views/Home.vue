@@ -4,7 +4,11 @@
 
     <ul class="grid">
       <li v-for="album in albums" :key="album.id">
-        <Cover :album="album" />
+        <router-link :to="'/' + album.id">
+          <Cover :link="album.content.cover[0].link">
+            {{ album.content.title }}
+          </Cover>
+        </router-link>
       </li>
     </ul>
   </main>

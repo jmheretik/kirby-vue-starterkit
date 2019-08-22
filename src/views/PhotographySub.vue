@@ -2,12 +2,9 @@
   <main class="album">
     <article>
       <header>
-        <figure class="album-cover">
-          <img :src="cover.url" :alt="cover.content.alt" />
-          <figcaption>
-            <h1>{{ page.headline || page.title }}</h1>
-          </figcaption>
-        </figure>
+        <Cover class="album-cover" v-if="page.cover" :link="page.cover[0].link">
+          <h1>{{ page.headline || page.title }}</h1>
+        </Cover>
       </header>
 
       <div class="album-text text">
@@ -29,17 +26,18 @@
 </template>
 
 <script>
+import Cover from '@/components/Cover.vue'
 import { tags } from '@/components/mixins/general'
 
 export default {
   name: 'PhotographySub',
+  components: {
+    Cover
+  },
   mixins: [tags],
   data() {
     return {
       page: {},
-      cover: {
-        content: {}
-      },
       gallery: []
     }
   },
@@ -51,9 +49,6 @@ export default {
 
     this.page = page.content
     this.$emit('change-title', this.page.title)
-
-    const cover = await this.$api.get(`pages/${pageId}/files/${page.content.cover[0].filename}?select=url,content`)
-    this.cover = cover
 
     const gallery = await this.$api.get(`pages/${pageId}/files?select=url,type,content`)
     this.gallery = gallery.filter(file => file.type === 'image')
