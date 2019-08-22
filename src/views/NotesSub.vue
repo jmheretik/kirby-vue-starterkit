@@ -13,16 +13,14 @@
 </template>
 
 <script>
+import { tags } from '@/components/mixins/general'
+
 export default {
   name: 'NotesSub',
+  mixins: [tags],
   data() {
     return {
       page: {}
-    }
-  },
-  computed: {
-    tags() {
-      return this.page.tags.map(e => e.text).join(', ')
     }
   },
   async created() {
