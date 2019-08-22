@@ -2,7 +2,7 @@
   <div id="app">
     <div class="page">
       <Header :site="site" />
-      <router-view @change-title="updateTitle" />
+      <router-view @change-title="updatePageTitle" />
     </div>
     <Footer :site="site" />
   </div>
@@ -20,23 +20,19 @@ export default {
   },
   data() {
     return {
-      site: {}
+      site: {},
+      pageTitle: null
     }
   },
   async created() {
-    const site = await this.$api.get('site?select=title')
-    this.site.title = site.title
+    let site = await this.$api.get('site?select=title')
 
+    // filter out unlisted pages
     const children = await this.$api.get('site/children?select=id,num,title,children')
-
-    // filter out unlisted
     site.children = children.filter(child => child.num)
 
-    for (const page of site.children) {
-      page.children = page.children.filter(child => child.num)
-    }
-
-    this.site.children = site.children
+    this.site = site
+    this.updateDocumentTitle()
 
     // set up routes
     let pageRoutes = []
@@ -49,7 +45,7 @@ export default {
         component: () => import(`@/views/${componentName}.vue`)
       })
 
-      if (page.children.length) {
+      if (page.children.filter(child => child.num).length) {
         pageRoutes.push({
           path: '/' + page.id + '/:id',
           component: () => import(`@/views/${componentName}Sub.vue`)
@@ -60,8 +56,12 @@ export default {
     this.$router.addRoutes(pageRoutes)
   },
   methods: {
-    updateTitle(pageTitle) {
-      document.title = `${this.site.title} | ${pageTitle}`
+    updatePageTitle(title) {
+      this.pageTitle = title
+      this.updateDocumentTitle()
+    },
+    updateDocumentTitle() {
+      document.title = this.site.title + (this.pageTitle ? ' | ' + this.pageTitle : '')
     }
   }
 }
