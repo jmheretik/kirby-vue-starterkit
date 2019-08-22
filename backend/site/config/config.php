@@ -20,12 +20,26 @@ return [
                     $fields = explode(',', get('select'));
 
                     if ($page = page($pageId)) {
-
                         foreach ($fields as $field) {
                             $result['data'][$field] = $page->$field()->kirbytext();
                         }
-
                         return $result;
+                    }
+                }
+            ],
+            [
+                'pattern' => '/(:alpha)/(:any)/file/(:any)',
+                'action'  => function ($method, $pageId, $fileId) {
+                    if ($method !== 'resize' && $method !== 'crop') return;
+
+                    $pageId = str_replace('+', '/', $pageId);
+
+                    if ($page = page($pageId)) {
+                        if ($file = $page->file($fileId)) {
+                            return [
+                                'data' => $file->$method(get('w'), get('h'))->url()
+                            ];
+                        }
                     }
                 }
             ]
