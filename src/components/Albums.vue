@@ -2,22 +2,25 @@
   <ul :data-even="albums.length % 2 === 0">
     <li v-for="album in albums" :key="album.id">
       <router-link :to="'/' + album.id">
-        <Cover :link="album.content.cover[0].link">
-          {{ album.content.title }}
-        </Cover>
+        <figure>
+          <KirbyImage :link="album.content.cover[0].link" :method="method" :w="w" :h="h" />
+
+          <figcaption>{{ album.content.title }}</figcaption>
+        </figure>
       </router-link>
     </li>
   </ul>
 </template>
 
 <script>
-import Cover from '@/components/Cover.vue'
+import KirbyImage from '@/components/KirbyImage.vue'
 
 export default {
   name: 'Albums',
   components: {
-    Cover
+    KirbyImage
   },
+  props: ['method', 'w', 'h'],
   data() {
     return {
       albums: []

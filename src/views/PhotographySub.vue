@@ -2,9 +2,13 @@
   <main class="album">
     <article>
       <header>
-        <Cover class="album-cover" v-if="page.cover" :link="page.cover[0].link">
-          <h1>{{ page.headline || page.title }}</h1>
-        </Cover>
+        <figure v-if="page.cover" class="album-cover">
+          <KirbyImage :link="page.cover[0].link" method="crop" w="1024" h="768" />
+
+          <figcaption>
+            <h1>{{ page.headline || page.title }}</h1>
+          </figcaption>
+        </figure>
       </header>
 
       <div class="album-text text">
@@ -16,7 +20,7 @@
         <li v-for="image in gallery" :key="image.id">
           <figure>
             <a :href="image.content.link || image.url">
-              <img :src="image.url" :alt="image.content.alt" />
+              <KirbyImage :link="image.link" method="crop" w="800" h="1000" />
             </a>
           </figure>
         </li>
@@ -26,13 +30,13 @@
 </template>
 
 <script>
-import Cover from '@/components/Cover.vue'
+import KirbyImage from '@/components/KirbyImage.vue'
 import { tags } from '@/components/mixins/general'
 
 export default {
   name: 'PhotographySub',
   components: {
-    Cover
+    KirbyImage
   },
   mixins: [tags],
   data() {
@@ -50,7 +54,7 @@ export default {
     this.page = page.content
     this.$emit('change-title', this.page.title)
 
-    const gallery = await this.$api.get(`pages/${pageId}/files?select=url,type,content`)
+    const gallery = await this.$api.get(`pages/${pageId}/files?select=url,type,link,content`)
     this.gallery = gallery.filter(file => file.type === 'image')
   }
 }

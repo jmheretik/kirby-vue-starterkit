@@ -2,7 +2,7 @@
   <main>
     <Intro :pageTitle="page.title" />
 
-    <Albums class="grid" />
+    <Albums class="grid" method="resize" w="1024" h="1024" />
   </main>
 </template>
 

@@ -2,7 +2,7 @@
   <main>
     <Intro :pageTitle="page.title" />
 
-    <Albums class="albums" />
+    <Albums class="albums" method="crop" w="800" h="1000" />
   </main>
 </template>
 
