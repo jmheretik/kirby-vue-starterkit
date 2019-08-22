@@ -2,8 +2,10 @@
   <div id="app">
     <div class="page">
       <Header :site="site" />
+
       <router-view @change-title="updatePageTitle" />
     </div>
+
     <Footer :site="site" />
   </div>
 </template>
