@@ -46,6 +46,11 @@ npm run serve:backend
 npm run serve:frontend
 ```
 
+### Lints and fixes files
+```
+npm run lint
+```
+
 ### Compiles and minifies for production
 ```
 npm run build
@@ -57,11 +62,6 @@ npm run build
 - set `debug` and `allowInsecure` (if you're deploying to https) to **false** in [backend/site/config/config.php](backend/site/config/config.php)
 
 Deploy the contents of `backend` and `frontend` folders to the same server to their corresponding public paths.
-
-### Lints and fixes files
-```
-npm run lint
-```
 
 ## Notes
 
