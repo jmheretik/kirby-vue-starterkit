@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <router-link to="/"> &copy; {{ new Date().getFullYear() }} / {{ site.title }} </router-link>
+    <router-link to="/"> &copy; {{ new Date().getFullYear() }} / {{ $site }} </router-link>
 
     <nav class="social">
       <a v-for="social in about.social" :key="social.id" :href="social.url"> {{ social.platform }} </a>
@@ -11,15 +11,13 @@
 <script>
 export default {
   name: 'Header',
-  props: ['site'],
   data() {
     return {
       about: {}
     }
   },
   async created() {
-    const about = await this.$api.get('pages/about?select=content')
-    this.about = about.content
+    this.about = await this.$api.getPage('about')
   }
 }
 </script>

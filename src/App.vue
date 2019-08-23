@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <div class="page">
-      <Header :site="site" />
+      <Header :pages="pages" />
 
-      <router-view @change-title="updatePageTitle" />
+      <router-view @update-title="updateDocumentTitle" />
     </div>
 
-    <Footer :site="site" />
+    <Footer />
   </div>
 </template>
 
@@ -22,24 +22,18 @@ export default {
   },
   data() {
     return {
-      site: {},
-      pageTitle: null
+      pages: []
     }
   },
   async created() {
-    let site = await this.$api.get('site?select=title')
-
     // filter out unlisted pages
-    const children = await this.$api.get('site/children?select=id,num,title,children')
-    site.children = children.filter(child => child.num)
-
-    this.site = site
-    this.updateDocumentTitle()
+    const pages = await this.$api.get('site/children?select=id,num,title,children')
+    this.pages = pages.filter(child => child.num)
 
     // set up routes
     let pageRoutes = []
 
-    for (const page of this.site.children) {
+    for (const page of this.pages) {
       const componentName = page.id.charAt(0).toUpperCase() + page.id.slice(1)
 
       pageRoutes.push({
@@ -58,12 +52,8 @@ export default {
     this.$router.addRoutes(pageRoutes)
   },
   methods: {
-    updatePageTitle(title) {
-      this.pageTitle = title
-      this.updateDocumentTitle()
-    },
-    updateDocumentTitle() {
-      document.title = this.site.title + (this.pageTitle ? ' | ' + this.pageTitle : '')
+    updateDocumentTitle(pageTitle) {
+      document.title = `${this.$site} | ${pageTitle}`
     }
   }
 }

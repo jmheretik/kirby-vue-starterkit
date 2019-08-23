@@ -7,13 +7,18 @@ import moment from 'moment'
 Vue.config.productionTip = false
 
 // globals
-Vue.prototype.$api = new Api()
-
 Vue.filter('moment', (date, format) => {
   return date ? moment(date).format(format) : ''
 })
 
-new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app')
+const api = new Api()
+
+api.get('site?select=title').then(site => {
+  Vue.prototype.$api = api
+  Vue.prototype.$site = site.title
+
+  new Vue({
+    router,
+    render: h => h(App)
+  }).$mount('#app')
+})
