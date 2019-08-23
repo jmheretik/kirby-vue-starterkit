@@ -2,29 +2,43 @@
   <main>
     <Intro :pageTitle="page.title" />
 
-    <Albums class="albums" method="crop" w="800" h="1000" />
+    <ul class="albums" :data-even="albums.length % 2 === 0">
+      <li v-for="album in albums" :key="album.id">
+        <router-link :to="'/' + album.id">
+          <figure>
+            <KirbyImage :link="album.content.cover[0].link" method="crop" w="800" h="1000" />
+
+            <figcaption>{{ album.content.title }}</figcaption>
+          </figure>
+        </router-link>
+      </li>
+    </ul>
   </main>
 </template>
 
 <script>
 import Intro from '@/components/Intro.vue'
-import Albums from '@/components/Albums.vue'
+import KirbyImage from '@/components/KirbyImage.vue'
 
 export default {
   name: 'Photography',
   components: {
     Intro,
-    Albums
+    KirbyImage
   },
   data() {
     return {
-      page: {}
+      page: {},
+      albums: []
     }
   },
   async created() {
     const page = await this.$api.get('pages/photography?select=content')
     this.page = page.content
     this.$emit('change-title', this.page.title)
+
+    const albums = await this.$api.get('pages/photography/children?select=id,num,content')
+    this.albums = albums.filter(album => album.num)
   }
 }
 </script>

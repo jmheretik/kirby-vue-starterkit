@@ -2,29 +2,47 @@
   <main>
     <Intro :pageTitle="page.title" />
 
-    <Albums class="grid" method="resize" w="1024" h="1024" />
+    <ul class="grid">
+      <li v-for="album in albums" :key="album.id">
+        <router-link :to="'/' + album.id">
+          <figure>
+            <KirbyImage :link="album.content.cover[0].link" method="resize" w="1024" h="1024" />
+
+            <figcaption>
+              <span>
+                <span class="example-name">{{ album.content.title }}</span>
+              </span>
+            </figcaption>
+          </figure>
+        </router-link>
+      </li>
+    </ul>
   </main>
 </template>
 
 <script>
 import Intro from '@/components/Intro.vue'
-import Albums from '@/components/Albums.vue'
+import KirbyImage from '@/components/KirbyImage.vue'
 
 export default {
   name: 'Home',
   components: {
     Intro,
-    Albums
+    KirbyImage
   },
   data() {
     return {
-      page: {}
+      page: {},
+      albums: []
     }
   },
   async created() {
     const page = await this.$api.get('pages/home?select=content')
     this.page = page.content
     this.$emit('change-title', this.page.title)
+
+    const albums = await this.$api.get('pages/photography/children?select=id,num,content')
+    this.albums = albums.filter(album => album.num)
   }
 }
 </script>
