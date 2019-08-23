@@ -56,7 +56,7 @@ npm run build
 - adjust `RewriteBase` in [public/.htaccess](public/.htaccess) file to match the frontend's public path
 - set `debug` and `allowInsecure` (if you're deploying to https) to **false** in [backend/site/config/config.php](backend/site/config/config.php)
 
-Deploy `backend` and `frontend` folders to the same server at corresponding public paths.
+Deploy the contents of `backend` and `frontend` folders to the same server to their corresponding public paths.
 
 ### Lints and fixes files
 ```
