@@ -65,6 +65,8 @@ Deploy the contents of `backend` and `frontend` folders to the same server to th
 
 ## Notes
 
+- I **highly recommend** using Kirby's [Content Representations](https://getkirby.com/docs/guide/templates/content-representations) for more sophisticated templates or models.
+
 - Vue.js components in [src/components](src/components) folder correspond to Kirby snippets.
 - Vue.js views in in [src/views](src/views) folder correspond to Kirby templates and the routes are being automatically resolved.
 - If you add a new page with a new blueprint you also need to manually add a new **View** (exactly as you would add a new **Template** if you were working on a frontend in Kirby).
