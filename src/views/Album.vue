@@ -35,7 +35,7 @@ import KirbyImage from '@/components/KirbyImage.vue'
 import { tags } from '@/components/mixins/general'
 
 export default {
-  name: 'PhotographySub',
+  name: 'Album',
   mixins: [page, tags],
   components: {
     KirbyImage

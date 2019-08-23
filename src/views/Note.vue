@@ -17,7 +17,7 @@ import page from '@/components/mixins/page'
 import { tags } from '@/components/mixins/general'
 
 export default {
-  name: 'NotesSub',
+  name: 'Note',
   mixins: [page, tags],
   async created() {
     const kt = await this.getKirbyText('text')

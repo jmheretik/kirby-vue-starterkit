@@ -26,25 +26,30 @@ export default {
     }
   },
   async created() {
-    // filter out unlisted pages
-    const pages = await this.$api.get('site/children?select=id,num,title,children')
-    this.pages = pages.filter(child => child.num)
+    // filter listed pages and find out their templates
+    const pages = await this.$api.get('site/children?select=id,num,template,title,hasChildren')
+    this.pages = pages.filter(page => page.num)
+
+    // find out child page templates
+    for (let page of this.pages.filter(page => page.hasChildren)) {
+      const childPages = await this.$api.get(`pages/${page.id}/children?select=template`)
+      page.childTemplate = childPages[0].template
+    }
 
     // set up routes
     let pageRoutes = []
+    const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1)
 
     for (const page of this.pages) {
-      const componentName = page.id.charAt(0).toUpperCase() + page.id.slice(1)
-
       pageRoutes.push({
         path: '/' + page.id,
-        component: () => import(`@/views/${componentName}.vue`)
+        component: () => import(`@/views/${capitalize(page.template)}.vue`)
       })
 
-      if (page.children.filter(child => child.num).length) {
+      if (page.hasChildren) {
         pageRoutes.push({
           path: '/' + page.id + '/:id',
-          component: () => import(`@/views/${componentName}Sub.vue`)
+          component: () => import(`@/views/${capitalize(page.childTemplate)}.vue`)
         })
       }
     }
