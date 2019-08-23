@@ -21,14 +21,14 @@ return [
 
                     if ($page = page($pageId)) {
                         foreach ($fields as $field) {
-                            $result['data'][$field] = $page->$field()->kirbytext();
+                            $result['data'][$field] = $page->$field()->kirbytext()->value();
                         }
                         return $result;
                     }
                 }
             ],
             [
-                'pattern' => '/(:alpha)/(:any)/file/(:any)',
+                'pattern' => '/process/(:alpha)/(:any)/(:any)',
                 'action'  => function ($method, $pageId, $fileId) {
                     if ($method !== 'resize' && $method !== 'crop') return;
 
