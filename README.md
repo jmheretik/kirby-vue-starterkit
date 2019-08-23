@@ -3,7 +3,7 @@
 This is a proof-of-concept project which uses [Kirby](https://getkirby.com/) as a headless CMS at the backend and [Vue.js](https://vuejs.org/) as a UI library at the frontend. The communication in between is handled using the [Kirby's REST API](https://getkirby.com/docs/guide/api/introduction).
 
 Snippets, templates and their specific JS/CSS from the Kirby [Starterkit](https://github.com/getkirby/starterkit) have been ported to Vue.js [Single File Components](https://vuejs.org/v2/guide/single-file-components.html).  
-This project is trying to be a simple, zero-setup straightforward, 1:1 port with the least possible modifications done to the original Starterkit in order to serve as a nice starting point for people wanting to use Vue.js with Kirby.
+This project is trying to be a simple, zero-setup, straightforward, 1:1 port with the least possible modifications done to the original Starterkit in order to serve as a nice starting point for people wanting to use Vue.js with Kirby.
 
 The project benefits from all the standard tools used in modern frontend development. For more details visit: [Vue CLI](https://cli.vuejs.org/).
 
