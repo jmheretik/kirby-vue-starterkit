@@ -16,27 +16,24 @@
 </template>
 
 <script>
+import page from '@/components/mixins/page'
 import Intro from '@/components/Intro.vue'
 
 export default {
   name: 'Notes',
+  mixins: [page],
   components: {
     Intro
   },
   data() {
     return {
-      page: {},
       notes: []
     }
   },
   async created() {
-    const page = await this.$api.get('pages/notes?select=content')
-    this.page = page.content
-    this.$emit('change-title', this.page.title)
-
-    const notes = await this.$api.get('pages/notes/children?select=id,num,content')
+    let notes = await this.getListedChildren()
     notes.sort((a, b) => new Date(b.content.date) - new Date(a.content.date))
-    this.notes = notes.filter(note => note.num)
+    this.notes = notes
   }
 }
 </script>

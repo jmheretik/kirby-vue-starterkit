@@ -3,7 +3,7 @@
     <article>
       <header>
         <figure v-if="page.cover" class="album-cover">
-          <KirbyImage :link="page.cover[0].link" method="crop" w="1024" h="768" />
+          <KirbyImage :file="page.cover[0]" method="crop" w="1024" h="768" />
 
           <figcaption>
             <h1>{{ page.headline || page.title }}</h1>
@@ -20,7 +20,7 @@
         <li v-for="image in gallery" :key="image.id">
           <figure>
             <a :href="image.content.link || image.url">
-              <KirbyImage :link="image.link" method="crop" w="800" h="1000" />
+              <KirbyImage :file="image" method="crop" w="800" h="1000" />
             </a>
           </figure>
         </li>
@@ -30,32 +30,27 @@
 </template>
 
 <script>
+import page from '@/components/mixins/page'
 import KirbyImage from '@/components/KirbyImage.vue'
 import { tags } from '@/components/mixins/general'
 
 export default {
   name: 'PhotographySub',
+  mixins: [page, tags],
   components: {
     KirbyImage
   },
-  mixins: [tags],
   data() {
     return {
-      page: {},
       gallery: []
     }
   },
   async created() {
-    const pageId = `photography+${this.$route.params.id}`
-    const page = await this.$api.get(`pages/${pageId}?select=content`)
-    const kt = await this.$api.get(`kt/${pageId}?select=description`)
-    page.content.description = kt.description.value
+    const kt = await this.getKirbyText('description')
+    this.page.description = kt.description
 
-    this.page = page.content
-    this.$emit('change-title', this.page.title)
-
-    const gallery = await this.$api.get(`pages/${pageId}/files?select=url,type,link,content`)
-    this.gallery = gallery.filter(file => file.type === 'image')
+    const files = await this.getFiles()
+    this.gallery = files.filter(file => file.type === 'image')
   }
 }
 </script>

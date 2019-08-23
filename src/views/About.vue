@@ -44,27 +44,19 @@
 </template>
 
 <script>
+import page from '@/components/mixins/page'
 import Intro from '@/components/Intro.vue'
 
 export default {
   name: 'About',
+  mixins: [page],
   components: {
     Intro
   },
-  data() {
-    return {
-      page: {}
-    }
-  },
   async created() {
-    const page = await this.$api.get('pages/about?select=content')
-
-    const kts = await this.$api.get('kt/about?select=address,text')
-    page.content.address = kts.address.value
-    page.content.text = kts.text.value
-
-    this.page = page.content
-    this.$emit('change-title', this.page.title)
+    const kts = await this.getKirbyText('address', 'text')
+    this.page.address = kts.address
+    this.page.text = kts.text
   }
 }
 </script>

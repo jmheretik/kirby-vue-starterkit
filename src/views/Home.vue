@@ -6,7 +6,7 @@
       <li v-for="album in albums" :key="album.id">
         <router-link :to="'/' + album.id">
           <figure>
-            <KirbyImage :link="album.content.cover[0].link" method="resize" w="1024" h="1024" />
+            <KirbyImage :file="album.content.cover[0]" method="resize" w="1024" h="1024" />
 
             <figcaption>
               <span>
@@ -21,28 +21,24 @@
 </template>
 
 <script>
+import page from '@/components/mixins/page'
 import Intro from '@/components/Intro.vue'
 import KirbyImage from '@/components/KirbyImage.vue'
 
 export default {
   name: 'Home',
+  mixins: [page],
   components: {
     Intro,
     KirbyImage
   },
   data() {
     return {
-      page: {},
       albums: []
     }
   },
   async created() {
-    const page = await this.$api.get('pages/home?select=content')
-    this.page = page.content
-    this.$emit('change-title', this.page.title)
-
-    const albums = await this.$api.get('pages/photography/children?select=id,num,content')
-    this.albums = albums.filter(album => album.num)
+    this.albums = await this.$api.getListedChildren('photography')
   }
 }
 </script>

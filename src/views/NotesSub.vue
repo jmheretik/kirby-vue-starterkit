@@ -13,24 +13,15 @@
 </template>
 
 <script>
+import page from '@/components/mixins/page'
 import { tags } from '@/components/mixins/general'
 
 export default {
   name: 'NotesSub',
-  mixins: [tags],
-  data() {
-    return {
-      page: {}
-    }
-  },
+  mixins: [page, tags],
   async created() {
-    const pageId = `notes+${this.$route.params.id}`
-    const page = await this.$api.get(`pages/${pageId}?select=content`)
-    const kt = await this.$api.get(`kt/${pageId}?select=text`)
-    page.content.text = kt.text.value
-
-    this.page = page.content
-    this.$emit('change-title', this.page.title)
+    const kt = await this.getKirbyText('text')
+    this.page.text = kt.text
   }
 }
 </script>

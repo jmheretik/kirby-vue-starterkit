@@ -5,7 +5,7 @@
 <script>
 export default {
   name: 'KirbyImage',
-  props: ['link', 'method', 'w', 'h'],
+  props: ['file', 'method', 'w', 'h'],
   data() {
     return {
       image: {}
@@ -14,21 +14,17 @@ export default {
   async created() {
     let image = {}
 
-    // /pages/:id/files/:id -> pages/:id/files/:id
-    const file = await this.$api.get(`${this.link.substr(1)}?select=url,content`)
-    image.alt = file.content.alt
-
-    if (!this.method || this.method === '') {
-      image.src = file.url
+    if (this.file.content) {
+      image.alt = this.file.content.alt
     } else {
-      // /pages/:id/files/:id -> (resize|crop)/:id/file/:id
-      const url = this.link
-        .substr(1)
-        .replace('pages', this.method)
-        .replace('files', 'file')
+      const content = await this.$api.getFileContent(this.file.link)
+      image.alt = content.alt
+    }
 
-      const processedFile = await this.$api.get(`${url}?w=${this.w}&h=${this.h}`)
-      image.src = processedFile
+    if (!this.method) {
+      image.src = this.file.url
+    } else {
+      image.src = await this.$api.getFileProcessed(this.file.link, this.method, this.w, this.h)
     }
 
     this.image = image
