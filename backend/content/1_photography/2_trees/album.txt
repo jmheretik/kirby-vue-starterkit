@@ -1,8 +1,6 @@
-Title: Trees
+Cover: 
 
-----
-
-Cover: - monster-trees-in-the-fog.jpg
+- monster-trees-in-the-fog.jpg
 
 ----
 
@@ -15,3 +13,7 @@ Description: Hug them if you like. They might not appreciate it though.
 ----
 
 Tags: tree, forest
+
+----
+
+Title: Trees
