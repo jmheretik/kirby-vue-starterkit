@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import page from '@/components/mixins/page'
-import { tags } from '@/components/mixins/general'
+import page from '@/mixins/page'
+import { tags, moment } from '@/mixins/general'
 
 export default {
   name: 'Note',
-  mixins: [page, tags],
+  mixins: [page, tags, moment],
   async created() {
     const kt = await this.getKirbyText('text')
     this.page.text = kt.text

@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import page from '@/components/mixins/page'
+import page from '@/mixins/page'
+import { tags } from '@/mixins/general'
 import KirbyImage from '@/components/KirbyImage.vue'
-import { tags } from '@/components/mixins/general'
 
 export default {
   name: 'Album',

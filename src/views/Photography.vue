@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import page from '@/components/mixins/page'
+import page from '@/mixins/page'
 import Intro from '@/components/Intro.vue'
 import KirbyImage from '@/components/KirbyImage.vue'
 

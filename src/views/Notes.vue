@@ -16,12 +16,13 @@
 </template>
 
 <script>
-import page from '@/components/mixins/page'
+import page from '@/mixins/page'
+import { moment } from '@/mixins/general'
 import Intro from '@/components/Intro.vue'
 
 export default {
   name: 'Notes',
-  mixins: [page],
+  mixins: [page, moment],
   components: {
     Intro
   },
