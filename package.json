@@ -3,22 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "run-p serve:*",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
     "serve:backend": "node -e \"require('./backend.js').serve()\"",
     "serve:frontend": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "start": "run-p serve:*"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
+    "core-js": "^3.1.2",
     "moment": "^2.24.0",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.11.0",
-    "@vue/cli-plugin-eslint": "^3.11.0",
-    "@vue/cli-service": "^3.11.0",
+    "@vue/cli-plugin-babel": "^4.0.0",
+    "@vue/cli-plugin-eslint": "^4.0.1",
+    "@vue/cli-service": "^4.0.0",
     "@vue/eslint-config-prettier": "^5.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
@@ -46,6 +46,11 @@
       "parser": "babel-eslint"
     }
   },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 150
+  },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
@@ -54,10 +59,5 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ],
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "printWidth": 150
-  }
+  ]
 }
