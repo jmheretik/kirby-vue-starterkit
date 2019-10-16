@@ -3,7 +3,7 @@
     <article class="note">
       <header class="note-header intro">
         <h1>{{ page.title }}</h1>
-        <time class="note-date">{{ page.date | moment('DD MMMM YYYY') }}</time>
+        <time class="note-date">{{ page.date | dayjs('LL') }}</time>
         <p v-if="page.tags" class="note-tags tags">{{ tags }}</p>
       </header>
 
@@ -14,11 +14,11 @@
 
 <script>
 import page from '@/mixins/page'
-import { tags, moment } from '@/mixins/general'
+import { tags, dayjs } from '@/mixins/general'
 
 export default {
   name: 'Note',
-  mixins: [page, tags, moment],
+  mixins: [page, tags, dayjs],
   async created() {
     const kt = await this.getKirbyText('text')
     this.page.text = kt.text

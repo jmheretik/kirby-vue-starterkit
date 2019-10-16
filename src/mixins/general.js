@@ -1,4 +1,9 @@
-import mmnt from 'moment'
+import DayJs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+
+DayJs.extend(customParseFormat)
+DayJs.extend(localizedFormat)
 
 export const tags = {
   computed: {
@@ -8,10 +13,10 @@ export const tags = {
   }
 }
 
-export const moment = {
+export const dayjs = {
   filters: {
-    moment(date, format) {
-      return date ? mmnt(date).format(format) : ''
+    dayjs(date, format) {
+      return date ? DayJs(date).format(format) : ''
     }
   }
 }
