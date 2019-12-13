@@ -10,27 +10,36 @@
     "start": "run-p serve:*"
   },
   "dependencies": {
-    "core-js": "^3.1.2",
+    "core-js": "^3.5.0",
     "moment": "^2.24.0",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vue-router": "^3.1.3"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.0.0",
-    "@vue/cli-plugin-eslint": "^4.0.1",
-    "@vue/cli-service": "^4.0.0",
-    "@vue/eslint-config-prettier": "^5.0.0",
+    "@vue/cli-plugin-babel": "^4.1.1",
+    "@vue/cli-plugin-eslint": "^4.1.1",
+    "@vue/cli-service": "^4.1.1",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.0.3",
-    "eslint": "^5.16.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-vue": "^5.0.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-vue": "^6.0.1",
     "node-php-server": "^0.1.2",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.18.2",
-    "sass-loader": "^7.3.1",
-    "vue-template-compiler": "^2.6.10"
+    "prettier": "^1.19.1",
+    "sass-loader": "^8.0.0",
+    "vue-template-compiler": "^2.6.11"
   },
+  "babel": {
+    "presets": [
+      "@vue/cli-plugin-babel/preset"
+    ]
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
   "eslintConfig": {
     "root": true,
     "env": {
@@ -46,18 +55,14 @@
       "parser": "babel-eslint"
     }
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "printWidth": 150
-  },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 150
+  }
 }
