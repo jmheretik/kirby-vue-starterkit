@@ -1,5 +1,3 @@
-import mmnt from 'moment'
-
 export const tags = {
   computed: {
     tags() {
@@ -8,10 +6,26 @@ export const tags = {
   }
 }
 
-export const moment = {
+const dateTimeFormatOptions = {
+  weekday: 'long',
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  timeZone: 'Europe/Prague'
+}
+
+export const formatDateTime = {
   filters: {
-    moment(date, format) {
-      return date ? mmnt(date).format(format) : ''
+    format(date, template) {
+      const dateParts = new Intl.DateTimeFormat(document.documentElement.lang, dateTimeFormatOptions).formatToParts(new Date(date))
+
+      for (const part of dateParts) {
+        template = template.replace(new RegExp(`\\b${part.type}\\b`, 'g'), part.value)
+      }
+
+      return template.replace('dayPeriod', '')
     }
   }
 }

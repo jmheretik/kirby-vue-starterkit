@@ -7,7 +7,7 @@
         <header class="note-header">
           <router-link :to="'/' + note.id">
             <h2>{{ note.content.title }}</h2>
-            <time>{{ note.content.date | moment('DD MMMM YYYY') }}</time>
+            <time>{{ note.content.date | format('day month year') }}</time>
           </router-link>
         </header>
       </article>
@@ -17,12 +17,12 @@
 
 <script>
 import page from '@/mixins/page'
-import { moment } from '@/mixins/general'
+import { formatDateTime } from '@/mixins/general'
 import Intro from '@/components/Intro.vue'
 
 export default {
   name: 'Notes',
-  mixins: [page, moment],
+  mixins: [page, formatDateTime],
   components: {
     Intro
   },
