@@ -9,8 +9,9 @@ The project benefits from all the standard tools used in modern frontend develop
 
 ## Demo
 
-Vue.js frontend: https://index.heretik.dev/kirby-api-vue-starterkit
-Kirby 3 backend starterkit for comparison: https://index.heretik.dev/kirby-api-vue-starterkit/backend
+Vue.js frontend https://index.heretik.dev/kirby-api-vue-starterkit
+
+Kirby 3 backend starterkit for comparison https://index.heretik.dev/kirby-api-vue-starterkit/backend
 
 ## Requirements
 
