@@ -5,7 +5,6 @@ namespace Kirby\Cms;
 use Kirby\Image\Image;
 use Kirby\Toolkit\A;
 use Kirby\Toolkit\F;
-use Kirby\Toolkit\Str;
 
 /**
  * The `$file` object provides a set
@@ -42,14 +41,14 @@ class File extends ModelWithContent
      * This is used to do actual file
      * method calls, like size, mime, etc.
      *
-     * @var Kirby\Image\Image
+     * @var \Kirby\Image\Image
      */
     protected $asset;
 
     /**
      * Cache for the initialized blueprint object
      *
-     * @var Kirby\Cms\FileBlueprint
+     * @var \Kirby\Cms\FileBlueprint
      */
     protected $blueprint;
 
@@ -73,7 +72,7 @@ class File extends ModelWithContent
     /**
      * The parent object
      *
-     * @var Kirby\Cms\Model
+     * @var \Kirby\Cms\Model
      */
     protected $parent;
 
@@ -141,7 +140,7 @@ class File extends ModelWithContent
      *
      * @return array
      */
-    public function __debuginfo(): array
+    public function __debugInfo(): array
     {
         return array_merge($this->toArray(), [
             'content'  => $this->content(),
@@ -165,7 +164,7 @@ class File extends ModelWithContent
      * Returns the Image object
      *
      * @internal
-     * @return Kirby\Image\Image
+     * @return \Kirby\Image\Image
      */
     public function asset()
     {
@@ -175,7 +174,7 @@ class File extends ModelWithContent
     /**
      * Returns the FileBlueprint object for the file
      *
-     * @return Kirby\Cms\FileBlueprint
+     * @return \Kirby\Cms\FileBlueprint
      */
     public function blueprint()
     {
@@ -189,7 +188,7 @@ class File extends ModelWithContent
     /**
      * Store the template in addition to the
      * other content.
-
+     *
      * @internal
      * @param array $data
      * @param string|null $languageCode
@@ -232,27 +231,33 @@ class File extends ModelWithContent
      * gets dragged onto a textarea
      *
      * @internal
-     * @param string $type
+     * @param string $type (null|auto|kirbytext|markdown)
      * @param bool $absolute
      * @return string
      */
-    public function dragText($type = 'kirbytext', bool $absolute = false): string
+    public function dragText(string $type = null, bool $absolute = false): string
     {
+        $type = $type ?? 'auto';
+
+        if ($type === 'auto') {
+            $type = option('panel.kirbytext', true) ? 'kirbytext' : 'markdown';
+        }
+
         $url = $absolute ? $this->id() : $this->filename();
 
         switch ($type) {
-            case 'kirbytext':
-                if ($this->type() === 'image') {
-                    return '(image: ' . $url . ')';
-                } else {
-                    return '(file: ' . $url . ')';
-                }
-                // no break
             case 'markdown':
                 if ($this->type() === 'image') {
                     return '![' . $this->alt() . '](' . $url . ')';
                 } else {
                     return '[' . $this->filename() . '](' . $url . ')';
+                }
+                // no break
+            default:
+                if ($this->type() === 'image') {
+                    return '(image: ' . $url . ')';
+                } else {
+                    return '(file: ' . $url . ')';
                 }
         }
     }
@@ -261,6 +266,7 @@ class File extends ModelWithContent
      * Constructs a File object
      *
      * @internal
+     * @param mixed $props
      * @return self
      */
     public static function factory($props)
@@ -281,7 +287,7 @@ class File extends ModelWithContent
     /**
      * Returns the parent Files collection
      *
-     * @return Kirby\Cms\Files
+     * @return \Kirby\Cms\Files
      */
     public function files()
     {
@@ -311,7 +317,7 @@ class File extends ModelWithContent
     /**
      * Compares the current object with the given file object
      *
-     * @param Kirby\Cms\File $file
+     * @param \Kirby\Cms\File $file
      * @return bool
      */
     public function is(File $file): bool
@@ -355,18 +361,20 @@ class File extends ModelWithContent
     /**
      * @deprecated 3.0.0 Use `File::content()` instead
      *
-     * @return Kirby\Cms\Content
+     * @return \Kirby\Cms\Content
      */
     public function meta()
     {
+        deprecated('$file->meta() is deprecated, use $file->content() instead. $file->meta() will be removed in Kirby 3.5.0.');
+
         return $this->content();
     }
 
     /**
      * Get the file's last modification time.
      *
-     * @param  string $format
-     * @param  string|null $handler date or strftime
+     * @param string $format
+     * @param string|null $handler date or strftime
      * @return mixed
      */
     public function modified(string $format = null, string $handler = null)
@@ -388,7 +396,7 @@ class File extends ModelWithContent
      * Timestamp of the last modification
      * of the content file
      *
-     * @return integer
+     * @return int
      */
     protected function modifiedContent(): int
     {
@@ -399,7 +407,7 @@ class File extends ModelWithContent
      * Timestamp of the last modification
      * of the source file
      *
-     * @return integer
+     * @return int
      */
     protected function modifiedFile(): int
     {
@@ -409,7 +417,7 @@ class File extends ModelWithContent
     /**
      * Returns the parent Page object
      *
-     * @return Kirby\Cms\Page|null
+     * @return \Kirby\Cms\Page|null
      */
     public function page()
     {
@@ -468,7 +476,7 @@ class File extends ModelWithContent
      *
      * @internal
      * @param string|null $query
-     * @return Kirby\Cms\File|Kirby\Cms\Asset|null
+     * @return \Kirby\Cms\File|\Kirby\Cms\Asset|null
      */
     protected function panelImageSource(string $query = null)
     {
@@ -505,11 +513,12 @@ class File extends ModelWithContent
 
         if (empty($params['model']) === false) {
             $uuid = $this->parent() === $params['model'] ? $this->filename() : $this->id();
+            $absolute = $this->parent() !== $params['model'];
         }
 
         return [
             'filename' => $this->filename(),
-            'dragText' => $this->dragText(),
+            'dragText' => $this->dragText('auto', $absolute ?? false),
             'icon'     => $icon,
             'id'       => $this->id(),
             'image'    => $image,
@@ -538,7 +547,7 @@ class File extends ModelWithContent
     /**
      * Returns the parent Model object
      *
-     * @return Kirby\Cms\Model
+     * @return \Kirby\Cms\Model
      */
     public function parent()
     {
@@ -563,7 +572,7 @@ class File extends ModelWithContent
     /**
      * Returns a collection of all parent pages
      *
-     * @return Kirby\Cms\Pages
+     * @return \Kirby\Cms\Pages
      */
     public function parents()
     {
@@ -571,13 +580,13 @@ class File extends ModelWithContent
             return $this->parent()->parents()->prepend($this->parent()->id(), $this->parent());
         }
 
-        return new Pages;
+        return new Pages();
     }
 
     /**
      * Returns the permissions object for this file
      *
-     * @return Kirby\Cms\FilePermissions
+     * @return \Kirby\Cms\FilePermissions
      */
     public function permissions()
     {
@@ -598,7 +607,7 @@ class File extends ModelWithContent
      * Returns the FileRules class to
      * validate any important action.
      *
-     * @return Kirby\Cms\FileRules
+     * @return \Kirby\Cms\FileRules
      */
     protected function rules()
     {
@@ -636,7 +645,7 @@ class File extends ModelWithContent
     /**
      * Sets the parent model object
      *
-     * @param Kirby\Cms\Model $parent
+     * @param \Kirby\Cms\Model $parent
      * @return self
      */
     protected function setParent(Model $parent = null)
@@ -684,7 +693,7 @@ class File extends ModelWithContent
      * Returns the parent Files collection
      * @internal
      *
-     * @return Kirby\Cms\Files
+     * @return \Kirby\Cms\Files
      */
     protected function siblingsCollection()
     {
@@ -694,7 +703,7 @@ class File extends ModelWithContent
     /**
      * Returns the parent Site object
      *
-     * @return Kirby\Cms\Site
+     * @return \Kirby\Cms\Site
      */
     public function site()
     {
@@ -715,7 +724,7 @@ class File extends ModelWithContent
      * Returns siblings with the same template
      *
      * @param bool $self
-     * @return Kirby\Cms\Files
+     * @return \Kirby\Cms\Files
      */
     public function templateSiblings(bool $self = true)
     {

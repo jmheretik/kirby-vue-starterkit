@@ -1,5 +1,6 @@
 <?php
 
+use Kirby\Toolkit\I18n;
 
 return [
     'props' => [
@@ -50,6 +51,13 @@ return [
          */
         'query' => function (string $query = null) {
             return $query;
+        },
+
+        /**
+         * Enable/disable the search field in the picker
+         */
+        'search' => function (bool $search = true) {
+            return $search;
         },
 
         /**

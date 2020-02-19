@@ -16,7 +16,6 @@ use Kirby\Toolkit\F;
  */
 class Languages extends Collection
 {
-
     /**
      * Creates a new collection with the given language objects
      *
@@ -51,7 +50,7 @@ class Languages extends Collection
      *
      * @internal
      * @param array $props
-     * @return Kirby\Cms\Language
+     * @return \Kirby\Cms\Language
      */
     public function create(array $props)
     {
@@ -61,7 +60,7 @@ class Languages extends Collection
     /**
      * Returns the default language
      *
-     * @return Kirby\Cms\Language|null
+     * @return \Kirby\Cms\Language|null
      */
     public function default()
     {
@@ -73,11 +72,13 @@ class Languages extends Collection
     }
 
     /**
-     * @deprecated 3.0.0  Use `Languages::default()`instead
-     * @return Kirby\Cms\Language|null
+     * @deprecated 3.0.0  Use `Languages::default()` instead
+     * @return \Kirby\Cms\Language|null
      */
     public function findDefault()
     {
+        deprecated('$languages->findDefault() is deprecated, use $languages->default() instead. $languages->findDefault() will be removed in Kirby 3.5.0.');
+
         return $this->default();
     }
 

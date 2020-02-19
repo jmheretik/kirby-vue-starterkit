@@ -18,21 +18,21 @@ use Kirby\Toolkit\Str;
  */
 class Remote
 {
-
     /**
      * @var array
      */
     public static $defaults = [
-        'agent'    => null,
-        'body'     => true,
-        'data'     => [],
-        'encoding' => 'utf-8',
-        'file'     => null,
-        'headers'  => [],
-        'method'   => 'GET',
-        'progress' => null,
-        'test'     => false,
-        'timeout'  => 10,
+        'agent'     => null,
+        'basicAuth' => null,
+        'body'      => true,
+        'data'      => [],
+        'encoding'  => 'utf-8',
+        'file'      => null,
+        'headers'   => [],
+        'method'    => 'GET',
+        'progress'  => null,
+        'test'      => false,
+        'timeout'   => 10,
     ];
 
     /**
@@ -114,7 +114,7 @@ class Remote
     /**
      * Returns the http status code
      *
-     * @return integer|null
+     * @return int|null
      */
     public function code(): ?int
     {
@@ -171,7 +171,22 @@ class Remote
 
         // add all headers
         if (empty($this->options['headers']) === false) {
-            $this->curlopt[CURLOPT_HTTPHEADER] = $this->options['headers'];
+            // convert associative arrays to strings
+            $headers = [];
+            foreach ($this->options['headers'] as $key => $value) {
+                if (is_string($key) === true) {
+                    $headers[] = $key . ': ' . $value;
+                } else {
+                    $headers[] = $value;
+                }
+            }
+
+            $this->curlopt[CURLOPT_HTTPHEADER] = $headers;
+        }
+
+        // add HTTP Basic authentication
+        if (empty($this->options['basicAuth']) === false) {
+            $this->curlopt[CURLOPT_USERPWD] = $this->options['basicAuth'];
         }
 
         // add the user agent
@@ -285,7 +300,7 @@ class Remote
      * Decode the response content
      *
      * @param bool $array decode as array or object
-     * @return array|stdClass
+     * @return array|\stdClass
      */
     public function json(bool $array = true)
     {

@@ -15,7 +15,6 @@ use Closure;
  */
 trait SiteActions
 {
-
     /**
      * Commits a site action, by following these steps
      *
@@ -27,6 +26,7 @@ trait SiteActions
      *
      * @param string $action
      * @param mixed ...$arguments
+     * @param Closure $callback
      * @return mixed
      */
     protected function commit(string $action, array $arguments, Closure $callback)
@@ -60,7 +60,7 @@ trait SiteActions
      * Creates a main page
      *
      * @param array $props
-     * @return Kirby\Cms\Page
+     * @return \Kirby\Cms\Page
      */
     public function createChild(array $props)
     {
@@ -81,11 +81,12 @@ trait SiteActions
      */
     public function purge()
     {
-        $this->children  = null;
-        $this->blueprint = null;
-        $this->files     = null;
-        $this->content   = null;
-        $this->inventory = null;
+        $this->blueprint    = null;
+        $this->children     = null;
+        $this->content      = null;
+        $this->files        = null;
+        $this->inventory    = null;
+        $this->translations = null;
 
         return $this;
     }

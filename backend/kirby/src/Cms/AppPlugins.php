@@ -23,7 +23,6 @@ use Kirby\Toolkit\V;
  */
 trait AppPlugins
 {
-
     /**
      * A list of all registered plugins
      *
@@ -71,6 +70,13 @@ trait AppPlugins
     ];
 
     /**
+     * Cache for system extensions
+     *
+     * @var array
+     */
+    protected static $systemExtensions = null;
+
+    /**
      * Flag when plugins have been loaded
      * to not load them again
      *
@@ -83,7 +89,7 @@ trait AppPlugins
      *
      * @internal
      * @param array $extensions
-     * @param Kirby\Cms\Plugin $plugin The plugin which defined those extensions
+     * @param \Kirby\Cms\Plugin $plugin The plugin which defined those extensions
      * @return array
      */
     public function extend(array $extensions, Plugin $plugin = null): array
@@ -106,7 +112,7 @@ trait AppPlugins
     protected function extendApi($api): array
     {
         if (is_array($api) === true) {
-            if (is_a($api['routes'] ?? [], Closure::class) === true) {
+            if (is_a($api['routes'] ?? [], 'Closure') === true) {
                 $api['routes'] = $api['routes']($this);
             }
 
@@ -254,7 +260,7 @@ trait AppPlugins
     /**
      * Registers markdown component
      *
-     * @param Closure $blueprints
+     * @param Closure $markdown
      * @return Closure
      */
     protected function extendMarkdown(Closure $markdown)
@@ -266,7 +272,7 @@ trait AppPlugins
      * Registers additional options
      *
      * @param array $options
-     * @param Kirby\Cms\Plugin|null $plugin
+     * @param \Kirby\Cms\Plugin|null $plugin
      * @return array
      */
     protected function extendOptions(array $options, Plugin $plugin = null): array
@@ -336,7 +342,7 @@ trait AppPlugins
      */
     protected function extendRoutes($routes): array
     {
-        if (is_a($routes, Closure::class) === true) {
+        if (is_a($routes, 'Closure') === true) {
             $routes = $routes($this);
         }
 
@@ -480,7 +486,7 @@ trait AppPlugins
 
     /**
      * Returns the extensions registry
-
+     *
      * @internal
      * @param string|null $type
      * @return array
@@ -556,6 +562,7 @@ trait AppPlugins
     /**
      * Apply all passed extensions
      *
+     * @param array $props
      * @return void
      */
     protected function extensionsFromProps(array $props)
@@ -570,37 +577,69 @@ trait AppPlugins
      */
     protected function extensionsFromSystem()
     {
-        // Form Field Mixins
-        FormField::$mixins['filepicker'] = include static::$root . '/config/fields/mixins/filepicker.php';
-        FormField::$mixins['min']        = include static::$root . '/config/fields/mixins/min.php';
-        FormField::$mixins['options']    = include static::$root . '/config/fields/mixins/options.php';
-        FormField::$mixins['pagepicker'] = include static::$root . '/config/fields/mixins/pagepicker.php';
-        FormField::$mixins['picker']     = include static::$root . '/config/fields/mixins/picker.php';
-        FormField::$mixins['upload']     = include static::$root . '/config/fields/mixins/upload.php';
-        FormField::$mixins['userpicker'] = include static::$root . '/config/fields/mixins/userpicker.php';
+        // load static extensions only once
+        if (static::$systemExtensions === null) {
+            // Form Field Mixins
+            FormField::$mixins['filepicker'] = include static::$root . '/config/fields/mixins/filepicker.php';
+            FormField::$mixins['min']        = include static::$root . '/config/fields/mixins/min.php';
+            FormField::$mixins['options']    = include static::$root . '/config/fields/mixins/options.php';
+            FormField::$mixins['pagepicker'] = include static::$root . '/config/fields/mixins/pagepicker.php';
+            FormField::$mixins['picker']     = include static::$root . '/config/fields/mixins/picker.php';
+            FormField::$mixins['upload']     = include static::$root . '/config/fields/mixins/upload.php';
+            FormField::$mixins['userpicker'] = include static::$root . '/config/fields/mixins/userpicker.php';
 
-        // Tag Aliases
-        KirbyTag::$aliases = [
-            'youtube' => 'video',
-            'vimeo'   => 'video'
-        ];
+            // Tag Aliases
+            KirbyTag::$aliases = [
+                'youtube' => 'video',
+                'vimeo'   => 'video'
+            ];
 
-        // Field method aliases
-        Field::$aliases = [
-            'bool'    => 'toBool',
-            'esc'     => 'escape',
-            'excerpt' => 'toExcerpt',
-            'float'   => 'toFloat',
-            'h'       => 'html',
-            'int'     => 'toInt',
-            'kt'      => 'kirbytext',
-            'kti'     => 'kirbytextinline',
-            'link'    => 'toLink',
-            'md'      => 'markdown',
-            'sp'      => 'smartypants',
-            'v'       => 'isValid',
-            'x'       => 'xml'
-        ];
+            // Field method aliases
+            Field::$aliases = [
+                'bool'    => 'toBool',
+                'esc'     => 'escape',
+                'excerpt' => 'toExcerpt',
+                'float'   => 'toFloat',
+                'h'       => 'html',
+                'int'     => 'toInt',
+                'kt'      => 'kirbytext',
+                'kti'     => 'kirbytextinline',
+                'link'    => 'toLink',
+                'md'      => 'markdown',
+                'sp'      => 'smartypants',
+                'v'       => 'isValid',
+                'x'       => 'xml'
+            ];
+
+            // blueprint presets
+            PageBlueprint::$presets['pages']   = include static::$root . '/config/presets/pages.php';
+            PageBlueprint::$presets['page']    = include static::$root . '/config/presets/page.php';
+            PageBlueprint::$presets['files']   = include static::$root . '/config/presets/files.php';
+
+            // section mixins
+            Section::$mixins['empty']          = include static::$root . '/config/sections/mixins/empty.php';
+            Section::$mixins['headline']       = include static::$root . '/config/sections/mixins/headline.php';
+            Section::$mixins['help']           = include static::$root . '/config/sections/mixins/help.php';
+            Section::$mixins['layout']         = include static::$root . '/config/sections/mixins/layout.php';
+            Section::$mixins['max']            = include static::$root . '/config/sections/mixins/max.php';
+            Section::$mixins['min']            = include static::$root . '/config/sections/mixins/min.php';
+            Section::$mixins['pagination']     = include static::$root . '/config/sections/mixins/pagination.php';
+            Section::$mixins['parent']         = include static::$root . '/config/sections/mixins/parent.php';
+
+            // section types
+            Section::$types['info']            = include static::$root . '/config/sections/info.php';
+            Section::$types['pages']           = include static::$root . '/config/sections/pages.php';
+            Section::$types['files']           = include static::$root . '/config/sections/files.php';
+            Section::$types['fields']          = include static::$root . '/config/sections/fields.php';
+
+            static::$systemExtensions = [
+                'components'   => include static::$root . '/config/components.php',
+                'blueprints'   => include static::$root . '/config/blueprints.php',
+                'fields'       => include static::$root . '/config/fields.php',
+                'fieldMethods' => include static::$root . '/config/methods.php',
+                'tags'         => include static::$root . '/config/tags.php'
+            ];
+        }
 
         // default cache types
         $this->extendCacheTypes([
@@ -610,32 +649,11 @@ trait AppPlugins
             'memory'    => 'Kirby\Cache\MemoryCache',
         ]);
 
-        $this->extendComponents(include static::$root . '/config/components.php');
-        $this->extendBlueprints(include static::$root . '/config/blueprints.php');
-        $this->extendFields(include static::$root . '/config/fields.php');
-        $this->extendFieldMethods((include static::$root . '/config/methods.php')($this));
-        $this->extendTags(include static::$root . '/config/tags.php');
-
-        // blueprint presets
-        PageBlueprint::$presets['pages']   = include static::$root . '/config/presets/pages.php';
-        PageBlueprint::$presets['page']    = include static::$root . '/config/presets/page.php';
-        PageBlueprint::$presets['files']   = include static::$root . '/config/presets/files.php';
-
-        // section mixins
-        Section::$mixins['empty']          = include static::$root . '/config/sections/mixins/empty.php';
-        Section::$mixins['headline']       = include static::$root . '/config/sections/mixins/headline.php';
-        Section::$mixins['help']           = include static::$root . '/config/sections/mixins/help.php';
-        Section::$mixins['layout']         = include static::$root . '/config/sections/mixins/layout.php';
-        Section::$mixins['max']            = include static::$root . '/config/sections/mixins/max.php';
-        Section::$mixins['min']            = include static::$root . '/config/sections/mixins/min.php';
-        Section::$mixins['pagination']     = include static::$root . '/config/sections/mixins/pagination.php';
-        Section::$mixins['parent']         = include static::$root . '/config/sections/mixins/parent.php';
-
-        // section types
-        Section::$types['info']            = include static::$root . '/config/sections/info.php';
-        Section::$types['pages']           = include static::$root . '/config/sections/pages.php';
-        Section::$types['files']           = include static::$root . '/config/sections/files.php';
-        Section::$types['fields']          = include static::$root . '/config/sections/fields.php';
+        $this->extendComponents(static::$systemExtensions['components']);
+        $this->extendBlueprints(static::$systemExtensions['blueprints']);
+        $this->extendFields(static::$systemExtensions['fields']);
+        $this->extendFieldMethods((static::$systemExtensions['fieldMethods'])($this));
+        $this->extendTags(static::$systemExtensions['tags']);
     }
 
     /**
@@ -643,7 +661,7 @@ trait AppPlugins
      *
      * @param string $name
      * @param array|null $extends If null is passed it will be used as getter. Otherwise as factory.
-     * @return Kirby\Cms\Plugin|null
+     * @return \Kirby\Cms\Plugin|null
      */
     public static function plugin(string $name, array $extends = null)
     {
@@ -658,7 +676,7 @@ trait AppPlugins
         $name   = $plugin->name();
 
         if (isset(static::$plugins[$name]) === true) {
-            throw new DuplicateException('The plugin "'. $name . '" has already been registered');
+            throw new DuplicateException('The plugin "' . $name . '" has already been registered');
         }
 
         return static::$plugins[$name] = $plugin;
@@ -701,7 +719,6 @@ trait AppPlugins
     protected function pluginsLoader(): array
     {
         $root   = $this->root('plugins');
-        $kirby  = $this;
         $loaded = [];
 
         foreach (Dir::read($root) as $dirname) {
@@ -709,14 +726,10 @@ trait AppPlugins
                 continue;
             }
 
-            if (is_dir($root . '/' . $dirname) === false) {
-                continue;
-            }
-
             $dir   = $root . '/' . $dirname;
             $entry = $dir . '/index.php';
 
-            if (file_exists($entry) === false) {
+            if (is_dir($dir) !== true || is_file($entry) !== true) {
                 continue;
             }
 

@@ -17,7 +17,6 @@ use Kirby\Exception\PermissionException;
  */
 class ContentLock
 {
-
     /**
      * Lock data
      *
@@ -33,7 +32,7 @@ class ContentLock
     protected $model;
 
     /**
-     * @param Kirby\Cms\ModelWithContent $model
+     * @param \Kirby\Cms\ModelWithContent $model
      */
     public function __construct(ModelWithContent $model)
     {
@@ -80,13 +79,13 @@ class ContentLock
             $data['user'] !== $this->user()->id() &&
             $user = $this->kirby()->user($data['user'])
         ) {
-            $time = intval($data['time']);
+            $time = (int)($data['time']);
 
             return [
                 'user'       => $user->id(),
                 'email'      => $user->email(),
                 'time'       => $time,
-                'unlockable' => $time + $this->kirby()->option('lock.duration', 60 * 2) <= time()
+                'unlockable' => ($time + 60) <= time()
             ];
         }
 
@@ -124,7 +123,7 @@ class ContentLock
     /**
      * Returns the app instance
      *
-     * @return Kirby\Cms\App
+     * @return \Kirby\Cms\App
      */
     protected function kirby(): App
     {
@@ -145,7 +144,10 @@ class ContentLock
 
         // check if lock was set by another user
         if ($this->data['lock']['user'] !== $this->user()->id()) {
-            throw new LogicException('The content lock can only be removed by the user who created it. Use unlock instead.', 409);
+            throw new LogicException([
+                'fallback' => 'The content lock can only be removed by the user who created it. Use unlock instead.',
+                'httpCode' => 409
+            ]);
         }
 
         // remove lock
@@ -201,7 +203,7 @@ class ContentLock
      * Returns currently authenticated user;
      * throws exception if none is authenticated
      *
-     * @return Kirby\Cms\User
+     * @return \Kirby\Cms\User
      */
     protected function user(): User
     {

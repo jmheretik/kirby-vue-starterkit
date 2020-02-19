@@ -1,8 +1,7 @@
 <?php
 
 use Kirby\Cms\File;
-use Kirby\Toolkit\A;
-use Kirby\Toolkit\Str;
+use Kirby\Toolkit\I18n;
 
 return [
     'mixins' => [
@@ -16,6 +15,12 @@ return [
         'parent',
     ],
     'props' => [
+        /**
+         * Enables/disables reverse sorting
+         */
+        'flip' => function (bool $flip = false) {
+            return $flip;
+        },
         /**
          * Image options to control the source and look of file previews
          */
@@ -72,9 +77,6 @@ return [
 
             return null;
         },
-        'dragTextType' => function () {
-            return (option('panel')['kirbytext'] ?? true) ? 'kirbytext' : 'markdown';
-        },
         'parent' => function () {
             return $this->parentModel();
         },
@@ -84,7 +86,12 @@ return [
             if ($this->sortBy) {
                 $files = $files->sortBy(...$files::sortArgs($this->sortBy));
             } elseif ($this->sortable === true) {
-                $files = $files->sortBy('sort', 'asc');
+                $files = $files->sortBy('sort', 'asc', 'filename', 'asc');
+            }
+
+            // flip
+            if ($this->flip === true) {
+                $files = $files->flip();
             }
 
             // apply the default pagination
@@ -106,15 +113,17 @@ return [
                 $image = $file->panelImage($this->image);
 
                 $data[] = [
-                    'dragText' => $file->dragText($this->dragTextType, $dragTextAbsolute),
+                    'dragText' => $file->dragText('auto', $dragTextAbsolute),
+                    'extension' => $file->extension(),
                     'filename' => $file->filename(),
                     'id'       => $file->id(),
-                    'text'     => $file->toString($this->text),
-                    'info'     => $file->toString($this->info ?? false),
                     'icon'     => $file->panelIcon($image),
                     'image'    => $image,
+                    'info'     => $file->toString($this->info ?? false),
                     'link'     => $file->panelUrl(true),
+                    'mime'     => $file->mime(),
                     'parent'   => $file->parent()->panelPath(),
+                    'text'     => $file->toString($this->text),
                     'url'      => $file->url(),
                 ];
             }
@@ -169,6 +178,10 @@ return [
             }
 
             if ($this->sortBy !== null) {
+                return false;
+            }
+
+            if ($this->flip === true) {
                 return false;
             }
 

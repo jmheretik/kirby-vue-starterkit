@@ -2,8 +2,6 @@
 
 namespace Kirby\Cms;
 
-use Kirby\Toolkit\Dir;
-
 /**
  * Extension of the Collection class that
  * introduces `Roles::factory()` to convert an
@@ -20,6 +18,51 @@ use Kirby\Toolkit\Dir;
  */
 class Roles extends Collection
 {
+    /**
+     * Returns a filtered list of all
+     * roles that can be created by the
+     * current user
+     *
+     * @return self
+     */
+    public function canBeChanged()
+    {
+        if (App::instance()->user()) {
+            return $this->filter(function ($role) {
+                $newUser = new User([
+                    'email' => 'test@getkirby.com',
+                    'role'  => $role->id()
+                ]);
+
+                return $newUser->permissions()->can('changeRole');
+            });
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns a filtered list of all
+     * roles that can be created by the
+     * current user
+     *
+     * @return self
+     */
+    public function canBeCreated()
+    {
+        if (App::instance()->user()) {
+            return $this->filter(function ($role) {
+                $newUser = new User([
+                    'email' => 'test@getkirby.com',
+                    'role'  => $role->id()
+                ]);
+
+                return $newUser->permissions()->can('create');
+            });
+        }
+
+        return $this;
+    }
 
     /**
      * @param array $roles
@@ -28,7 +71,7 @@ class Roles extends Collection
      */
     public static function factory(array $roles, array $inject = [])
     {
-        $collection = new static;
+        $collection = new static();
 
         // read all user blueprints
         foreach ($roles as $props) {
@@ -52,7 +95,7 @@ class Roles extends Collection
      */
     public static function load(string $root = null, array $inject = [])
     {
-        $roles = new static;
+        $roles = new static();
 
         // load roles from plugins
         foreach (App::instance()->extensions('blueprints') as $blueprintName => $blueprint) {
@@ -71,12 +114,14 @@ class Roles extends Collection
 
         // load roles from directory
         if ($root !== null) {
-            foreach (Dir::read($root) as $filename) {
+            foreach (glob($root . '/*.yml') as $file) {
+                $filename = basename($file);
+
                 if ($filename === 'default.yml') {
                     continue;
                 }
 
-                $role = Role::load($root . '/' . $filename, $inject);
+                $role = Role::load($file, $inject);
                 $roles->set($role->id(), $role);
             }
         }

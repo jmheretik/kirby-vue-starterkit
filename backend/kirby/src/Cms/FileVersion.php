@@ -15,7 +15,9 @@ use Kirby\Toolkit\Properties;
  */
 class FileVersion
 {
-    use FileFoundation;
+    use FileFoundation {
+        toArray as parentToArray;
+    }
     use Properties;
 
     protected $modifications;
@@ -37,7 +39,7 @@ class FileVersion
             return $this->asset()->$method(...$arguments);
         }
 
-        if (is_a($this->original(), File::class) === true) {
+        if (is_a($this->original(), 'Kirby\Cms\File') === true) {
             // content fields
             return $this->original()->content()->get($method, $arguments);
         }
@@ -49,7 +51,7 @@ class FileVersion
     }
 
     /**
-     * @return Kirby\Cms\App
+     * @return \Kirby\Cms\App
      */
     public function kirby()
     {
@@ -89,7 +91,7 @@ class FileVersion
      */
     public function toArray(): array
     {
-        $array = array_merge(parent::toArray(), [
+        $array = array_merge($this->parentToArray(), [
             'modifications' => $this->modifications(),
         ]);
 

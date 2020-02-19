@@ -7,35 +7,39 @@
 
   <title>Kirby Panel</title>
 
-  <link rel="stylesheet" href="<?= $assetUrl ?>/css/app.css">
-  <link rel="stylesheet" href="<?= $pluginCss ?>">
+  <link nonce="<?= $nonce ?>" rel="stylesheet" href="<?= $assetUrl ?>/css/app.css">
+  <link nonce="<?= $nonce ?>" rel="stylesheet" href="<?= $pluginCss ?>">
 
-  <?php if (isset($config['css'])) : ?>
-    <link rel="stylesheet" href="<?= Url::to($config['css']) ?>">
+  <?php if ($customCss) : ?>
+  <link nonce="<?= $nonce ?>" rel="stylesheet" href="<?= $customCss ?>">
   <?php endif ?>
 
-  <link rel="apple-touch-icon" href="<?= $assetUrl ?>/apple-touch-icon.png" />
-  <link rel="shortcut icon" href="<?= $assetUrl ?>/favicon.png">
+  <link nonce="<?= $nonce ?>" rel="apple-touch-icon" href="<?= $assetUrl ?>/apple-touch-icon.png" />
+  <link nonce="<?= $nonce ?>" rel="shortcut icon" href="<?= $assetUrl ?>/favicon.png">
 
   <base href="<?= $panelUrl ?>">
 </head>
 <body>
-  <?= $icons ?>
+  <svg aria-hidden="true" class="k-icons" xmlns="http://www.w3.org/2000/svg" overflow="hidden" nonce="<?= $nonce ?>">
+    <defs />
+  </svg>
+
   <div id="app"></div>
 
   <noscript>
     Please enable JavaScript in your browser
   </noscript>
 
-  <script>window.panel = <?= json_encode($options, JSON_UNESCAPED_SLASHES) ?></script>
+  <?= $icons ?>
 
-  <script src="<?= $assetUrl ?>/js/plugins.js" defer></script>
-  <script src="<?= $assetUrl ?>/js/vendor.js" defer></script>
-  <script src="<?= $pluginJs ?>" defer></script>
+  <script nonce="<?= $nonce ?>">window.panel = <?= json_encode($options, JSON_UNESCAPED_SLASHES) ?></script>
+  <script nonce="<?= $nonce ?>" src="<?= $assetUrl ?>/js/plugins.js" defer></script>
+  <script nonce="<?= $nonce ?>" src="<?= $assetUrl ?>/js/vendor.js" defer></script>
+  <script nonce="<?= $nonce ?>" src="<?= $pluginJs ?>" defer></script>
   <?php if (isset($config['js'])) : ?>
-    <script src="<?= Url::to($config['js']) ?>" defer></script>
+    <script nonce="<?= $nonce ?>" src="<?= Url::to($config['js']) ?>" defer></script>
   <?php endif ?>
-  <script src="<?= $assetUrl ?>/js/app.js" defer></script>
+  <script nonce="<?= $nonce ?>" src="<?= $assetUrl ?>/js/app.js" defer></script>
 
 </body>
 </html>

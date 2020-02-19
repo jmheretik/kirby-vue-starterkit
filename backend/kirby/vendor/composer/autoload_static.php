@@ -7,16 +7,13 @@ namespace Composer\Autoload;
 class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
 {
     public static $files = array (
+        '7e9bd612cc444b3eed788ebbe46263a0' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/autoload.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '04c6c5c2f7095ccf6c481d3e53e1776f' => __DIR__ . '/..' . '/mustangostang/spyc/Spyc.php',
         'f864ae44e8154e5ff6f4eec32f46d37f' => __DIR__ . '/../..' . '/config/setup.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'Z' => 
-        array (
-            'Zend\\Escaper\\' => 13,
-        ),
         'W' => 
         array (
             'Whoops\\' => 7,
@@ -34,6 +31,11 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
             'Psr\\Log\\' => 8,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'L' => 
+        array (
+            'Laminas\\ZendFrameworkBridge\\' => 28,
+            'Laminas\\Escaper\\' => 16,
+        ),
         'K' => 
         array (
             'Kirby\\' => 6,
@@ -41,10 +43,6 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
     );
 
     public static $prefixDirsPsr4 = array (
-        'Zend\\Escaper\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-escaper/src',
-        ),
         'Whoops\\' => 
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
@@ -64,6 +62,14 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Laminas\\ZendFrameworkBridge\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src',
+        ),
+        'Laminas\\Escaper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laminas/laminas-escaper/src',
         ),
         'Kirby\\' => 
         array (
@@ -101,6 +107,8 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'Kirby\\Cache\\Cache' => __DIR__ . '/../..' . '/src/Cache/Cache.php',
         'Kirby\\Cache\\FileCache' => __DIR__ . '/../..' . '/src/Cache/FileCache.php',
         'Kirby\\Cache\\MemCached' => __DIR__ . '/../..' . '/src/Cache/MemCached.php',
+        'Kirby\\Cache\\MemoryCache' => __DIR__ . '/../..' . '/src/Cache/MemoryCache.php',
+        'Kirby\\Cache\\NullCache' => __DIR__ . '/../..' . '/src/Cache/NullCache.php',
         'Kirby\\Cache\\Value' => __DIR__ . '/../..' . '/src/Cache/Value.php',
         'Kirby\\Cms\\Api' => __DIR__ . '/../..' . '/src/Cms/Api.php',
         'Kirby\\Cms\\App' => __DIR__ . '/../..' . '/src/Cms/App.php',
@@ -115,6 +123,8 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'Kirby\\Cms\\Collection' => __DIR__ . '/../..' . '/src/Cms/Collection.php',
         'Kirby\\Cms\\Collections' => __DIR__ . '/../..' . '/src/Cms/Collections.php',
         'Kirby\\Cms\\Content' => __DIR__ . '/../..' . '/src/Cms/Content.php',
+        'Kirby\\Cms\\ContentLock' => __DIR__ . '/../..' . '/src/Cms/ContentLock.php',
+        'Kirby\\Cms\\ContentLocks' => __DIR__ . '/../..' . '/src/Cms/ContentLocks.php',
         'Kirby\\Cms\\ContentTranslation' => __DIR__ . '/../..' . '/src/Cms/ContentTranslation.php',
         'Kirby\\Cms\\Dir' => __DIR__ . '/../..' . '/src/Cms/Dir.php',
         'Kirby\\Cms\\Email' => __DIR__ . '/../..' . '/src/Cms/Email.php',
@@ -125,6 +135,7 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'Kirby\\Cms\\FileFoundation' => __DIR__ . '/../..' . '/src/Cms/FileFoundation.php',
         'Kirby\\Cms\\FileModifications' => __DIR__ . '/../..' . '/src/Cms/FileModifications.php',
         'Kirby\\Cms\\FilePermissions' => __DIR__ . '/../..' . '/src/Cms/FilePermissions.php',
+        'Kirby\\Cms\\FilePicker' => __DIR__ . '/../..' . '/src/Cms/FilePicker.php',
         'Kirby\\Cms\\FileRules' => __DIR__ . '/../..' . '/src/Cms/FileRules.php',
         'Kirby\\Cms\\FileVersion' => __DIR__ . '/../..' . '/src/Cms/FileVersion.php',
         'Kirby\\Cms\\Filename' => __DIR__ . '/../..' . '/src/Cms/Filename.php',
@@ -139,6 +150,9 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'Kirby\\Cms\\KirbyTag' => __DIR__ . '/../..' . '/src/Cms/KirbyTag.php',
         'Kirby\\Cms\\KirbyTags' => __DIR__ . '/../..' . '/src/Cms/KirbyTags.php',
         'Kirby\\Cms\\Language' => __DIR__ . '/../..' . '/src/Cms/Language.php',
+        'Kirby\\Cms\\LanguageRouter' => __DIR__ . '/../..' . '/src/Cms/LanguageRouter.php',
+        'Kirby\\Cms\\LanguageRoutes' => __DIR__ . '/../..' . '/src/Cms/LanguageRoutes.php',
+        'Kirby\\Cms\\LanguageRules' => __DIR__ . '/../..' . '/src/Cms/LanguageRules.php',
         'Kirby\\Cms\\Languages' => __DIR__ . '/../..' . '/src/Cms/Languages.php',
         'Kirby\\Cms\\Media' => __DIR__ . '/../..' . '/src/Cms/Media.php',
         'Kirby\\Cms\\Model' => __DIR__ . '/../..' . '/src/Cms/Model.php',
@@ -151,6 +165,7 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'Kirby\\Cms\\PageActions' => __DIR__ . '/../..' . '/src/Cms/PageActions.php',
         'Kirby\\Cms\\PageBlueprint' => __DIR__ . '/../..' . '/src/Cms/PageBlueprint.php',
         'Kirby\\Cms\\PagePermissions' => __DIR__ . '/../..' . '/src/Cms/PagePermissions.php',
+        'Kirby\\Cms\\PagePicker' => __DIR__ . '/../..' . '/src/Cms/PagePicker.php',
         'Kirby\\Cms\\PageRules' => __DIR__ . '/../..' . '/src/Cms/PageRules.php',
         'Kirby\\Cms\\PageSiblings' => __DIR__ . '/../..' . '/src/Cms/PageSiblings.php',
         'Kirby\\Cms\\Pages' => __DIR__ . '/../..' . '/src/Cms/Pages.php',
@@ -158,6 +173,7 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'Kirby\\Cms\\Panel' => __DIR__ . '/../..' . '/src/Cms/Panel.php',
         'Kirby\\Cms\\PanelPlugins' => __DIR__ . '/../..' . '/src/Cms/PanelPlugins.php',
         'Kirby\\Cms\\Permissions' => __DIR__ . '/../..' . '/src/Cms/Permissions.php',
+        'Kirby\\Cms\\Picker' => __DIR__ . '/../..' . '/src/Cms/Picker.php',
         'Kirby\\Cms\\Plugin' => __DIR__ . '/../..' . '/src/Cms/Plugin.php',
         'Kirby\\Cms\\PluginAssets' => __DIR__ . '/../..' . '/src/Cms/PluginAssets.php',
         'Kirby\\Cms\\R' => __DIR__ . '/../..' . '/src/Cms/R.php',
@@ -184,6 +200,7 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'Kirby\\Cms\\UserActions' => __DIR__ . '/../..' . '/src/Cms/UserActions.php',
         'Kirby\\Cms\\UserBlueprint' => __DIR__ . '/../..' . '/src/Cms/UserBlueprint.php',
         'Kirby\\Cms\\UserPermissions' => __DIR__ . '/../..' . '/src/Cms/UserPermissions.php',
+        'Kirby\\Cms\\UserPicker' => __DIR__ . '/../..' . '/src/Cms/UserPicker.php',
         'Kirby\\Cms\\UserRules' => __DIR__ . '/../..' . '/src/Cms/UserRules.php',
         'Kirby\\Cms\\Users' => __DIR__ . '/../..' . '/src/Cms/Users.php',
         'Kirby\\Cms\\Visitor' => __DIR__ . '/../..' . '/src/Cms/Visitor.php',
@@ -208,6 +225,7 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'Kirby\\Email\\PHPMailer' => __DIR__ . '/../..' . '/src/Email/PHPMailer.php',
         'Kirby\\Exception\\BadMethodCallException' => __DIR__ . '/../..' . '/src/Exception/BadMethodCallException.php',
         'Kirby\\Exception\\DuplicateException' => __DIR__ . '/../..' . '/src/Exception/DuplicateException.php',
+        'Kirby\\Exception\\ErrorPageException' => __DIR__ . '/../..' . '/src/Exception/ErrorPageException.php',
         'Kirby\\Exception\\Exception' => __DIR__ . '/../..' . '/src/Exception/Exception.php',
         'Kirby\\Exception\\InvalidArgumentException' => __DIR__ . '/../..' . '/src/Exception/InvalidArgumentException.php',
         'Kirby\\Exception\\LogicException' => __DIR__ . '/../..' . '/src/Exception/LogicException.php',
@@ -284,6 +302,15 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'Kirby\\Toolkit\\V' => __DIR__ . '/../..' . '/src/Toolkit/V.php',
         'Kirby\\Toolkit\\View' => __DIR__ . '/../..' . '/src/Toolkit/View.php',
         'Kirby\\Toolkit\\Xml' => __DIR__ . '/../..' . '/src/Toolkit/Xml.php',
+        'Laminas\\Escaper\\Escaper' => __DIR__ . '/..' . '/laminas/laminas-escaper/src/Escaper.php',
+        'Laminas\\Escaper\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/laminas/laminas-escaper/src/Exception/ExceptionInterface.php',
+        'Laminas\\Escaper\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/laminas/laminas-escaper/src/Exception/InvalidArgumentException.php',
+        'Laminas\\Escaper\\Exception\\RuntimeException' => __DIR__ . '/..' . '/laminas/laminas-escaper/src/Exception/RuntimeException.php',
+        'Laminas\\ZendFrameworkBridge\\Autoloader' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/Autoloader.php',
+        'Laminas\\ZendFrameworkBridge\\ConfigPostProcessor' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/ConfigPostProcessor.php',
+        'Laminas\\ZendFrameworkBridge\\Module' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/Module.php',
+        'Laminas\\ZendFrameworkBridge\\Replacements' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/Replacements.php',
+        'Laminas\\ZendFrameworkBridge\\RewriteRules' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/RewriteRules.php',
         'League\\ColorExtractor\\Color' => __DIR__ . '/..' . '/league/color-extractor/src/League/ColorExtractor/Color.php',
         'League\\ColorExtractor\\ColorExtractor' => __DIR__ . '/..' . '/league/color-extractor/src/League/ColorExtractor/ColorExtractor.php',
         'League\\ColorExtractor\\Palette' => __DIR__ . '/..' . '/league/color-extractor/src/League/ColorExtractor/Palette.php',
@@ -330,10 +357,6 @@ class ComposerStaticInit12091bebabd81c9aba88b2aeec22c8d7
         'Whoops\\Util\\Misc' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/Misc.php',
         'Whoops\\Util\\SystemFacade' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/SystemFacade.php',
         'Whoops\\Util\\TemplateHelper' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/TemplateHelper.php',
-        'Zend\\Escaper\\Escaper' => __DIR__ . '/..' . '/zendframework/zend-escaper/src/Escaper.php',
-        'Zend\\Escaper\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/zendframework/zend-escaper/src/Exception/ExceptionInterface.php',
-        'Zend\\Escaper\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/zendframework/zend-escaper/src/Exception/InvalidArgumentException.php',
-        'Zend\\Escaper\\Exception\\RuntimeException' => __DIR__ . '/..' . '/zendframework/zend-escaper/src/Exception/RuntimeException.php',
         'claviska\\SimpleImage' => __DIR__ . '/..' . '/claviska/simpleimage/src/claviska/SimpleImage.php',
     );
 

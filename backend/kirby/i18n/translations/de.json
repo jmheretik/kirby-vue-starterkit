@@ -23,6 +23,7 @@
 
   "delete": "L\u00f6schen",
   "dimensions": "Maße",
+  "disabled": "Gesperrt",
   "discard": "Verwerfen",
   "download": "Download",
   "duplicate": "Duplizieren",
@@ -37,6 +38,7 @@
 
   "error.access.login": "Ungültige Zugangsdaten",
   "error.access.panel": "Du hast keinen Zugang zum Panel",
+  "error.access.view": "Du hast keinen Zugriff auf diesen Teil des Panels",
 
   "error.avatar.create.fail": "Das Profilbild konnte nicht hochgeladen werden",
   "error.avatar.delete.fail": "Das Profilbild konnte nicht gel\u00f6scht werden",
@@ -51,6 +53,7 @@
 
   "error.field.converter.invalid": "Ungültiger Konverter:  \"{converter}\"",
 
+  "error.file.changeName.empty": "Bitte gib einen Namen an",
   "error.file.changeName.permission":
     "Du darfst den Dateinamen von \"{filename}\" nicht ändern",
   "error.file.duplicate": "Eine Datei mit dem Dateinamen \"{filename}\" besteht bereits",
@@ -58,13 +61,21 @@
     "Verbotene Dateiendung \"{extension}\"",
   "error.file.extension.missing":
     "Du kannst keine Dateien ohne Dateiendung hochladen",
+  "error.file.maxheight": "Die Bildhöhe darf {height} Pixel nicht überschreiten",
+  "error.file.maxsize": "Die Datei ist zu groß",
+  "error.file.maxwidth": "Die Bildbreite darf {height} Pixel nicht überschreiten",
   "error.file.mime.differs":
     "Die Datei muss den Medientyp \"{mime}\" haben.",
   "error.file.mime.forbidden": "Der Medientyp \"{mime}\"  ist nicht erlaubt",
+  "error.file.mime.invalid": "Ungültiger Dateityp: {mime}",
   "error.file.mime.missing":
     "Der Medientyp für \"{filename}\" konnte nicht erkannt werden",
+  "error.file.minheight": "Die Bildhöhe muss mindestens {height} Pixel betragen",
+  "error.file.minsize": "Die Datei ist zu klein",
+  "error.file.minwidth": "Die Bildbreite muss mindestens {height} Pixel betragen",
   "error.file.name.missing": "Bitte gib einen Dateinamen an",
   "error.file.notFound": "Die Datei \"{filename}\" konnte nicht gefunden werden",
+  "error.file.orientation": "Das Bildformat ist ungültig. Erwartetes Format: \"{orientation}\"",
   "error.file.type.forbidden": "Du kannst keinen {type}-Dateien hochladen",
   "error.file.undefined": "Die Datei konnte nicht gefunden werden",
 
@@ -135,6 +146,7 @@
   "error.section.notLoaded": "Der Bereich \"{name}\" konnte nicht geladen werden",
   "error.section.type.invalid": "Der Bereichstyp \"{type}\" ist nicht gültig",
 
+  "error.site.changeTitle.empty": "Bitte gib einen Titel an",
   "error.site.changeTitle.permission":
     "Du kannst den Titel der Seite nicht ändern",
   "error.site.update.permission": "Du darfst die Seite nicht editieren",
@@ -153,6 +165,8 @@
     "Die Rolle des letzten Administrators kann nicht geändert werden",
   "error.user.changeRole.permission":
     "Du kannst die Rolle für den Benutzer \"{name}\" nicht ändern",
+  "error.user.changeRole.toAdmin":
+    "Du darfst die Admin Rolle nicht an andere Benutzer vergeben",
   "error.user.create.permission": "Du kannst diesen Benutzer nicht anlegen",
   "error.user.delete": "Der Benutzer \"{name}\" konnte nicht gelöscht werden",
   "error.user.delete.lastAdmin": "Du kannst den letzten Admin nicht l\u00f6schen",
@@ -169,7 +183,6 @@
   "error.user.password.notSame": "Die Passwörter stimmen nicht überein",
   "error.user.password.undefined": "Der Benutzer hat kein Passwort",
   "error.user.role.invalid": "Bitte gib eine gültige Rolle an",
-  "error.user.undefined": "Der Benutzer wurde nicht gefunden",
   "error.user.update.permission":
     "Du darfst den den Benutzer \"{name}\" nicht editieren",
 
@@ -218,6 +231,7 @@
   "error.validation.time": "Bitte gib eine gültige Uhrzeit ein",
   "error.validation.url": "Bitte gib eine gültige URL ein",
 
+  "field.required": "Das Feld ist Pflicht",
   "field.files.empty": "Keine Dateien ausgewählt",
   "field.pages.empty": "Keine Seiten ausgewählt",
   "field.structure.delete.confirm": "Willst du diesen Eintrag wirklich l\u00f6schen?",
@@ -290,6 +304,7 @@
   "loading": "Laden",
 
   "lock.unsaved": "Ungespeicherte Änderungen",
+  "lock.unsaved.empty": "Keine ungespeicherten Änderungen",
   "lock.isLocked": "Ungespeicherte Änderungen von <strong>{email}</strong>",
   "lock.file.isLocked": "Die Datei wird von {email} bearbeitet und kann nicht geändert werden.",
   "lock.page.isLocked": "Die Seite wird von {email} bearbeitet und kann nicht geändert werden.",
@@ -363,6 +378,8 @@
   "pages.status.listed": "Veröffentlicht",
   "pages.status.unlisted": "Ungelistet",
 
+  "pagination.page": "Seite",
+
   "password": "Passwort",
   "pixel": "Pixel",
   "prev": "Vorheriger Eintrag",
@@ -383,6 +400,9 @@
 
   "save": "Speichern",
   "search": "Suchen",
+
+  "section.required": "Der Bereich ist Pflicht",
+
   "select": "Auswählen",
   "settings": "Einstellungen",
   "size": "Größe",
@@ -410,8 +430,20 @@
   "translation.author": "Kirby Team",
   "translation.direction": "ltr",
   "translation.name": "Deutsch",
+  "translation.locale": "de_DE",
 
   "upload": "Hochladen",
+  "upload.error.cantMove": "Die Datei konnte nicht an ihren Zielort bewegt werden",
+  "upload.error.cantWrite": "Die Datei konnte nicht auf der Festplatte gespeichert werden",
+  "upload.error.default": "Die Datei konnte nicht hochgeladen werden",
+  "upload.error.extension": "Der Dateiupload wurde durch eine Erweiterung verhindert",
+  "upload.error.formSize": "Die Datei ist größer als die MAX_FILE_SIZE Einstellung im Formular",
+  "upload.error.iniPostSize": "Die Datei ist größer als die post_max_size Einstellung in der php.ini",
+  "upload.error.iniSize": "Die Datei ist größer als die upload_max_filesize Einstellung in der php.ini",
+  "upload.error.noFile": "Es wurde keine Datei hochgeladen",
+  "upload.error.noFiles": "Es wurden keine Dateien hochgeladen",
+  "upload.error.partial": "Die Datei wurde nur teilweise hochgeladen",
+  "upload.error.tmpDir": "Der temporäre Ordner für den Dateiupload existiert leider nicht",
   "upload.errors": "Fehler",
   "upload.progress": "Hochladen …",
 

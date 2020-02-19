@@ -5,7 +5,6 @@ namespace Kirby\Cms;
 use Exception;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\NotFoundException;
-use Kirby\Exception\PermissionException;
 use Kirby\Session\Session;
 use Kirby\Toolkit\F;
 use Kirby\Toolkit\Str;
@@ -140,7 +139,7 @@ class User extends ModelWithContent
      *
      * @return array
      */
-    public function __debuginfo(): array
+    public function __debugInfo(): array
     {
         return array_merge($this->toArray(), [
             'avatar'  => $this->avatar(),
@@ -168,7 +167,7 @@ class User extends ModelWithContent
     /**
      * Returns the File object for the avatar or null
      *
-     * @return Kirby\Cms\File|null
+     * @return \Kirby\Cms\File|null
      */
     public function avatar()
     {
@@ -178,7 +177,7 @@ class User extends ModelWithContent
     /**
      * Returns the UserBlueprint object
      *
-     * @return Kirby\Cms\UserBlueprint
+     * @return \Kirby\Cms\UserBlueprint
      */
     public function blueprint()
     {
@@ -248,7 +247,7 @@ class User extends ModelWithContent
     /**
      * Checks if the user exists
      *
-     * @return boolean
+     * @return bool
      */
     public function exists(): bool
     {
@@ -260,6 +259,7 @@ class User extends ModelWithContent
      * takes User models into account.
      *
      * @internal
+     * @param mixed $props
      * @return self
      */
     public static function factory($props)
@@ -272,7 +272,8 @@ class User extends ModelWithContent
     }
 
     /**
-     * Hashes user password
+     * Hashes the user's password unless it is `null`,
+     * which will leave it as `null`
      *
      * @internal
      * @param string|null $password
@@ -281,11 +282,7 @@ class User extends ModelWithContent
     public static function hashPassword($password): ?string
     {
         if ($password !== null) {
-            $info = password_get_info($password);
-
-            if ($info['algo'] === 0) {
-                $password = password_hash($password, PASSWORD_DEFAULT);
-            }
+            $password = password_hash($password, PASSWORD_DEFAULT);
         }
 
         return $password;
@@ -326,7 +323,7 @@ class User extends ModelWithContent
     /**
      * Compares the current object with the given user object
      *
-     * @param Kirby\Cms\User|null $user
+     * @param \Kirby\Cms\User|null $user
      * @return bool
      */
     public function is(User $user = null): bool
@@ -341,7 +338,7 @@ class User extends ModelWithContent
     /**
      * Checks if this user has the admin role
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdmin(): bool
     {
@@ -352,7 +349,7 @@ class User extends ModelWithContent
      * Checks if the current user is the virtual
      * Kirby user
      *
-     * @return boolean
+     * @return bool
      */
     public function isKirby(): bool
     {
@@ -362,7 +359,7 @@ class User extends ModelWithContent
     /**
      * Checks if the current user is this user
      *
-     * @return boolean
+     * @return bool
      */
     public function isLoggedIn(): bool
     {
@@ -373,7 +370,7 @@ class User extends ModelWithContent
      * Checks if the user is the last one
      * with the admin role
      *
-     * @return boolean
+     * @return bool
      */
     public function isLastAdmin(): bool
     {
@@ -383,7 +380,7 @@ class User extends ModelWithContent
     /**
      * Checks if the user is the last user
      *
-     * @return boolean
+     * @return bool
      */
     public function isLastUser(): bool
     {
@@ -404,10 +401,10 @@ class User extends ModelWithContent
      * Logs the user in
      *
      * @param string $password
-     * @param Kirby\Session\Session|array $session Session options or session object to set the user in
+     * @param \Kirby\Session\Session|array $session Session options or session object to set the user in
      * @return bool
      *
-     * @throws PermissionException If the password is not valid
+     * @throws \Kirby\Exception\PermissionException If the password is not valid
      */
     public function login(string $password, $session = null): bool
     {
@@ -420,35 +417,53 @@ class User extends ModelWithContent
     /**
      * Logs the user in without checking the password
      *
-     * @param Kirby\Session\Session|array $session Session options or session object to set the user in
+     * @param \Kirby\Session\Session|array $session Session options or session object to set the user in
      * @return void
      */
     public function loginPasswordless($session = null): void
     {
+        $kirby = $this->kirby();
+
         $session = $this->sessionFromOptions($session);
+
+        $kirby->trigger('user.login:before', $this, $session);
 
         $session->regenerateToken(); // privilege change
         $session->data()->set('user.id', $this->id());
+        $this->kirby()->auth()->setUser($this);
+
+        $kirby->trigger('user.login:after', $this, $session);
     }
 
     /**
      * Logs the user out
      *
-     * @param Kirby\Session\Session|array $session Session options or session object to unset the user in
+     * @param \Kirby\Session\Session|array $session Session options or session object to unset the user in
      * @return void
      */
     public function logout($session = null): void
     {
+        $kirby   = $this->kirby();
         $session = $this->sessionFromOptions($session);
 
+        $kirby->trigger('user.logout:before', $this, $session);
+
+        // remove the user from the session for future requests
         $session->data()->remove('user.id');
+
+        // clear the cached user object from the app state of the current request
+        $this->kirby()->auth()->flush();
 
         if ($session->data()->get() === []) {
             // session is now empty, we might as well destroy it
             $session->destroy();
+
+            $kirby->trigger('user.logout:after', $this, null);
         } else {
             // privilege change
             $session->regenerateToken();
+
+            $kirby->trigger('user.logout:after', $this, $session);
         }
     }
 
@@ -480,7 +495,7 @@ class User extends ModelWithContent
      * @internal
      * @param string $name
      * @param array $props
-     * @return Kirby\Cms\User
+     * @return \Kirby\Cms\User
      */
     public static function model(string $name, array $props = [])
     {
@@ -515,7 +530,7 @@ class User extends ModelWithContent
     /**
      * Returns the user's name
      *
-     * @return Kirby\Cms\Field
+     * @return \Kirby\Cms\Field
      */
     public function name()
     {
@@ -563,7 +578,7 @@ class User extends ModelWithContent
      *
      * @internal
      * @param string|null $query
-     * @return Kirby\Cms\File|Kirby\Cms\Asset|null
+     * @return \Kirby\Cms\File|\Kirby\Cms\Asset|null
      */
     protected function panelImageSource(string $query = null)
     {
@@ -640,7 +655,7 @@ class User extends ModelWithContent
     }
 
     /**
-     * @return Kirby\Cms\UserPermissions
+     * @return \Kirby\Cms\UserPermissions
      */
     public function permissions()
     {
@@ -650,7 +665,7 @@ class User extends ModelWithContent
     /**
      * Returns the user role
      *
-     * @return Kirby\Cms\Role
+     * @return \Kirby\Cms\Role
      */
     public function role()
     {
@@ -681,7 +696,7 @@ class User extends ModelWithContent
      * Returns the UserRules class to
      * validate any important action.
      *
-     * @return Kirby\Cms\UserRules
+     * @return \Kirby\Cms\UserRules
      */
     protected function rules()
     {
@@ -755,7 +770,7 @@ class User extends ModelWithContent
     }
 
     /**
-     * Sets and hashes a new user password
+     * Sets the user's password hash
      *
      * @param string $password
      * @return self
@@ -781,8 +796,8 @@ class User extends ModelWithContent
     /**
      * Converts session options into a session object
      *
-     * @param Kirby\Session\Session|array $session Session options or session object to unset the user in
-     * @return Kirby\Session\Session
+     * @param \Kirby\Session\Session|array $session Session options or session object to unset the user in
+     * @return \Kirby\Session\Session
      */
     protected function sessionFromOptions($session)
     {
@@ -799,7 +814,7 @@ class User extends ModelWithContent
     /**
      * Returns the parent Users collection
      *
-     * @return Kirby\Cms\Users
+     * @return \Kirby\Cms\Users
      */
     protected function siblingsCollection()
     {
@@ -856,11 +871,11 @@ class User extends ModelWithContent
      * Compares the given password with the stored one
      *
      * @param string $password
-     * @return boolean
+     * @return bool
      *
-     * @throws NotFoundException If the user has no password
-     * @throws InvalidArgumentException If the entered password is not valid
-     * @throws InvalidArgumentException If the entered password does not match the user password
+     * @throws \Kirby\Exception\NotFoundException If the user has no password
+     * @throws \Kirby\Exception\InvalidArgumentException If the entered password is not valid
+     * @throws \Kirby\Exception\InvalidArgumentException If the entered password does not match the user password
      */
     public function validatePassword(string $password = null): bool
     {

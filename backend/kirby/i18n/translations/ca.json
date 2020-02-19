@@ -23,6 +23,7 @@
 
   "delete": "Eliminar",
   "dimensions": "Dimensions",
+  "disabled": "Desactivat",
   "discard": "Descartar",
   "download": "Descarregar",
   "duplicate": "Duplicar",
@@ -37,6 +38,7 @@
 
   "error.access.login": "Inici de sessió no vàlid",
   "error.access.panel": "No tens permís per accedir al panell",
+  "error.access.view": "No tens accés a aquesta part del tauler",
 
   "error.avatar.create.fail": "No s'ha pogut carregar la imatge del perfil",
   "error.avatar.delete.fail": "La imatge del perfil no s'ha pogut eliminar",
@@ -51,6 +53,7 @@
 
   "error.field.converter.invalid": "Convertidor no vàlid \"{converter}\"",
 
+  "error.file.changeName.empty": "El nom no pot estar buit",
   "error.file.changeName.permission":
     "No tens permís per canviar el nom de \"{filename}\"",
   "error.file.duplicate": "Ja existeix un fitxer amb el nom \"{filename}\"",
@@ -58,13 +61,21 @@
     "L'extensió de l'arxiu \"{extension}\" no està permesa",
   "error.file.extension.missing":
     "Falta l'extensió de l'arxiu \"{filename}\"",
+  "error.file.maxheight": "L'alçada de la imatge no ha de ser superior a {height} píxels",
+  "error.file.maxsize": "El fitxer és massa gran",
+  "error.file.maxwidth": "L'amplada de la imatge no ha de ser superior a {width} píxels",
   "error.file.mime.differs":
     "L'arxiu carregat ha ha de ser del mateix tipus de mime \"{mime}\"",
   "error.file.mime.forbidden": "El tipus de mitjà \"{mime}\" no està permès",
+  "error.file.mime.invalid": "Mime type no vàlid: {mime}",
   "error.file.mime.missing":
     "El tipus de suport per a \"{filename}\" no es pot detectar",
+  "error.file.minheight": "L'alçada de la imatge ha de ser com a mínim de {height} píxels",
+  "error.file.minsize": "El fitxer és massa petit",
+  "error.file.minwidth": "L'amplada de la imatge ha de ser com a mínim de {width} píxels",
   "error.file.name.missing": "El nom del fitxer no pot estar buit",
   "error.file.notFound": "L'arxiu \"{filename}\" no s'ha trobat",
+  "error.file.orientation": "L’orientació de la imatge ha de ser \"{orientation}\"",
   "error.file.type.forbidden": "No tens permís per penjar fitxers {type}",
   "error.file.undefined": "L'arxiu no s'ha trobat",
 
@@ -135,6 +146,7 @@
   "error.section.notLoaded": "No s'ha pogut carregar la secció \"{name}\"",
   "error.section.type.invalid": "La secció tipus \"{type}\" no és vàlida",
 
+  "error.site.changeTitle.empty": "El títol no pot estar buit",
   "error.site.changeTitle.permission":
     "No tens permís per canviar el títol del lloc web",
   "error.site.update.permission": "No tens permís per actualitzar el lloc web",
@@ -153,6 +165,8 @@
     "El rol del darrer administrador no es pot canviar",
   "error.user.changeRole.permission":
     "No tens permís per canviar el rol de l'usuari \"{name}\"",
+  "error.user.changeRole.toAdmin":
+    "No tens permís per promocionar algú al rol d’administrador",
   "error.user.create.permission": "No tens permís per crear aquest usuari",
   "error.user.delete": "L'usuari \"{name}\" no es pot eliminar",
   "error.user.delete.lastAdmin": "No es pot eliminar l'\u00faltim administrador",
@@ -169,7 +183,6 @@
   "error.user.password.notSame": "Les contrasenyes no coincideixen",
   "error.user.password.undefined": "L'usuari no té una contrasenya",
   "error.user.role.invalid": "Si us plau, introdueix un rol vàlid",
-  "error.user.undefined": "L'usuari no s'ha trobat",
   "error.user.update.permission":
     "No tens permís per actualitzar l'usuari \"{name}\"",
 
@@ -218,6 +231,7 @@
   "error.validation.time": "Si us plau, introduïu una hora vàlida",
   "error.validation.url": "Si us plau, introduïu una URL vàlida",
 
+  "field.required": "El camp és obligatori",
   "field.files.empty": "Encara no hi ha cap fitxer seleccionat",
   "field.pages.empty": "Encara no s'ha seleccionat cap pàgina",
   "field.structure.delete.confirm": "Segur que voleu eliminar aquesta fila?",
@@ -265,7 +279,7 @@
   "language.direction.ltr": "Esquerra a dreta",
   "language.direction.rtl": "De dreta a esquerra",
   "language.locale": "Cadena local de PHP",
-  "language.locale.warning": "You are using a custom locale set up. Please modify it in the language file in /site/languages",
+  "language.locale.warning": "S'està fent servir una configuració regional personalitzada. Modifica el fitxer d'idioma a /site/languages",
   "language.name": "Nom",
   "language.updated": "S'ha actualitzat l'idioma",
 
@@ -290,6 +304,7 @@
   "loading": "Carregant",
 
   "lock.unsaved": "Canvis no guardats",
+  "lock.unsaved.empty": "Ja no hi ha canvis no guardats",
   "lock.isLocked": "Canvis no guardats per <strong>{email}</strong>",
   "lock.file.isLocked": "El fitxer està sent editat actualment per {email}  i no pot ser modificat.",
   "lock.page.isLocked": "La pàgina està sent editat actualment per {email} i no pot ser modificat.",
@@ -363,6 +378,8 @@
   "pages.status.listed": "Publicat",
   "pages.status.unlisted": "Sense classificar",
 
+  "pagination.page": "Pàgina",
+
   "password": "Contrasenya",
   "pixel": "Pixel",
   "prev": "Anterior",
@@ -383,6 +400,9 @@
 
   "save": "Desar",
   "search": "Cercar",
+
+  "section.required": "La secció és obligatòria",
+
   "select": "Seleccionar",
   "settings": "Configuració",
   "size": "Tamany",
@@ -410,8 +430,20 @@
   "translation.author": "Equip Kirby",
   "translation.direction": "ltr",
   "translation.name": "Catalan",
+  "translation.locale": "ca_ES",
 
   "upload": "Carregar",
+  "upload.error.cantMove": "El fitxer carregat no s'ha pogut moure",
+  "upload.error.cantWrite": "No s'ha pogut escriure el fitxer al disc",
+  "upload.error.default": "No s'ha pogut carregar el fitxer",
+  "upload.error.extension": "La càrrega del fitxer s'ha aturat per l'extensió",
+  "upload.error.formSize": "El fitxer carregat supera la directiva MAX_FILE_SIZE especificada en el formulari",
+  "upload.error.iniPostSize": "El fitxer carregat supera la directiva post_max_size especifiada al php.ini",
+  "upload.error.iniSize": "El fitxer carregat supera la directiva upload_max_filesize especifiada al php.ini",
+  "upload.error.noFile": "No s'ha carregat cap fitxer",
+  "upload.error.noFiles": "No s'ha penjat cap fitxer",
+  "upload.error.partial": "El fitxer carregat només s'ha carregat parcialment",
+  "upload.error.tmpDir": "Falta una carpeta temporal",
   "upload.errors": "Error",
   "upload.progress": "Carregant...",
 

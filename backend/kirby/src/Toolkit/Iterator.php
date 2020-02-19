@@ -2,6 +2,9 @@
 
 namespace Kirby\Toolkit;
 
+use ArrayIterator;
+use IteratorAggregate;
+
 /**
  * Extended version of PHP's iterator
  * class that builds the foundation of our
@@ -13,9 +16,8 @@ namespace Kirby\Toolkit;
  * @copyright Bastian Allgeier GmbH
  * @license   https://opensource.org/licenses/MIT
  */
-class Iterator implements \Iterator
+class Iterator implements IteratorAggregate
 {
-
     /**
      * The data array
      *
@@ -31,6 +33,16 @@ class Iterator implements \Iterator
     public function __construct(array $data = [])
     {
         $this->data = $data;
+    }
+
+    /**
+     * Get an iterator for the items.
+     *
+     * @return \ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->data);
     }
 
     /**
@@ -96,7 +108,7 @@ class Iterator implements \Iterator
     /**
      * Checks if the current element is valid
      *
-     * @return boolean
+     * @return bool
      */
     public function valid(): bool
     {
@@ -116,8 +128,8 @@ class Iterator implements \Iterator
     /**
      * Tries to find the index number for the given element
      *
-     * @param  mixed         $needle  the element to search for
-     * @return string|false           the name of the key or false
+     * @param mixed $needle the element to search for
+     * @return string|false the name of the key or false
      */
     public function indexOf($needle)
     {
@@ -127,8 +139,8 @@ class Iterator implements \Iterator
     /**
      * Tries to find the key for the given element
      *
-     * @param  mixed         $needle  the element to search for
-     * @return string|false           the name of the key or false
+     * @param mixed $needle the element to search for
+     * @return string|false the name of the key or false
      */
     public function keyOf($needle)
     {
@@ -138,8 +150,8 @@ class Iterator implements \Iterator
     /**
      * Checks by key if an element is included
      *
-     * @param  mixed  $key
-     * @return boolean
+     * @param mixed $key
+     * @return bool
      */
     public function has($key): bool
     {
@@ -149,8 +161,8 @@ class Iterator implements \Iterator
     /**
      * Checks if the current key is set
      *
-     * @param  mixed  $key  the key to check
-     * @return boolean
+     * @param mixed $key the key to check
+     * @return bool
      */
     public function __isset($key): bool
     {
@@ -162,7 +174,7 @@ class Iterator implements \Iterator
      *
      * @return array
      */
-    public function __debuginfo(): array
+    public function __debugInfo(): array
     {
         return $this->data;
     }

@@ -1,7 +1,8 @@
 <?php
 
 use Kirby\Cms\Form;
-use Kirby\Cms\Blueprint;
+use Kirby\Data\Yaml;
+use Kirby\Toolkit\I18n;
 
 return [
     'mixins' => ['min'],
@@ -83,6 +84,10 @@ return [
             return $this->rows($this->value);
         },
         'fields' => function () {
+            if (empty($this->fields) === true) {
+                throw new Exception('Please provide some fields for the structure');
+            }
+
             return $this->form()->fields()->toArray();
         },
         'columns' => function () {
@@ -162,7 +167,7 @@ return [
         $data = [];
 
         foreach ($value as $row) {
-            $data[] = $this->form($row)->data(true);
+            $data[] = $this->form($row)->data();
         }
 
         return $data;

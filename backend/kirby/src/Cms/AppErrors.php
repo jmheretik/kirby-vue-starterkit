@@ -3,11 +3,11 @@
 namespace Kirby\Cms;
 
 use Kirby\Http\Response;
-use Whoops\Run as Whoops;
-use Whoops\Handler\Handler;
-use Whoops\Handler\PrettyPageHandler;
-use Whoops\Handler\PlainTextHandler;
 use Whoops\Handler\CallbackHandler;
+use Whoops\Handler\Handler;
+use Whoops\Handler\PlainTextHandler;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run as Whoops;
 
 /**
  * AppErrors
@@ -22,34 +22,33 @@ trait AppErrors
 {
     protected function handleCliErrors(): void
     {
-        $whoops = new Whoops;
-        $whoops->pushHandler(new PlainTextHandler);
+        $whoops = new Whoops();
+        $whoops->pushHandler(new PlainTextHandler());
         $whoops->register();
     }
 
     protected function handleErrors()
     {
-        $request = $this->request();
-
-        // TODO: implement acceptance
-        if ($request->ajax()) {
-            return $this->handleJsonErrors();
+        if ($this->request()->cli() === true) {
+            $this->handleCliErrors();
+            return;
         }
 
-        if ($request->cli()) {
-            return $this->handleCliErrors();
+        if ($this->visitor()->prefersJson() === true) {
+            $this->handleJsonErrors();
+            return;
         }
 
-        return $this->handleHtmlErrors();
+        $this->handleHtmlErrors();
     }
 
     protected function handleHtmlErrors()
     {
-        $whoops = new Whoops;
+        $whoops = new Whoops();
 
         if ($this->option('debug') === true) {
             if ($this->option('whoops', true) === true) {
-                $handler = new PrettyPageHandler;
+                $handler = new PrettyPageHandler();
                 $handler->setPageTitle('Kirby CMS Debugger');
 
                 if ($editor = $this->option('editor')) {
@@ -79,7 +78,7 @@ trait AppErrors
 
     protected function handleJsonErrors()
     {
-        $whoops  = new Whoops;
+        $whoops  = new Whoops();
         $handler = new CallbackHandler(function ($exception, $inspector, $run) {
             if (is_a($exception, 'Kirby\Exception\Exception') === true) {
                 $httpCode = $exception->getHttpCode();

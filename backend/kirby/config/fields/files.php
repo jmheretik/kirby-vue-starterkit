@@ -1,5 +1,6 @@
 <?php
 
+use Kirby\Data\Yaml;
 use Kirby\Toolkit\A;
 
 return [
@@ -98,10 +99,13 @@ return [
                     $field = $this->field();
 
                     return $field->filepicker([
-                        'query' => $field->query(),
-                        'image' => $field->image(),
-                        'info'  => $field->info(),
-                        'text'  => $field->text()
+                        'image'  => $field->image(),
+                        'info'   => $field->info(),
+                        'limit'  => $field->limit(),
+                        'page'   => $this->requestQuery('page'),
+                        'query'  => $field->query(),
+                        'search' => $this->requestQuery('search'),
+                        'text'   => $field->text()
                     ]);
                 }
             ],
@@ -112,7 +116,7 @@ return [
                     $field   = $this->field();
                     $uploads = $field->uploads();
 
-                    return $field->upload($this, $uploads, function ($file) use ($field) {
+                    return $field->upload($this, $uploads, function ($file, $parent) use ($field) {
                         return $file->panelPickerData([
                             'image' => $field->image(),
                             'info'  => $field->info(),

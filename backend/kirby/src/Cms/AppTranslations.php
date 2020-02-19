@@ -85,7 +85,7 @@ trait AppTranslations
      *
      * @internal
      * @param string $languageCode
-     * @return Kirby\Cms\Language|null
+     * @return \Kirby\Cms\Language|null
      */
     public function setCurrentLanguage(string $languageCode = null)
     {
@@ -140,7 +140,7 @@ trait AppTranslations
      * Load a specific translation by locale
      *
      * @param string|null $locale
-     * @return Kirby\Cms\Translation|null
+     * @return \Kirby\Cms\Translation|null
      */
     public function translation(string $locale = null)
     {
@@ -158,13 +158,13 @@ trait AppTranslations
         $inject = $this->extensions['translations'][$locale] ?? [];
 
         // load from disk instead
-        return Translation::load($locale, $this->root('translations') . '/' . $locale . '.json', $inject);
+        return Translation::load($locale, $this->root('i18n:translations') . '/' . $locale . '.json', $inject);
     }
 
     /**
      * Returns all available translations
      *
-     * @return Kirby\Cms\Translations
+     * @return \Kirby\Cms\Translations
      */
     public function translations()
     {
@@ -172,6 +172,6 @@ trait AppTranslations
             return $this->translations;
         }
 
-        return Translations::load($this->root('translations'), $this->extensions['translations'] ?? []);
+        return Translations::load($this->root('i18n:translations'), $this->extensions['translations'] ?? []);
     }
 }

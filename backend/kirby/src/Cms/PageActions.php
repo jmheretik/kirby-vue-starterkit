@@ -23,7 +23,6 @@ use Kirby\Toolkit\Str;
  */
 trait PageActions
 {
-
     /**
      * Changes the sorting number
      * The sorting number must already be correct
@@ -52,7 +51,13 @@ trait PageActions
 
             // actually move the page on disk
             if ($oldPage->exists() === true) {
-                Dir::move($oldPage->root(), $newPage->root());
+                if (Dir::move($oldPage->root(), $newPage->root()) === true) {
+                    // Updates the root path of the old page with the root path
+                    // of the moved new page to use fly actions on old page in loop
+                    $oldPage->setRoot($newPage->root());
+                } else {
+                    throw new LogicException('The page directory cannot be moved');
+                }
             }
 
             // overwrite the child in the parent page
@@ -69,7 +74,7 @@ trait PageActions
      * Changes the slug/uid of the page
      *
      * @param string $slug
-     * @param string $language
+     * @param string $languageCode
      * @return self
      */
     public function changeSlug(string $slug, string $languageCode = null)
@@ -101,12 +106,17 @@ trait PageActions
 
             if ($oldPage->exists() === true) {
                 // remove the lock of the old page
-                $oldPage->lock()->remove();
+                if ($lock = $oldPage->lock()) {
+                    $lock->remove();
+                }
 
                 // actually move stuff on disk
                 if (Dir::move($oldPage->root(), $newPage->root()) !== true) {
                     throw new LogicException('The page directory cannot be moved');
                 }
+
+                // remove from the siblings
+                $oldPage->parentModel()->children()->remove($oldPage);
 
                 Dir::remove($oldPage->mediaRoot());
             }
@@ -126,7 +136,7 @@ trait PageActions
      * Change the slug for a specific language
      *
      * @param string $slug
-     * @param string $language
+     * @param string $languageCode
      * @return self
      */
     protected function changeSlugForLanguage(string $slug, string $languageCode = null)
@@ -156,7 +166,7 @@ trait PageActions
      * to either draft, listed or unlisted
      *
      * @param string $status "draft", "listed" or "unlisted"
-     * @param integer $position Optional sorting number
+     * @param int $position Optional sorting number
      * @return self
      */
     public function changeStatus(string $status, int $position = null)
@@ -175,7 +185,7 @@ trait PageActions
 
     protected function changeStatusToDraft()
     {
-        $page = $this->commit('changeStatus', [$this, 'draft'], function ($page) {
+        $page = $this->commit('changeStatus', [$this, 'draft', null], function ($page) {
             return $page->unpublish();
         });
 
@@ -216,7 +226,7 @@ trait PageActions
             return $this;
         }
 
-        $page = $this->commit('changeStatus', [$this, 'unlisted'], function ($page) {
+        $page = $this->commit('changeStatus', [$this, 'unlisted', null], function ($page) {
             return $page->publish()->changeNum(null);
         });
 
@@ -295,7 +305,8 @@ trait PageActions
      * 5. returns the result
      *
      * @param string $action
-     * @param mixed ...$arguments
+     * @param array $arguments
+     * @param Closure $callback
      * @return mixed
      */
     protected function commit(string $action, array $arguments, Closure $callback)
@@ -314,7 +325,7 @@ trait PageActions
      * Copies the page to a new parent
      *
      * @param array $options
-     * @return Kirby\Cms\Page
+     * @return \Kirby\Cms\Page
      */
     public function copy(array $options = [])
     {
@@ -368,6 +379,13 @@ trait PageActions
                     $copy = $copy->save(['slug' => null], $language->code());
                 }
             }
+        }
+
+        // add copy to siblings
+        if ($isDraft === true) {
+            $parentModel->drafts()->append($copy->id(), $copy);
+        } else {
+            $parentModel->children()->append($copy->id(), $copy);
         }
 
         return $copy;
@@ -450,8 +468,8 @@ trait PageActions
      * Create the sorting number for the page
      * depending on the blueprint settings
      *
-     * @param integer $num
-     * @return integer
+     * @param int $num
+     * @return int
      */
     public function createNum(int $num = null): int
     {
@@ -494,13 +512,17 @@ trait PageActions
 
                 return $num;
             default:
+                // get instance with default language
+                $app = $this->kirby()->clone();
+                $app->setCurrentLanguage();
+
                 $template = Str::template($mode, [
-                    'kirby' => $this->kirby(),
-                    'page'  => $this,
-                    'site'  => $this->site(),
+                    'kirby' => $app,
+                    'page'  => $app->page($this->id()),
+                    'site'  => $app->site(),
                 ]);
 
-                return intval($template);
+                return (int)$template;
         }
     }
 
@@ -561,7 +583,7 @@ trait PageActions
      *
      * @param string $slug
      * @param array $options
-     * @return Kirby\Cms\Page
+     * @return \Kirby\Cms\Page
      */
     public function duplicate(string $slug = null, array $options = [])
     {
@@ -619,12 +641,13 @@ trait PageActions
      */
     public function purge()
     {
-        $this->children  = null;
-        $this->blueprint = null;
-        $this->drafts    = null;
-        $this->files     = null;
-        $this->content   = null;
-        $this->inventory = null;
+        $this->blueprint    = null;
+        $this->children     = null;
+        $this->content      = null;
+        $this->drafts       = null;
+        $this->files        = null;
+        $this->inventory    = null;
+        $this->translations = null;
 
         return $this;
     }
@@ -693,7 +716,7 @@ trait PageActions
                 $sibling->changeNum($index);
             }
 
-            $parent->children = $siblings->sortBy('num', 'desc');
+            $parent->children = $siblings->sortBy('num', 'asc');
         }
 
         return true;
@@ -744,7 +767,7 @@ trait PageActions
      *
      * @param array $input
      * @param string $language
-     * @param boolean $validate
+     * @param bool $validate
      * @return self
      */
     public function update(array $input = null, string $language = null, bool $validate = false)

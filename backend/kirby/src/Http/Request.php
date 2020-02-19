@@ -24,7 +24,6 @@ use Kirby\Toolkit\Str;
  */
 class Request
 {
-
     /**
      * The auth object if available
      *
@@ -132,7 +131,7 @@ class Request
      *
      * @return array
      */
-    public function __debuginfo(): array
+    public function __debugInfo(): array
     {
         return [
             'body'   => $this->body(),
@@ -144,19 +143,9 @@ class Request
     }
 
     /**
-     * Detects ajax requests
-     * @deprecated 3.1.0 No longer reliable, especially with the fetch api.
-     * @return boolean
-     */
-    public function ajax(): bool
-    {
-        return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
-    }
-
-    /**
      * Returns the Auth object if authentication is set
      *
-     * @return Kirby\Http\Request\Auth\BasicAuth|Kirby\Http\Request\Auth\BearerAuth|null
+     * @return \Kirby\Http\Request\Auth\BasicAuth|\Kirby\Http\Request\Auth\BearerAuth|null
      */
     public function auth()
     {
@@ -182,7 +171,7 @@ class Request
     /**
      * Returns the Body object
      *
-     * @return Kirby\Http\Request\Body
+     * @return \Kirby\Http\Request\Body
      */
     public function body()
     {
@@ -192,7 +181,7 @@ class Request
     /**
      * Checks if the request has been made from the command line
      *
-     * @return boolean
+     * @return bool
      */
     public function cli(): bool
     {
@@ -233,7 +222,7 @@ class Request
      * Fetches a single file array
      * from the Files object by key
      *
-     * @param  string $key
+     * @param string $key
      * @return array|null
      */
     public function file(string $key)
@@ -244,7 +233,7 @@ class Request
     /**
      * Returns the Files object
      *
-     * @return Kirby\Cms\Files
+     * @return \Kirby\Cms\Files
      */
     public function files()
     {
@@ -317,8 +306,8 @@ class Request
      * Checks if the given method name
      * matches the name of the request method.
      *
-     * @param  string  $method
-     * @return boolean
+     * @param string $method
+     * @return bool
      */
     public function is(string $method): bool
     {
@@ -354,7 +343,7 @@ class Request
     /**
      * Returns the Query object
      *
-     * @return Kirby\Http\Query
+     * @return \Kirby\Http\Query
      */
     public function query()
     {
@@ -364,7 +353,7 @@ class Request
     /**
      * Checks for a valid SSL connection
      *
-     * @return boolean
+     * @return bool
      */
     public function ssl(): bool
     {
@@ -378,7 +367,7 @@ class Request
      * the original object.
      *
      * @param array $props
-     * @return Kirby\Http\Uri
+     * @return \Kirby\Http\Uri
      */
     public function url(array $props = null)
     {

@@ -1,7 +1,7 @@
 <?php
 
+use Kirby\Data\Yaml;
 use Kirby\Toolkit\A;
-use Kirby\Toolkit\I18n;
 
 return [
     'mixins' => ['min', 'pagepicker', 'picker'],
@@ -43,9 +43,22 @@ return [
             return $size;
         },
 
+        /**
+         * Optionally include subpages of pages
+         */
+        'subpages' => function (bool $subpages = true) {
+            return $subpages;
+        },
+
         'value' => function ($value = null) {
             return $this->toPages($value);
         },
+    ],
+    'computed' => [
+        /**
+         * Unset inherited computed
+         */
+        'default' => null
     ],
     'methods' => [
         'pageResponse' => function ($page) {
@@ -80,11 +93,15 @@ return [
                     $field = $this->field();
 
                     return $field->pagepicker([
-                        'image'  => $field->image(),
-                        'info'   => $field->info(),
-                        'parent' => $this->requestQuery('parent'),
-                        'query'  => $field->query(),
-                        'text'   => $field->text()
+                        'image'    => $field->image(),
+                        'info'     => $field->info(),
+                        'limit'    => $field->limit(),
+                        'page'     => $this->requestQuery('page'),
+                        'parent'   => $this->requestQuery('parent'),
+                        'query'    => $field->query(),
+                        'search'   => $this->requestQuery('search'),
+                        'subpages' => $field->subpages(),
+                        'text'     => $field->text()
                     ]);
                 }
             ]

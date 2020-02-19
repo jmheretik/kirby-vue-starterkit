@@ -17,10 +17,9 @@ use Kirby\Toolkit\Str;
  * @link      https://getkirby.com
  * @copyright Bastian Allgeier GmbH
  * @license   https://opensource.org/licenses/MIT
-*/
+ */
 class Visitor
 {
-
     /**
      * IP address
      * @var string|null
@@ -67,8 +66,8 @@ class Visitor
      * provided or returns the user's
      * accepted language otherwise
      *
-     * @param  string|null $acceptedLanguage
-     * @return Kirby\Toolkit\Obj|Kirby\Http\Visitor|null
+     * @param string|null $acceptedLanguage
+     * @return \Kirby\Toolkit\Obj|\Kirby\Http\Visitor|null
      */
     public function acceptedLanguage(string $acceptedLanguage = null)
     {
@@ -84,7 +83,7 @@ class Visitor
      * Returns an array of all accepted languages
      * including their quality and locale
      *
-     * @return Kirby\Toolkit\Collection
+     * @return \Kirby\Toolkit\Collection
      */
     public function acceptedLanguages()
     {
@@ -134,8 +133,8 @@ class Visitor
      * provided or returns the user's
      * accepted mime type otherwise
      *
-     * @param  string|null $acceptedMimeType
-     * @return Kirby\Toolkit\Obj|Kirby\Http\Visitor
+     * @param string|null $acceptedMimeType
+     * @return \Kirby\Toolkit\Obj|\Kirby\Http\Visitor
      */
     public function acceptedMimeType(string $acceptedMimeType = null)
     {
@@ -150,7 +149,7 @@ class Visitor
     /**
      * Returns a collection of all accepted mime types
      *
-     * @return Kirby\Toolkit\Collection
+     * @return \Kirby\Toolkit\Collection
      */
     public function acceptedMimeTypes()
     {
@@ -170,8 +169,8 @@ class Visitor
     /**
      * Checks if the user accepts the given mime type
      *
-     * @param  string $mimeType
-     * @return boolean
+     * @param string $mimeType
+     * @return bool
      */
     public function acceptsMimeType(string $mimeType): bool
     {
@@ -179,11 +178,50 @@ class Visitor
     }
 
     /**
+     * Returns the MIME type from the provided list that
+     * is most accepted (= preferred) by the visitor
+     * @since 3.3.0
+     *
+     * @param string ...$mimeTypes MIME types to query for
+     * @return string|null Preferred MIME type
+     */
+    public function preferredMimeType(string ...$mimeTypes): ?string
+    {
+        foreach ($this->acceptedMimeTypes() as $acceptedMime) {
+            // look for direct matches
+            if (in_array($acceptedMime->type(), $mimeTypes)) {
+                return $acceptedMime->type();
+            }
+
+            // test each option against wildcard `Accept` values
+            foreach ($mimeTypes as $expectedMime) {
+                if (Mime::matches($expectedMime, $acceptedMime->type()) === true) {
+                    return $expectedMime;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns true if the visitor prefers a JSON response over
+     * an HTML response based on the `Accept` request header
+     * @since 3.3.0
+     *
+     * @return bool
+     */
+    public function prefersJson(): bool
+    {
+        return $this->preferredMimeType('application/json', 'text/html') === 'application/json';
+    }
+
+    /**
      * Sets the ip address if provided
      * or returns the ip of the current
      * visitor otherwise
      *
-     * @param  string|null $ip
+     * @param string|null $ip
      * @return string|Visitor|null
      */
     public function ip(string $ip = null)
@@ -200,7 +238,7 @@ class Visitor
      * or returns the user agent string of
      * the current visitor otherwise
      *
-     * @param  string|null $userAgent
+     * @param string|null $userAgent
      * @return string|Visitor|null
      */
     public function userAgent(string $userAgent = null)
