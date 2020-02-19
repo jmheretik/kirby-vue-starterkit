@@ -9,9 +9,7 @@ The project benefits from all the standard tools used in modern frontend develop
 
 ## Demo
 
-Vue.js frontend https://index.heretik.dev/kirby-api-vue-starterkit
-
-Kirby 3 backend starterkit for comparison https://index.heretik.dev/kirby-api-vue-starterkit/backend
+https://index.heretik.dev/kirby-api-vue-starterkit (and the original starterkit for comparison is [here](https://index.heretik.dev/kirby-starterkit))
 
 ## Requirements
 
@@ -29,7 +27,7 @@ npm install
 ### Backend
 
 - out of the box the backend is served using the PHP built-in development server, however:
-  - you can serve it any way you want but remember to specify the address in the [backend.js](backend.js) file
+  - you can serve it any way you want but remember to specify the host and port in the [kirby.config.js](kirby.config.js) file
 
 1. if using the built-in server, run it with `npm run serve:backend`
 2. open kirby panel and create a new user with preconfigured read-only role **Api**
@@ -58,26 +56,29 @@ npm run lint
 ```
 
 ### Compiles and minifies for production
+Firstly, adjust the publicPath in [kirby.config.js](kirby.config.js) file (more info [here](https://cli.vuejs.org/config/#publicpath)). Then run:
+
 ```
 npm run build
 ```
 
-**Don't forget to:**
-- adjust public paths in [.env.production](.env.production) file
-- adjust `RewriteBase` in [public/.htaccess](public/.htaccess) file to match the frontend's public path
-- set `allowInsecure` (if you're deploying to https) and `debug` to **false** in [backend/site/config/config.php](backend/site/config/config.php)
+This builds the frontend in the `www/assets` assets directory and the index file as the default kirby template at `www/site/templates/default.php`, which is the only template needed.
 
-Deploy the contents of `backend` and `frontend` folders to the same server to their corresponding public paths.
+### Deploying
+
+- set `allowInsecure` (if you're deploying to https) and `debug` to **false** in [www/site/config/config.php](www/site/config/config.php)
+
+Deploy the contents of `www` folder to the production server at the corresponding publicPath.
 
 ## Notes
 
 - I **highly recommend** using Kirby's [Content Representations](https://getkirby.com/docs/guide/templates/content-representations) for more sophisticated templates or models.
 
+- Vue.js mixin `page` [src/components/mixins/page.js](src/components/mixins/page.js) roughly corresponds to the `$page` object in Kirby, but only the functionality needed in Starterkit is present.
 - Vue.js components in [src/components](src/components) folder correspond to Kirby snippets.
 - Vue.js views in in [src/views](src/views) folder correspond to Kirby templates and the routes are being automatically resolved.
-- If you add a new page with a new blueprint you also need to manually add a new **View** (exactly as you would add a new **Template** if you were working on a frontend in Kirby).
-- Vue.js mixin `page` [src/components/mixins/page.js](src/components/mixins/page.js) roughly corresponds to the `$page` object in Kirby, but only the functionality needed in Starterkit is present.
+  - If you add a new page with a new blueprint you also need to manually add a new **View** (exactly as you would add a new **Template** if you were working on a frontend in Kirby).
 
-- For now there is no nice way how to get a `kirbytext` of a field or how to `resize` or `crop` an image easily using the Kirby REST API so for that some custom endpoints have been added ([backend/site/config/config.php](backend/site/config/config.php)).
+- For now there is no nice way how to get a `kirbytext` of a field or how to `resize` or `crop` an image easily using the Kirby REST API so for that some custom endpoints have been added ([www/site/config/config.php](www/site/config/config.php)).
   - This being the only modification done to the Kirby Starterkit.
   - It will be removed in future if a nicer solution gets exposed by Kirby.
