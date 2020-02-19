@@ -7,6 +7,11 @@ This project is trying to be a simple, zero-setup, straightforward, 1:1 port wit
 
 The project benefits from all the standard tools used in modern frontend development. For more details visit: [Vue CLI](https://cli.vuejs.org/).
 
+## Demo
+
+Vue.js frontend: https://index.heretik.dev/kirby-api-vue-starterkit
+Kirby 3 backend starterkit for comparison: https://index.heretik.dev/kirby-api-vue-starterkit/backend
+
 ## Requirements
 
 - Node.js with npm is required to install the project
