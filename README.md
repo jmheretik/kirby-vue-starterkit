@@ -22,12 +22,12 @@ https://index.heretik.dev/kirby-api-vue-starterkit (and the original starterkit 
 ```
 npm install
 ```
-- to customize configuration see [Configuration Reference](https://cli.vuejs.org/config/)
+- to customize configuration see [Vue CLI Configuration Reference](https://cli.vuejs.org/config/)
 
 ### Backend
 
 - out of the box the backend is served using the PHP built-in development server, however:
-  - you can serve it any way you want but remember to specify the host and port in the [kirby.config.js](kirby.config.js) file
+  - you can serve it any way you want but remember to specify the `host` and `port` in the [kirby.config.js](kirby.config.js) file
 
 1. if using the built-in server, run it with `npm run serve:backend`
 2. open kirby panel and create a new user with preconfigured read-only role **Api**
