@@ -1,14 +1,12 @@
-const backend = require('./backend.js')
+const config = require('./kirby.config.js')
 
 module.exports = {
-  publicPath: process.env.VUE_APP_FRONTEND_PUBLIC_PATH || '/',
-  outputDir: './frontend',
+  outputDir: config.baseDir,
+  assetsDir: config.assetsDir,
+  indexPath: config.indexPath,
+  publicPath: process.env.NODE_ENV === 'production' ? config.publicPath : '/',
   productionSourceMap: false,
   devServer: {
-    proxy: {
-      '^/api': {
-        target: `http://${backend.host}:${backend.port}`
-      }
-    }
+    proxy: `http://${config.host}:${config.port}`
   }
 }

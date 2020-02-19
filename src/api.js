@@ -1,10 +1,9 @@
 export default class Api {
   constructor() {
-    const env = variable => process.env['VUE_APP_' + variable] || ''
-    const auth = btoa(env('API_EMAIL') + ':' + env('API_PASSWORD'))
+    const auth = btoa(process.env.VUE_APP_API_EMAIL + ':' + process.env.VUE_APP_API_PASSWORD)
 
     this.headers = { Authorization: 'Basic ' + auth }
-    this.url = window.location.origin + env('BACKEND_PUBLIC_PATH') + '/api'
+    this.url = window.location.origin + process.env.BASE_URL + 'api'
   }
 
   async get(path) {

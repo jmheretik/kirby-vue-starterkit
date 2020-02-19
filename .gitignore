@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-/frontend
 
 # local env files
 .env.local
@@ -19,3 +18,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# built files
+www/assets
+www/site/templates/default.php
