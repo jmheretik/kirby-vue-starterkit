@@ -56,7 +56,7 @@ npm run lint
 ```
 
 ### Compiles and minifies for production
-Firstly, adjust the publicPath in [kirby.config.js](kirby.config.js) file (more info [here](https://cli.vuejs.org/config/#publicpath)). Then run:
+Firstly, adjust the **publicPath** in [kirby.config.js](kirby.config.js) file (more info [here](https://cli.vuejs.org/config/#publicpath)). Then run:
 
 ```
 npm run build
