@@ -1,4 +1,4 @@
-# kirby-vue-starterkit
+# kirby-api-vue-starterkit
 
 This is a proof-of-concept project which uses [Kirby](https://getkirby.com/) as a headless CMS at the backend and [Vue.js](https://vuejs.org/) as a UI library at the frontend. The communication in between is handled using the [Kirby's REST API](https://getkirby.com/docs/guide/api/introduction).
 
@@ -59,7 +59,7 @@ npm run build
 **Don't forget to:**
 - adjust public paths in [.env.production](.env.production) file
 - adjust `RewriteBase` in [public/.htaccess](public/.htaccess) file to match the frontend's public path
-- set `debug` and `allowInsecure` (if you're deploying to https) to **false** in [backend/site/config/config.php](backend/site/config/config.php)
+- set `allowInsecure` (if you're deploying to https) and `debug` to **false** in [backend/site/config/config.php](backend/site/config/config.php)
 
 Deploy the contents of `backend` and `frontend` folders to the same server to their corresponding public paths.
 
