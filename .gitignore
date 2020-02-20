@@ -22,3 +22,4 @@ yarn-error.log*
 # built files
 www/assets
 www/site/templates/default.php
+www/favicon.ico
