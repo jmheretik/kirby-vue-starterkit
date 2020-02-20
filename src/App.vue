@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="page">
-      <Header :pages="pages" />
+      <Header />
 
       <router-view @update-title="updateDocumentTitle" />
     </div>
@@ -20,45 +20,9 @@ export default {
     Header,
     Footer
   },
-  data() {
-    return {
-      pages: []
-    }
-  },
-  async created() {
-    // filter listed pages and find out their templates
-    const pages = await this.$api.get('site/children?select=id,num,template,title,hasChildren')
-    this.pages = pages.filter(page => page.num)
-
-    // find out child page templates
-    for (let page of this.pages.filter(page => page.hasChildren)) {
-      const childPages = await this.$api.get(`pages/${page.id}/children?select=template`)
-      page.childTemplate = childPages[0].template
-    }
-
-    // set up routes
-    let pageRoutes = []
-    const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1)
-
-    for (const page of this.pages) {
-      pageRoutes.push({
-        path: '/' + page.id,
-        component: () => import(`@/views/${capitalize(page.template)}.vue`)
-      })
-
-      if (page.hasChildren) {
-        pageRoutes.push({
-          path: '/' + page.id + '/:id',
-          component: () => import(`@/views/${capitalize(page.childTemplate)}.vue`)
-        })
-      }
-    }
-
-    this.$router.addRoutes(pageRoutes)
-  },
   methods: {
     updateDocumentTitle(pageTitle) {
-      document.title = `${this.$site} | ${pageTitle}`
+      document.title = `${this.$root.site.title} | ${pageTitle}`
     }
   }
 }

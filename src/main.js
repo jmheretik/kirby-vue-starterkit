@@ -1,19 +1,24 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import Api from './api'
+import Router from './router'
+import KirbyApi from './api/kirby'
 
 Vue.config.productionTip = false
 
-const api = new Api()
+Vue.prototype.$api = new KirbyApi()
 
-api.get('site?select=title').then(site => {
-  // globals
-  Vue.prototype.$api = api
-  Vue.prototype.$site = site.title
+Vue.prototype.$api.get('site?select=title,children').then(site => {
+  // filter listed pages
+  site.children = site.children.filter(page => page.num)
 
-  new Vue({
-    router,
-    render: h => h(App)
-  }).$mount('#app')
+  Router.init(site.children).then(router => {
+    new Vue({
+      router: router,
+      render: h => h(App),
+
+      data: {
+        site: site
+      }
+    }).$mount('#app')
+  })
 })
