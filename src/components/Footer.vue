@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import KirbyApi from '@/api/kirby'
+
 export default {
   name: 'Header',
   data() {
@@ -17,7 +19,7 @@ export default {
     }
   },
   async created() {
-    this.about = await this.$api.getPage('about')
+    this.about = await KirbyApi.getPage('about')
   }
 }
 </script>

@@ -1,24 +1,25 @@
 import Vue from 'vue'
-import App from './App.vue'
-import Router from './router'
-import KirbyApi from './api/kirby'
+import App from '@/App.vue'
+import Router from '@/router'
+import KirbyApi from '@/api/kirby'
 
 Vue.config.productionTip = false
 
-Vue.prototype.$api = new KirbyApi()
+// eslint-disable-next-line prettier/prettier
+;(async () => {
+  const site = await KirbyApi.get('site?select=title,children')
 
-Vue.prototype.$api.get('site?select=title,children').then(site => {
   // filter listed pages
   site.children = site.children.filter(page => page.num)
 
-  Router.init(site.children).then(router => {
-    new Vue({
-      router: router,
-      render: h => h(App),
+  const router = await Router.init(site.children)
 
-      data: {
-        site: site
-      }
-    }).$mount('#app')
-  })
-})
+  new Vue({
+    router,
+    render: h => h(App),
+
+    data: {
+      site: site
+    }
+  }).$mount('#app')
+})()

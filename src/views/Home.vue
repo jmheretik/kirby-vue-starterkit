@@ -24,6 +24,7 @@
 import page from '@/mixins/page'
 import Intro from '@/components/Intro.vue'
 import KirbyImage from '@/components/KirbyImage.vue'
+import KirbyApi from '@/api/kirby'
 
 export default {
   name: 'Home',
@@ -38,7 +39,7 @@ export default {
     }
   },
   async created() {
-    this.albums = await this.$api.getListedChildren('photography')
+    this.albums = await KirbyApi.getListedChildren('photography')
   }
 }
 </script>

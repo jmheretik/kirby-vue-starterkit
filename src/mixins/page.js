@@ -1,3 +1,5 @@
+import KirbyApi from '@/api/kirby'
+
 export default {
   data() {
     return {
@@ -7,19 +9,19 @@ export default {
   },
   async created() {
     this.pageId = this.$route.path === '/' ? 'home' : this.$route.path.substr(1).replace('/', '+')
-    this.page = await this.$api.getPage(this.pageId)
+    this.page = await KirbyApi.getPage(this.pageId)
 
     this.$emit('update-title', this.page.title)
   },
   methods: {
     async getListedChildren() {
-      return await this.$api.getListedChildren(this.pageId)
+      return await KirbyApi.getListedChildren(this.pageId)
     },
     async getFiles() {
-      return await this.$api.getFiles(this.pageId)
+      return await KirbyApi.getFiles(this.pageId)
     },
     async getKirbyText(...fields) {
-      return await this.$api.getKirbyText(this.pageId, fields)
+      return await KirbyApi.getKirbyText(this.pageId, fields)
     }
   }
 }
