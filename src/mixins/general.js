@@ -1,11 +1,3 @@
-export const tags = {
-  computed: {
-    tags() {
-      return this.page.tags.map(tag => tag.text).join(', ')
-    }
-  }
-}
-
 const dateTimeFormatOptions = {
   weekday: 'long',
   day: '2-digit',
@@ -19,6 +11,8 @@ const dateTimeFormatOptions = {
 export const formatDateTime = {
   filters: {
     format(date, template) {
+      if (!date) return
+
       const dateParts = new Intl.DateTimeFormat(document.documentElement.lang, dateTimeFormatOptions).formatToParts(new Date(date))
 
       for (const part of dateParts) {
@@ -26,6 +20,14 @@ export const formatDateTime = {
       }
 
       return template.replace('dayPeriod', '')
+    }
+  }
+}
+
+export const tags = {
+  computed: {
+    tags() {
+      return this.page.tags.map(tag => tag.text).join(', ')
     }
   }
 }
