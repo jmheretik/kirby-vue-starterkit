@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <router-link to="/"> &copy; {{ new Date().getFullYear() }} / {{ $root.site.title }} </router-link>
+    <router-link to="/"> &copy; {{ new Date().getFullYear() }} / {{ $site.title }} </router-link>
 
     <nav class="social">
       <a v-for="social in about.social" :key="social.id" :href="social.url"> {{ social.platform }} </a>
@@ -9,17 +9,15 @@
 </template>
 
 <script>
-import KirbyApi from '@/api/kirby'
-
 export default {
-  name: 'Header',
+  name: 'Footer',
   data() {
     return {
       about: {}
     }
   },
   async created() {
-    this.about = await KirbyApi.getPage('about')
+    this.about = await this.$api.getPage('about')
   }
 }
 </script>

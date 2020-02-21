@@ -5,7 +5,7 @@ import KirbyApi from '@/api/kirby'
 
 Vue.config.productionTip = false
 
-// eslint-disable-next-line prettier/prettier
+// self invoke async initialization
 ;(async () => {
   const site = await KirbyApi.get('site?select=title,children')
 
@@ -14,12 +14,12 @@ Vue.config.productionTip = false
 
   const router = await Router.init(site.children)
 
+  // globals
+  Vue.prototype.$api = KirbyApi
+  Vue.prototype.$site = site
+
   new Vue({
     router,
-    render: h => h(App),
-
-    data: {
-      site: site
-    }
+    render: h => h(App)
   }).$mount('#app')
 })()

@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     updateDocumentTitle(pageTitle) {
-      document.title = `${this.$root.site.title} | ${pageTitle}`
+      document.title = `${this.$site.title} | ${pageTitle}`
     }
   }
 }

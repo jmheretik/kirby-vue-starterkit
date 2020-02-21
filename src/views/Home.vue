@@ -22,24 +22,17 @@
 
 <script>
 import page from '@/mixins/page'
-import Intro from '@/components/Intro.vue'
-import KirbyImage from '@/components/KirbyImage.vue'
-import KirbyApi from '@/api/kirby'
 
 export default {
   name: 'Home',
   mixins: [page],
-  components: {
-    Intro,
-    KirbyImage
-  },
   data() {
     return {
       albums: []
     }
   },
   async created() {
-    this.albums = await KirbyApi.getListedChildren('photography')
+    this.albums = await this.$api.getListedChildren('photography')
   }
 }
 </script>

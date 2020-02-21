@@ -18,21 +18,17 @@
 <script>
 import page from '@/mixins/page'
 import { formatDateTime } from '@/mixins/general'
-import Intro from '@/components/Intro.vue'
 
 export default {
   name: 'Notes',
   mixins: [page, formatDateTime],
-  components: {
-    Intro
-  },
   data() {
     return {
       notes: []
     }
   },
   async created() {
-    let notes = await this.getListedChildren()
+    let notes = await this.$api.getListedChildren(this.pageId)
     notes.sort((a, b) => new Date(b.content.date) - new Date(a.content.date))
     this.notes = notes
   }

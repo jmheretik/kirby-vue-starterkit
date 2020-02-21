@@ -32,24 +32,20 @@
 <script>
 import page from '@/mixins/page'
 import { tags } from '@/mixins/general'
-import KirbyImage from '@/components/KirbyImage.vue'
 
 export default {
   name: 'Album',
   mixins: [page, tags],
-  components: {
-    KirbyImage
-  },
   data() {
     return {
       gallery: []
     }
   },
   async created() {
-    const kt = await this.getKirbyText('description')
+    const kt = await this.$api.getKirbyText(this.pageId, 'description')
     this.page.description = kt.description
 
-    const files = await this.getFiles()
+    const files = await this.$api.getFiles(this.pageId)
     this.gallery = files.filter(file => file.type === 'image')
   }
 }

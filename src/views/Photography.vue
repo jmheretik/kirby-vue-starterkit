@@ -18,23 +18,17 @@
 
 <script>
 import page from '@/mixins/page'
-import Intro from '@/components/Intro.vue'
-import KirbyImage from '@/components/KirbyImage.vue'
 
 export default {
   name: 'Photography',
   mixins: [page],
-  components: {
-    Intro,
-    KirbyImage
-  },
   data() {
     return {
       albums: []
     }
   },
   async created() {
-    this.albums = await this.getListedChildren()
+    this.albums = await this.$api.getListedChildren(this.pageId)
   }
 }
 </script>

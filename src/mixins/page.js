@@ -1,27 +1,21 @@
-import KirbyApi from '@/api/kirby'
+import Intro from '@/components/Intro.vue'
+import KirbyImage from '@/components/KirbyImage.vue'
 
 export default {
+  components: {
+    Intro,
+    KirbyImage
+  },
   data() {
     return {
-      pageId: '',
-      page: {}
+      page: {},
+      pageId: ''
     }
   },
   async created() {
     this.pageId = this.$route.path === '/' ? 'home' : this.$route.path.substr(1).replace('/', '+')
-    this.page = await KirbyApi.getPage(this.pageId)
+    this.page = await this.$api.getPage(this.pageId)
 
     this.$emit('update-title', this.page.title)
-  },
-  methods: {
-    async getListedChildren() {
-      return await KirbyApi.getListedChildren(this.pageId)
-    },
-    async getFiles() {
-      return await KirbyApi.getFiles(this.pageId)
-    },
-    async getKirbyText(...fields) {
-      return await KirbyApi.getKirbyText(this.pageId, fields)
-    }
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <header class="header">
-    <router-link to="/" class="logo"> {{ $root.site.title }} </router-link>
+    <router-link to="/" class="logo"> {{ $site.title }} </router-link>
 
     <nav id="menu" class="menu">
-      <router-link v-for="page in $root.site.children" :key="page.id" :to="'/' + page.id"> {{ page.title }} </router-link>
+      <router-link v-for="page in $site.children" :key="page.id" :to="'/' + page.id"> {{ page.title }} </router-link>
     </nav>
   </header>
 </template>

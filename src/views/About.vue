@@ -45,16 +45,12 @@
 
 <script>
 import page from '@/mixins/page'
-import Intro from '@/components/Intro.vue'
 
 export default {
   name: 'About',
   mixins: [page],
-  components: {
-    Intro
-  },
   async created() {
-    const kts = await this.getKirbyText('address', 'text')
+    const kts = await this.$api.getKirbyText(this.pageId, 'address', 'text')
     this.page.address = kts.address
     this.page.text = kts.text
   }
