@@ -3,7 +3,9 @@
     <div class="page">
       <Header />
 
-      <router-view @update-title="updateDocumentTitle" />
+      <keep-alive>
+        <router-view :key="$route.path" @update-title="updateDocumentTitle" />
+      </keep-alive>
     </div>
 
     <Footer />
