@@ -4,7 +4,9 @@
 # The default user blueprint does not define a role, but a standard set of fields
 # available for each defined user role with blueprints that only contain a title.
 # More about users, roles and permissions: https://getkirby.com/docs/guide/users/managing-users
-title: Api
+title: API
+
+description: Read-only rights
 
 permissions:
   access:

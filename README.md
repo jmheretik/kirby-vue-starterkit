@@ -30,7 +30,7 @@ npm install
   - you can serve it any way you want but remember to specify the `host` and `port` in the [kirby.config.js](kirby.config.js) file
 
 1. if using the built-in server, run it with `npm run serve:backend`
-2. open kirby panel and create a new user with preconfigured read-only role **Api**
+2. open kirby panel and create a new user with preconfigured read-only role **API**
 3. add its credentials to the [.env.local](.env.local) file
 
 ## Usage
