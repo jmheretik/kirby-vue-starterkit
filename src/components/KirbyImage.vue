@@ -5,7 +5,7 @@
 <script>
 export default {
   name: 'KirbyImage',
-  props: ['file', 'method', 'w', 'h'],
+  props: ['file', 'thumb', 'params'],
   data() {
     return {
       image: {}
@@ -21,10 +21,10 @@ export default {
       image.alt = content.alt
     }
 
-    if (!this.method) {
+    if (!this.thumb) {
       image.src = this.file.url
     } else {
-      image.src = await this.$api.getFileProcessed(this.file.link, this.method, this.w, this.h)
+      image.src = await this.$api.getFileThumb(this.file.link, this.thumb, this.params)
     }
 
     this.image = image

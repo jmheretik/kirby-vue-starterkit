@@ -6,7 +6,7 @@
       <li v-for="album in albums" :key="album.id">
         <router-link :to="'/' + album.id">
           <figure>
-            <KirbyImage :file="album.content.cover[0]" method="resize" w="1024" h="1024" />
+            <KirbyImage :file="album.content.cover[0]" thumb="resize" :params="[1024, 1024]" />
 
             <figcaption>
               <span>

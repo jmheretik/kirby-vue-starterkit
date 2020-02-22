@@ -3,7 +3,7 @@
     <article>
       <header>
         <figure v-if="page.cover" class="album-cover">
-          <KirbyImage :file="page.cover[0]" method="crop" w="1024" h="768" />
+          <KirbyImage :file="page.cover[0]" thumb="crop" :params="[1024, 768]" />
 
           <figcaption>
             <h1>{{ page.headline || page.title }}</h1>
@@ -20,7 +20,7 @@
         <li v-for="image in gallery" :key="image.id">
           <figure>
             <a :href="image.content.link || image.url">
-              <KirbyImage :file="image" method="crop" w="800" h="1000" />
+              <KirbyImage :file="image" thumb="crop" :params="[800, 1000]" />
             </a>
           </figure>
         </li>

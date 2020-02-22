@@ -9,14 +9,20 @@
  */
 return [
     'debug' => true,
+
     'api' => [
         'basicAuth' => true,
         'allowInsecure' => true,
+
+        // api extensions
         'routes' => [
             [
-                'pattern' => '/kt/(:any)',
+                // get kirbytext
+                'pattern' => '/pages/(:any)/kt',
                 'action'  => function ($pageId) {
                     $pageId = str_replace('+', '/', $pageId);
+
+                    // fields specified in url 'select' parameter delimited by ','
                     $fields = explode(',', get('select'));
 
                     if ($page = page($pageId)) {
@@ -28,17 +34,19 @@ return [
                 }
             ],
             [
-                'pattern' => '/process/(:alpha)/(:any)/(:any)',
-                'action'  => function ($method, $pageId, $fileId) {
-                    if ($method !== 'resize' && $method !== 'crop') return;
-
+                // get file thumb
+                'pattern' => '/pages/(:any)/files/(:any)/thumb',
+                'action'  => function ($pageId, $fileId) {
                     $pageId = str_replace('+', '/', $pageId);
+
+                    // method and its parameters specified in url
+                    $method = get('method');
+                    $params = json_decode(get('params'));
+                    if (!is_array($params)) $params = [$params];
 
                     if ($page = page($pageId)) {
                         if ($file = $page->file($fileId)) {
-                            return [
-                                'data' => $file->$method(get('w'), get('h'))->url()
-                            ];
+                            return ['data' => $file->$method(...$params)->url()];
                         }
                     }
                 }

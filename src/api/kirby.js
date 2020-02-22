@@ -23,18 +23,17 @@ export default {
     return await this.get(`pages/${pageId}/files?select=url,type,link,content`)
   },
 
-  async getFileContent(link) {
-    const file = await this.get(`${link.substr(1)}?select=content`)
+  async getKirbyText(pageId, ...fields) {
+    const select = fields.map(field => field).join(',')
+    return await this.get(`pages/${pageId}/kt?select=${select}`)
+  },
+
+  async getFileContent(fileUrl) {
+    const file = await this.get(`${fileUrl.substr(1)}?select=content`)
     return file.content
   },
 
-  async getFileProcessed(link, method, w, h) {
-    const url = link.replace('pages/', '').replace('files/', '')
-    return await this.get(`process/${method}/${url.substr(1)}?w=${w}&h=${h}`)
-  },
-
-  async getKirbyText(pageId, ...fields) {
-    const select = fields.map(field => field).join(',')
-    return await this.get(`kt/${pageId}?select=${select}`)
+  async getFileThumb(fileUrl, method, params) {
+    return await this.get(`${fileUrl.substr(1)}/thumb?method=${method}&params=${JSON.stringify(params)}`)
   }
 }
