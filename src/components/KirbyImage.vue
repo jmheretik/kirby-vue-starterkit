@@ -17,7 +17,7 @@ export default {
     if (this.file.content) {
       image.alt = this.file.content.alt
     } else {
-      const content = await this.$api.getFileContent(this.file.link)
+      const content = await this.$api.getFile(this.file.link)
       image.alt = content.alt
     }
 

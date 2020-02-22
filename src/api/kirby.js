@@ -9,31 +9,30 @@ export default {
     return json.data
   },
 
-  async getPage(pageId) {
-    const page = await this.get(`pages/${pageId}?select=content`)
+  async getPage(id) {
+    const page = await this.get(`pages/${id}?select=content`)
     return page.content
   },
 
-  async getListedChildren(pageId) {
-    const children = await this.get(`pages/${pageId}/children?select=id,num,content`)
+  async getListedChildren(page) {
+    const children = await this.get(`pages/${page}/children?select=id,num,content`)
     return children.filter(child => child.num)
   },
 
-  async getFiles(pageId) {
-    return await this.get(`pages/${pageId}/files?select=url,type,link,content`)
-  },
-
-  async getKirbyText(pageId, ...fields) {
+  async getKirbyText(page, ...fields) {
     const select = fields.map(field => field).join(',')
-    return await this.get(`pages/${pageId}/kt?select=${select}`)
+    return await this.get(`pages/${page}/kt?select=${select}`)
   },
 
-  async getFileContent(fileUrl) {
-    const file = await this.get(`${fileUrl.substr(1)}?select=content`)
-    return file.content
+  async getFiles(page) {
+    return await this.get(`pages/${page}/files?select=url,type,link,content`)
   },
 
-  async getFileThumb(fileUrl, method, params) {
-    return await this.get(`${fileUrl.substr(1)}/thumb?method=${method}&params=${JSON.stringify(params)}`)
+  async getFile(path) {
+    return await this.get(`${path.substr(1)}?select=content`)
+  },
+
+  async getFileThumb(path, method, params) {
+    return await this.get(`${path.substr(1)}/thumb?method=${method}&params=${JSON.stringify(params)}`)
   }
 }
