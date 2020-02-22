@@ -22,7 +22,7 @@ return [
                 'action'  => function ($pageId) {
                     $pageId = str_replace('+', '/', $pageId);
 
-                    // fields specified in url 'select' parameter delimited by ','
+                    // fields specified in url
                     $fields = explode(',', get('select'));
 
                     if ($page = page($pageId)) {
@@ -41,8 +41,7 @@ return [
 
                     // method and its parameters specified in url
                     $method = get('method');
-                    $params = json_decode(get('params'));
-                    if (!is_array($params)) $params = [$params];
+                    $params = explode(',', get('params'));
 
                     if ($page = page($pageId)) {
                         if ($file = $page->file($fileId)) {

@@ -9,7 +9,7 @@ Vue.config.productionTip = false
 ;(async () => {
   const site = await KirbyApi.get('site?select=title,children')
 
-  // filter listed pages
+  // only listed pages
   site.children = site.children.filter(page => page.num)
 
   const router = await Router.init(site.children)

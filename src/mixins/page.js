@@ -14,8 +14,10 @@ export default {
     }
   },
   created() {
+    // transform current vue-router path to use with Kirby API
     this.pageId = this.$route.path.substr(1).replace('/', '+') || 'home'
 
+    // wait for page to be fetched from API and rendered
     this.pageLoaded = new Promise(async resolve => {
       this.page = await this.$api.getPage(this.pageId)
 

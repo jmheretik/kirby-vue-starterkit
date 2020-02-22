@@ -1,5 +1,8 @@
+// HTTP Basic auth headers
 const auth = btoa(process.env.VUE_APP_API_EMAIL + ':' + process.env.VUE_APP_API_PASSWORD)
 const headers = { Authorization: 'Basic ' + auth }
+
+// base url for api requests
 const url = window.location.origin + process.env.BASE_URL + 'api'
 
 export default {
@@ -32,7 +35,8 @@ export default {
     return await this.get(`${path.substr(1)}?select=content`)
   },
 
-  async getFileThumb(path, method, params) {
-    return await this.get(`${path.substr(1)}/thumb?method=${method}&params=${JSON.stringify(params)}`)
+  async getFileThumb(path, method, ...params) {
+    params = params.map(field => field).join(',')
+    return await this.get(`${path.substr(1)}/thumb?method=${method}&params=${params}`)
   }
 }
