@@ -8,11 +8,7 @@ Vue.config.productionTip = false
 // self invoke async initialization
 ;(async () => {
   const site = await KirbyApi.get('site?select=title,children')
-
-  // only listed pages
-  site.children = site.children.filter(page => page.num)
-
-  const router = await Router.init(site.children)
+  const router = await Router.init(site)
 
   // globals
   Vue.prototype.$api = KirbyApi

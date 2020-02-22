@@ -16,8 +16,12 @@ let routes = [
 const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1)
 
 export default {
-  async init(pages) {
-    for (const page of pages) {
+  async init(site) {
+    // filter out unlisted pages
+    site.children = site.children.filter(page => page.num)
+
+    // setup routes
+    for (const page of site.children) {
       const pageInfo = await KirbyApi.get(`pages/${page.id}?select=template,hasChildren`)
 
       routes.push({
