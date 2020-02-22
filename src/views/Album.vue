@@ -16,7 +16,7 @@
         <p v-if="page.tags" class="album-tags tags">{{ tags }}</p>
       </div>
 
-      <ul class="album-gallery" :data-even="gallery.length % 2 === 0">
+      <ul class="album-gallery" :data-even="gallery.length % 2 === 0" :data-count="gallery.length">
         <li v-for="image in gallery" :key="image.id">
           <figure>
             <a :href="image.content.link || image.url">
