@@ -79,6 +79,6 @@ Deploy the contents of `www` folder to the production server at the correspondin
 - Vue.js views in in [src/views](src/views) folder correspond to Kirby templates and the routes are being automatically resolved.
   - If you add a new page with a new blueprint you also need to manually add a new **View** (exactly as you would add a new **Template** if you were working on a frontend in Kirby).
 
-- For now there is no nice way how to get an image `thumb` or `kirbytext` of a field easily using the Kirby REST API so for that the api was extended with some custom endpoints ([www/site/config/config.php](www/site/config/config.php)).
+- For now there is no nice way how to get an image's `thumb` or field's `kirbytext` easily using the Kirby REST API so for that the API was extended with some custom endpoints ([www/site/config/config.php](www/site/config/config.php)).
   - This being the only modification done to the Kirby Starterkit.
   - It will be removed in future if a nicer solution gets exposed by Kirby.
