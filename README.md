@@ -18,6 +18,7 @@ https://index.heretik.dev/kirby-api-vue-starterkit (and the original starterkit 
 
 - Node.js with npm is required to install the project
 - Kirby runs on PHP 7.1+
+  - Kirby is **not** a free software. You can try it for free on your local machine but in order to run Kirby on a public server you must purchase a valid license at https://getkirby.com/buy
 
 ## Project setup
 
