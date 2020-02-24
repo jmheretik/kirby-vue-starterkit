@@ -1,12 +1,14 @@
-# Kirby API/[JSON](https://github.com/jmheretik/kirby-json-vue-starterkit#kirby-json-vue-starterkit) Vue starterkit
+# Kirby API/[JSON](https://github.com/jmheretik/kirby-json-vue-starterkit#kirby-apijson-vue-starterkit) Vue starterkit
 
 
-This is a proof-of-concept project which uses [Kirby](https://getkirby.com/) as a headless CMS at the backend and [Vue.js](https://vuejs.org/) as a UI library at the frontend. The communication in between is handled using the [Kirby's built-in REST API](https://getkirby.com/docs/guide/api/introduction).
+This is a proof-of-concept project which uses [Kirby](https://getkirby.com/) as a headless CMS at the backend and [Vue.js](https://vuejs.org/) as a UI library at the frontend. The communication in between is handled using the Kirby's [built-in REST API](https://getkirby.com/docs/guide/api/introduction).
+
+- If you wish to use JSON [Content Representations](https://getkirby.com/docs/guide/templates/content-representations) instead of the API, check my other project [kirby-json-vue-starterkit](https://github.com/jmheretik/kirby-json-vue-starterkit).
 
 Snippets, templates and their specific JS/CSS from the Kirby [Starterkit](https://github.com/getkirby/starterkit) have been ported to Vue.js [Single File Components](https://vuejs.org/v2/guide/single-file-components.html).  
 This project is trying to be a simple, zero-setup, straightforward, 1:1 port with the least possible modifications done to the original Starterkit in order to serve as a nice starting point for people wanting to use Vue.js with Kirby.
 
-The project benefits from all the standard tools used in modern frontend development. For more details visit: [Vue CLI](https://cli.vuejs.org/).
+The project benefits from all the standard tools used in modern frontend development. For more details visit [Vue CLI](https://cli.vuejs.org/).
 
 ## Demo
 
@@ -23,7 +25,7 @@ https://index.heretik.dev/kirby-api-vue-starterkit (and the original starterkit 
 ```
 npm install
 ```
-- to customize configuration see [Vue CLI Configuration Reference](https://cli.vuejs.org/config/)
+- to customize configuration see Vue CLI [Configuration Reference](https://cli.vuejs.org/config/)
 
 ### Backend
 
@@ -57,7 +59,7 @@ npm run lint
 ```
 
 ### Compiles and minifies for production
-Firstly, adjust the **publicPath** in [kirby.config.js](kirby.config.js) file (more info [here](https://cli.vuejs.org/config/#publicpath)). Then run:
+Firstly, adjust the `publicPath` in [kirby.config.js](kirby.config.js) file (more info [here](https://cli.vuejs.org/config/#publicpath)). Then run:
 
 ```
 npm run build
@@ -72,8 +74,6 @@ This builds the frontend in the `www/assets` assets directory and the index file
 Deploy the contents of `www` folder to the production server at the corresponding publicPath.
 
 ## Notes
-
-- I **highly recommend** using Kirby's [Content Representations](https://getkirby.com/docs/guide/templates/content-representations) for more sophisticated templates or models.
 
 - Vue.js mixin `page` [src/components/mixins/page.js](src/components/mixins/page.js) roughly corresponds to the `$page` object in Kirby, but only the functionality needed in Starterkit is present.
 - Vue.js components in [src/components](src/components) folder correspond to Kirby snippets.
