@@ -1,4 +1,5 @@
-# kirby-api-vue-starterkit
+# Kirby API/[JSON](https://github.com/jmheretik/kirby-json-vue-starterkit#kirby-json-vue-starterkit) Vue starterkit
+
 
 This is a proof-of-concept project which uses [Kirby](https://getkirby.com/) as a headless CMS at the backend and [Vue.js](https://vuejs.org/) as a UI library at the frontend. The communication in between is handled using the [Kirby's built-in REST API](https://getkirby.com/docs/guide/api/introduction).
 
