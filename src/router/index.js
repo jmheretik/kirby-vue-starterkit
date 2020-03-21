@@ -36,12 +36,14 @@ export default {
       })
 
       if (pageInfo.hasChildren) {
-        const childPageInfo = await KirbyApi.get(`pages/${page.id}/children?select=template&limit=1	`)
+        const pageChildren = await KirbyApi.get(`pages/${page.id}/children?select=id,template`)
 
-        routes.push({
-          path: '/' + page.id + '/:id',
-          component: () => import(`@/views/${capitalize(childPageInfo[0].template)}.vue`)
-        })
+        for (const childPage of pageChildren) {
+          routes.push({
+            path: '/' + childPage.id,
+            component: () => import(`@/views/${capitalize(childPage.template)}.vue`)
+          })
+        }
       }
     }
 
