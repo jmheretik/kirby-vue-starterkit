@@ -50,6 +50,9 @@ export default {
   name: 'About',
   mixins: [page],
   async created() {
+    await this.pageLoaded
+    this.page.address = this.page.text = null
+
     const kts = await this.$api.getKirbyText(this.pageId, 'address', 'text')
     this.page.address = kts.address
     this.page.text = kts.text

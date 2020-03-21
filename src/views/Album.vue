@@ -42,6 +42,9 @@ export default {
     }
   },
   async created() {
+    await this.pageLoaded
+    this.page.description = null
+
     const kt = await this.$api.getKirbyText(this.pageId, 'description')
     this.page.description = kt.description
 

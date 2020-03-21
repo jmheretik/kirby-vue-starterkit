@@ -20,6 +20,9 @@ export default {
   name: 'Note',
   mixins: [page, tags, formatDateTime],
   async created() {
+    await this.pageLoaded
+    this.page.text = null
+
     const kt = await this.$api.getKirbyText(this.pageId, 'text')
     this.page.text = kt.text
   }
