@@ -6,4 +6,4 @@ title: Error
 # If you want to allow users to modify the error page content in the Panel, remove this option.
 # More about page options: https://getkirby.com/docs/reference/panel/blueprints/page#options
 options:
-  read: false
+  read: true
