@@ -7,7 +7,7 @@ module.exports = {
   port: 80,
   baseDir: 'www',
   assetsDir: 'assets',
-  indexPath: 'site/templates/default.php',
+  indexPath: 'site/snippets/vue-index.php',
   routerPath: 'kirby/router.php',
   publicPath: '/',
 

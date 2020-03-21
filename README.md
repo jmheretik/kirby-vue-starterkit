@@ -66,7 +66,7 @@ Firstly, adjust the `publicPath` in [kirby.config.js](kirby.config.js) file (mor
 npm run build
 ```
 
-This builds the frontend in the `www/assets` assets directory and the index file as the default kirby template at `www/site/templates/default.php`, which is the only template needed.
+This builds the frontend assets in `www/assets` directory and the index file as a kirby snippet in `www/site/snippets/vue-index.php`.
 
 ### Deploying
 

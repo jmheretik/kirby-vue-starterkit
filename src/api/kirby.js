@@ -32,11 +32,11 @@ export default {
   },
 
   async getFile(path) {
-    return await this.get(`${path.substr(1)}?select=content`)
+    return await this.get(`${path}?select=content`)
   },
 
   async getFileThumb(path, method, ...params) {
     params = params.map(field => field).join(',')
-    return await this.get(`${path.substr(1)}/thumb?method=${method}&params=${params}`)
+    return await this.get(`${path}/thumb?method=${method}&params=${params}`)
   }
 }

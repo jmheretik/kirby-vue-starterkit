@@ -27,7 +27,7 @@ return [
 
                     if ($page = page($pageId)) {
                         foreach ($fields as $field) {
-                            $result['data'][$field] = $page->$field()->kirbytext()->value();
+                            $result['data'][$field] = $page->$field()->kt()->value();
                         }
                         return $result;
                     }
