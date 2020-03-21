@@ -10,7 +10,7 @@
 import page from '@/mixins/page'
 
 export default {
-  name: 'Error',
+  name: 'Default',
   mixins: [page]
 }
 </script>

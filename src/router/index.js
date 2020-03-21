@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
-import Error from '@/views/Error.vue'
+import Default from '@/views/Default.vue'
 import KirbyApi from '@/api/kirby'
 
 Vue.use(VueRouter)
@@ -14,8 +14,8 @@ let routes = [
   },
   {
     path: '*',
-    name: 'Error',
-    component: Error
+    name: 'Default',
+    component: Default
   }
 ]
 
