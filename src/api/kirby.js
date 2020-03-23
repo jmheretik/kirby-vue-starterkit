@@ -13,7 +13,14 @@ export default {
   },
 
   async getPage(id) {
-    const page = await this.get(`pages/${id}?select=content`)
+    let page = await this.get(`pages/${id}?select=num,content`)
+
+    if (!page || !page.num) {
+      page = await this.get('pages/error?select=content')
+      const kt = await this.getKirbyText('error', 'text')
+      page.content.text = kt.text
+    }
+
     return page.content
   },
 

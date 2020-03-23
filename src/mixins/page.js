@@ -19,15 +19,7 @@ export default {
 
     // wait for page to be fetched from API and rendered
     this.pageLoaded = new Promise(async resolve => {
-      try {
-        this.page = await this.$api.getPage(this.pageId)
-      } catch {
-        this.page = await this.$api.getPage('error')
-        this.page.text = null
-
-        const kt = await this.$api.getKirbyText('error', 'text')
-        this.page.text = kt.text
-      }
+      this.page = await this.$api.getPage(this.pageId)
 
       await this.$nextTick()
 
