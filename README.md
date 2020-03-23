@@ -76,7 +76,7 @@ Deploy the contents of `www` folder to the production server at the correspondin
 
 ## Notes
 
-- Vue.js mixin `page` [src/mixins/page.js](src/components/mixins/page.js) roughly corresponds to the `$page` object in Kirby, but only the functionality needed in Starterkit is present.
+- Vue.js mixin `page` [src/mixins/page.js](src/mixins/page.js) roughly corresponds to the `$page` object in Kirby, but only the functionality needed in Starterkit is present.
 - Vue.js components in [src/components](src/components) folder correspond to Kirby snippets.
 - Vue.js views in in [src/views](src/views) folder correspond to Kirby templates and the routes are being automatically resolved.
   - If you add a new page with a new blueprint you also need to manually add a new **View** (exactly as you would add a new **Template** if you were working on a frontend in Kirby).
