@@ -15,7 +15,7 @@ export default {
   async getPage(id) {
     let page = await this.get(`pages/${id}?select=num,content`)
 
-    if (!page || !page.num) {
+    if (!page || (!page.num && id !== 'home')) {
       page = await this.get('pages/error?select=content')
       const kt = await this.getKirbyText('error', 'text')
       page.content.text = kt.text
