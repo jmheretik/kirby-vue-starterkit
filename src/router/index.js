@@ -1,51 +1,36 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/views/Home.vue'
 import Default from '@/views/Default.vue'
-import KirbyApi from '@/api/kirby'
 
 Vue.use(VueRouter)
-
-let routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '*',
-    name: 'Default',
-    component: Default
-  }
-]
 
 const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1)
 
 export default {
   async init(site) {
-    // filter out unlisted pages
-    site.children = site.children.filter(page => page.num)
+    let routes = []
 
-    // setup routes
+    // published pages routes
     for (const page of site.children) {
-      const pageInfo = await KirbyApi.get(`pages/${page.id}?select=template,hasChildren`)
-
       routes.push({
         path: '/' + page.id,
-        component: () => import(`@/views/${capitalize(pageInfo.template)}.vue`)
+        component: () => import(`@/views/${capitalize(page.template)}.vue`).catch(() => Default)
       })
 
-      if (pageInfo.hasChildren) {
-        const pageChildren = await KirbyApi.get(`pages/${page.id}/children?select=id,template`)
-
-        for (const childPage of pageChildren) {
-          routes.push({
-            path: '/' + childPage.id,
-            component: () => import(`@/views/${capitalize(childPage.template)}.vue`)
-          })
-        }
+      for (const child of page.children) {
+        routes.push({
+          path: '/' + child.id,
+          component: () => import(`@/views/${capitalize(child.template)}.vue`).catch(() => Default)
+        })
       }
     }
+
+    // home route / instead of /home
+    routes.find(route => route.path === '/home').path = '/'
+    routes.push({ path: '/home', redirect: '/' })
+
+    // error route catch all fallback
+    routes.push({ path: '*', redirect: '/error' })
 
     return new VueRouter({
       mode: 'history',

@@ -32,7 +32,8 @@ export default {
     }
   },
   async created() {
-    this.albums = await this.$api.getListedChildren('photography')
+    const albums = await this.$api.getChildren('photography')
+    this.albums = albums.filter(album => album.status === 'listed')
   }
 }
 </script>

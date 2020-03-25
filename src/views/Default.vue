@@ -11,7 +11,14 @@ import page from '@/mixins/page'
 
 export default {
   name: 'Default',
-  mixins: [page]
+  mixins: [page],
+  async created() {
+    await this.pageLoaded
+    this.page.text = null
+
+    const kt = await this.$api.getKirbyText(this.pageId, 'text')
+    this.page.text = kt.text
+  }
 }
 </script>
 
