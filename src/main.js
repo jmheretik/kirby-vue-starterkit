@@ -7,7 +7,7 @@ Vue.config.productionTip = false
 
 // self invoke async initialization
 ;(async () => {
-  const site = await KirbyApi.get('site?select=title,children')
+  const site = await KirbyApi.getSite()
   const router = await Router.init(site)
 
   // globals
