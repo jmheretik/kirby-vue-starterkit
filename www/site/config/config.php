@@ -26,10 +26,11 @@ return [
                     $fields = explode(',', get('select'));
 
                     if ($page = page($pageId)) {
-                        foreach ($fields as $field) {
-                            $result['data'][$field] = $page->$field()->kt()->value();
-                        }
-                        return $result;
+                        return ['data' => 
+                            array_combine($fields, array_map(function($field) use ($page) {
+                                return $page->$field()->kt()->value();
+                            },  $fields))
+                        ];
                     }
                 }
             ],
