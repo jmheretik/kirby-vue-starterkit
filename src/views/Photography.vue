@@ -6,7 +6,7 @@
       <li v-for="album in albums" :key="album.id">
         <router-link :to="'/' + album.id">
           <figure>
-            <KirbyImage :file="album.content.cover[0]" thumb="crop" :params="[800, 1000]" />
+            <KirbyImage v-if="album.content.cover[0]" :file="album.content.cover[0]" thumb="crop" :params="[800, 1000]" />
 
             <figcaption>{{ album.content.title }}</figcaption>
           </figure>

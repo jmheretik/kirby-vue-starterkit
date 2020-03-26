@@ -3,7 +3,7 @@
     <article>
       <header>
         <figure v-if="page.cover" class="album-cover">
-          <KirbyImage :file="page.cover[0]" thumb="crop" :params="[1024, 768]" />
+          <KirbyImage v-if="page.cover[0]" :file="page.cover[0]" thumb="crop" :params="[1024, 768]" />
 
           <figcaption>
             <h1>{{ page.headline || page.title }}</h1>
