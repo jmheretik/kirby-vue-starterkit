@@ -8,7 +8,7 @@ const publicPath = '/'
 const apiUrl = ''
 
 process.env.VUE_APP_API_URL = apiUrl
-process.env.VUE_APP_KIRBY_URL = process.env.NODE_ENV === 'production' ? apiUrl : serveKirby ? `http://${kirby.host}:${kirby.port}` : ''
+process.env.VUE_APP_KIRBY_URL = apiUrl || `http://${kirby.host}:${kirby.port}`
 
 if (process.env.NODE_ENV === 'development' && serveKirby) kirby.start(php)
 if (process.env.NODE_ENV === 'production' && injectKirby) kirby.cleanAssets(fs)
@@ -22,7 +22,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/*.json': {
-        target: `http://${kirby.host}:${kirby.port}`,
+        target: process.env.VUE_APP_KIRBY_URL,
         pathRewrite: { [publicPath]: '/' }
       }
     }

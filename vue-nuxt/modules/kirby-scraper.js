@@ -1,22 +1,18 @@
 import fs from 'fs-extra'
 import { JSDOM } from 'jsdom'
-import config from '../kirby.config'
 import KirbyApi from '../plugins/kirby-api'
 import modifyPageHtml from '../plugins/modify-page-html'
-
-const apiUrl = config.getApiUrl()
-const api = KirbyApi.init(apiUrl)
 
 const dom = new JSDOM('<!doctype html><html><body></body></html>')
 const document = dom.window.document
 
 const tmpDir = 'tmp'
-const dataDir = 'static/' + config.staticDataDir
-const clientDataDir = config.publicPath + config.staticDataDir
+const dataDir = 'static/data'
+const clientDataDir = process.env.NUXT_ENV_BASE_URL + 'data'
+
+const api = KirbyApi.init(process.env.NUXT_ENV_KIRBY_URL)
 
 export default function() {
-  if (process.env.NODE_ENV !== 'generate') return
-
   // create data required for static site generation
   this.nuxt.hook('generate:before', async () => {
     const routes = await this.options.generate.routes()
@@ -32,36 +28,36 @@ export default function() {
   this.nuxt.hook('generate:done', async () => {
     await Promise.all([fs.remove(tmpDir), fs.remove(dataDir)])
   })
-}
 
-const generateData = async route => {
-  const files = []
-  const page = await api.getPage(route)
+  const generateData = async route => {
+    const files = []
+    const page = await api.getPage(route)
 
-  modifyPageHtml(page, document, html => {
-    // fix relative links
-    for (const a of html.getElementsByTagName('a')) {
-      a.href = a.href.replace(apiUrl, config.publicPath.slice(0, -1))
-    }
+    modifyPageHtml(page, document, html => {
+      // fix relative links
+      for (const a of html.getElementsByTagName('a')) {
+        a.href = a.href.replace(process.env.NUXT_ENV_KIRBY_URL, process.env.NUXT_ENV_BASE_URL.slice(0, -1))
+      }
 
-    // download images and point img tags to the downloaded copies
-    for (const img of html.getElementsByTagName('img')) {
-      files.push(outputFile(`${dataDir}/${img.dataset.id}`, img.src))
-      img.src = `${clientDataDir}/${img.dataset.id}`
-    }
-  })
+      // download images and point img tags to the downloaded copies
+      for (const img of html.getElementsByTagName('img')) {
+        files.push(outputFile(`${dataDir}/${img.dataset.id}`, img.src))
+        img.src = `${clientDataDir}/${img.dataset.id}`
+      }
+    })
 
-  // save the modified page json for api to read during static site generation
-  // TODO remove once full static generation is supported (https://github.com/nuxt/rfcs/issues/22)
-  files.push(fs.outputJson(`${tmpDir}/${route}.json`, page))
+    // save the modified page json for api to read during static site generation
+    // TODO remove once full static generation is supported (https://github.com/nuxt/rfcs/issues/22)
+    files.push(fs.outputJson(`${tmpDir}/${route}.json`, page))
 
-  return Promise.all(files)
-}
+    return Promise.all(files)
+  }
 
-const outputFile = async (path, url) => {
-  if (await fs.pathExists(path)) return
+  const outputFile = async (path, url) => {
+    if (await fs.pathExists(path)) return
 
-  const [file] = await Promise.all([api.getFile(url), fs.ensureFile(path)])
+    const [file] = await Promise.all([api.getFile(url), fs.ensureFile(path)])
 
-  return new Promise(resolve => file.pipe(fs.createWriteStream(path)).on('finish', resolve))
+    return new Promise(resolve => file.pipe(fs.createWriteStream(path)).on('finish', resolve))
+  }
 }

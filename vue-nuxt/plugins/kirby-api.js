@@ -3,7 +3,7 @@ import axios from 'axios'
 let baseUrl
 
 const getPage = async id => {
-  const resp = await axios.get(`${baseUrl}/${id}?content=json`, { validateStatus: false })
+  const resp = await axios.get(`${baseUrl}/${id}.json`)
 
   return resp.data
 }
