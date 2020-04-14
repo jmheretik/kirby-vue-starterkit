@@ -1,12 +1,12 @@
 const php = require('node-php-server')
-const path = require('path')
-const rimraf = require('rimraf')
+const fs = require('fs-extra')
 
 module.exports = {
+  api: 'http://127.0.0.1:8000',
   host: '127.0.0.1',
-  port: 80,
+  port: 8000,
   baseDir: 'www',
-  assetsDir: 'assets',
+  assetsDir: 'vue-assets',
   indexPath: 'site/snippets/vue-index.php',
   routerPath: 'kirby/router.php',
   publicPath: '/',
@@ -23,6 +23,6 @@ module.exports = {
   },
 
   cleanAssets: () => {
-    rimraf.sync(path.join(module.exports.baseDir, module.exports.assetsDir))
+    fs.emptyDirSync(module.exports.baseDir + '/' + module.exports.assetsDir)
   }
 }
