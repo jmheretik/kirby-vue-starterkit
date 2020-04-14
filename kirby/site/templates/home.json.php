@@ -4,10 +4,11 @@ $data = [
   'title' => $page->title()->value(),
   'site' => [
     'title' => $site->title()->value(),
+    'routes' => $site->index()->published()->pluck('id'),
     'children' => array_values($site->children()->published()->map(function ($child) {
       return [
         'id' => $child->id(),
-        'title' => $child->content()->title()->value(),
+        'title' => $child->title()->value(),
         'template' => $child->intendedTemplate()->name(),
         'isListed' => $child->isListed(),
         'children' => array_values($child->children()->published()->map(function ($grandChild) {

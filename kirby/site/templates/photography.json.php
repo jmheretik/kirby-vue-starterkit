@@ -6,11 +6,8 @@ $data = [
     return [
       'id' => $album->id(),
       'title' => $album->title()->value(),
-      'cover' => $album->cover() === null ? null : [
-        'url' => $album->cover()->crop(800, 1000)->url(),
-        'urlHome' => $album->cover()->resize(1024, 1024)->url(),
-        'alt' => $album->cover()->alt()->value()
-      ]
+      'cover' => $album->cover() === null ? null : ['html' => $album->cover()->crop(800, 1000)->html(['data-id' => $album->cover()->crop(800, 1000)->id()])],
+      'coverHome' => $album->cover() === null ? null : ['html' => $album->cover()->resize(1024, 1024)->html(['data-id' => $album->cover()->resize(1024, 1024)->id()])]
     ];
   })->data())
 ];

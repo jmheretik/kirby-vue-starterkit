@@ -11,7 +11,7 @@
   <?php foreach ($gallery->images() as $image): ?>
   <figure>
     <a href="<?= $image->link()->or($image->url()) ?>">
-      <?= $image->crop(600, 800) ?>
+      <?= $image->crop(600, 800)->html(['data-id' => $image->crop(600, 800)->id()]) ?>
     </a>
   </figure>
   <?php endforeach ?>
