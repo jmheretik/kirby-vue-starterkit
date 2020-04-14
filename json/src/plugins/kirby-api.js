@@ -9,7 +9,7 @@ const getPage = async id => {
   modifyPageHtml(page, document, html => {
     // fix relative links
     for (const a of html.getElementsByTagName('a')) {
-      a.href = a.href.replace(apiUrl, process.env.BASE_URL.slice(0, -1))
+      a.href = a.href.replace(process.env.VUE_APP_KIRBY_URL, process.env.BASE_URL.slice(0, -1))
     }
   })
 
