@@ -1,0 +1,56 @@
+{
+  "name": "kirby-nuxt-starterkit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "cross-env NODE_ENV=generate nuxt generate --universal",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "nuxt": "^2.0.0",
+    "nuxt-merge-asyncdata": "^0.1.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "^2.0.0",
+    "@nuxtjs/eslint-module": "^1.0.0",
+    "babel-eslint": "^10.0.1",
+    "cross-env": "^7.0.2",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jsdom": "^16.2.2",
+    "node-php-server": "^0.1.2",
+    "prettier": "^1.19.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "extends": [
+      "@nuxtjs",
+      "prettier",
+      "prettier/vue",
+      "plugin:prettier/recommended",
+      "plugin:nuxt/recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {
+      "vue/no-v-html": "off",
+      "vue/require-prop-types": "off"
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 150
+  }
+}
