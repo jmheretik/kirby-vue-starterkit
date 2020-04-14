@@ -1,14 +1,4 @@
 .DS_Store
-node_modules
-
-# local env files
-.env.local
-.env.*.local
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # Editor directories and files
 .idea
@@ -20,6 +10,6 @@ yarn-error.log*
 *.sw?
 
 # built files
-www/assets
-www/site/snippets/vue-index.php
-www/favicon.ico
+kirby/vue-assets
+kirby/site/snippets/vue-index.php
+kirby/favicon.ico
