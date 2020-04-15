@@ -31,9 +31,9 @@ const getSite = async () => {
 }
 
 const getPage = async id => {
-  const page = await get(`pages/${id}?select=content`)
+  const page = await get(`pages/${id}?select=id,content`)
 
-  return page.content
+  return { id: page.id, ...page.content }
 }
 
 const getChildren = page => {

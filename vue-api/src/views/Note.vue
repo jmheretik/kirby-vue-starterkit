@@ -23,7 +23,7 @@ export default {
     await this.page
     this.page.text = null
 
-    const kt = await this.$api.getKirbyText(this.pageId, 'text')
+    const kt = await this.$api.getKirbyText(this.page.id, 'text')
     this.page.text = kt.text
   }
 }

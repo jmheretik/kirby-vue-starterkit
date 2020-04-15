@@ -28,7 +28,9 @@ export default {
     }
   },
   async created() {
-    const albums = await this.$api.getChildren(this.pageId)
+    await this.page
+
+    const albums = await this.$api.getChildren(this.page.id)
     this.albums = albums.filter(album => album.status === 'listed')
   }
 }

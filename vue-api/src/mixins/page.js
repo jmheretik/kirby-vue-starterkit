@@ -8,16 +8,18 @@ export default {
   },
   data() {
     return {
-      page: null,
-      pageId: ''
+      page: null
     }
   },
   created() {
     // transform route path to pageId for use with api
     const path = this.$route.path
-    this.pageId = (path.endsWith('/') ? path.slice(0, -1) : path).slice(1).replace('/', '+') || 'home'
+    const pageId = (path.endsWith('/') ? path.slice(0, -1) : path).slice(1).replace('/', '+') || 'home'
 
-    this.page = this.$api.getPage(this.pageId).then(page => (this.page = page))
+    this.page = this.$api
+      .getPage(pageId)
+      .then(page => (this.page = page))
+      .catch(async () => (this.page = await this.$api.getPage('error')))
   },
   async activated() {
     await this.page

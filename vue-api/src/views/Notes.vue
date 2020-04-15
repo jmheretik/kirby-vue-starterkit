@@ -28,7 +28,9 @@ export default {
     }
   },
   async created() {
-    let notes = await this.$api.getChildren(this.pageId)
+    await this.page
+
+    let notes = await this.$api.getChildren(this.page.id)
     notes = notes.filter(note => note.status === 'listed')
     notes.sort((a, b) => new Date(b.content.date) - new Date(a.content.date))
     this.notes = notes
