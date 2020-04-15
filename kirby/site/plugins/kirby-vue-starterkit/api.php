@@ -5,9 +5,6 @@
  * Taken from https://getkirby.com/docs/reference/plugins/extensions/api#custom-endpoints
  */
 return [
-    'basicAuth' => true,
-
-    // api extensions
     'routes' => [
         [
             // get kirbytext

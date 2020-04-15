@@ -10,7 +10,8 @@
 return [
     'debug' => true,
     'api' => [
-        'allowInsecure' => true
+        'allowInsecure' => true,
+        'basicAuth' => true
     ],
     'kirby-vue-starterkit.plugin.useVueIndex' => true
 ];
