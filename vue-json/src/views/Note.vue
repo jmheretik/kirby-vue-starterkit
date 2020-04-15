@@ -7,7 +7,7 @@
         <p v-if="page.tags" class="note-tags tags">{{ page.tags }}</p>
       </header>
 
-      <div class="note-text text" v-if="page.text" v-html="page.text.html" />
+      <div v-if="page.text" class="note-text text" v-html="page.text.html" />
     </article>
   </main>
 </template>

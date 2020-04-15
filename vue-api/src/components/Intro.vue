@@ -1,13 +1,13 @@
 <template>
   <header class="intro">
-    <h1>{{ pageTitle }}</h1>
+    <h1>{{ title }}</h1>
   </header>
 </template>
 
 <script>
 export default {
   name: 'Intro',
-  props: ['pageTitle']
+  props: ['title']
 }
 </script>
 

@@ -1,8 +1,8 @@
 <template>
   <main>
-    <Intro :pageTitle="page.title" />
+    <Intro :title="page.title" />
 
-    <div class="text"><span v-html="page.text"></span></div>
+    <div class="text" v-html="page.text" />
   </main>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   name: 'Default',
   mixins: [page],
   async created() {
-    await this.pageLoaded
+    await this.page
     this.page.text = null
 
     const kt = await this.$api.getKirbyText(this.pageId, 'text')

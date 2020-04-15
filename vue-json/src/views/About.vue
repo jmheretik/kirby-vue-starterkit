@@ -6,7 +6,7 @@
       <aside>
         <section>
           <h2>Address</h2>
-          <div class="text" v-if="page.address" v-html="page.address.html" />
+          <div v-if="page.address" class="text" v-html="page.address.html" />
         </section>
 
         <section>
@@ -34,7 +34,7 @@
         </section>
       </aside>
 
-      <div class="text" v-if="page.text" v-html="page.text.html" />
+      <div v-if="page.text" class="text" v-html="page.text.html" />
     </div>
   </main>
 </template>

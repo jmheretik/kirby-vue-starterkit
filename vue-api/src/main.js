@@ -1,17 +1,18 @@
 import Vue from 'vue'
 import App from '@/App.vue'
 import Router from '@/router'
-import KirbyApi from '@/api/kirby'
+import KirbyApi from '@/plugins/kirby-api'
 
 Vue.config.productionTip = false
 
 // self invoke async initialization
 ;(async () => {
-  const site = await KirbyApi.getSite()
+  const api = KirbyApi.init(process.env.VUE_APP_API_URL || window.location.origin + process.env.BASE_URL + 'api')
+  const site = await api.getSite()
   const router = await Router.init(site)
 
   // globals
-  Vue.prototype.$api = KirbyApi
+  Vue.prototype.$api = api
   Vue.prototype.$site = site
 
   new Vue({

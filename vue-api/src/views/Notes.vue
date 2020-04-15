@@ -1,6 +1,6 @@
 <template>
   <main>
-    <Intro :pageTitle="page.title" />
+    <Intro :title="page.title" />
 
     <div class="notes">
       <article v-for="note in notes" :key="note.id" class="note">
@@ -24,7 +24,7 @@ export default {
   mixins: [page, formatDateTime],
   data() {
     return {
-      notes: []
+      notes: null
     }
   },
   async created() {

@@ -7,7 +7,7 @@
         <p v-if="page.tags" class="note-tags tags">{{ tags }}</p>
       </header>
 
-      <div class="note-text text"><span v-html="page.text"></span></div>
+      <div class="note-text text" v-html="page.text" />
     </article>
   </main>
 </template>
@@ -20,7 +20,7 @@ export default {
   name: 'Note',
   mixins: [page, tags, formatDateTime],
   async created() {
-    await this.pageLoaded
+    await this.page
     this.page.text = null
 
     const kt = await this.$api.getKirbyText(this.pageId, 'text')
@@ -46,23 +46,23 @@ export default {
     deep selectors for v-html content
     https://vue-loader.vuejs.org/guide/scoped-css.html#dynamically-generated-content
 */
-span >>> .gallery {
+* >>> .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-gap: 1.5rem;
   margin-bottom: 1.5rem;
   padding: 3rem 0;
 }
-span >>> .gallery figure a {
+* >>> .gallery figure a {
   border: 0;
 }
-span >>> .gallery figure {
+* >>> .gallery figure {
   margin: 0;
   padding: 0;
 }
 
 @media screen and (min-width: 45rem) {
-  span >>> .gallery {
+  * >>> .gallery {
     margin-left: -3rem;
     margin-right: -3rem;
   }

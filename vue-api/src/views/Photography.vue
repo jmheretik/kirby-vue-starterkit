@@ -1,12 +1,12 @@
 <template>
   <main>
-    <Intro :pageTitle="page.title" />
+    <Intro :title="page.title" />
 
-    <ul class="albums" :data-even="albums.length % 2 === 0">
+    <ul v-if="albums" class="albums" :data-even="albums.length % 2 === 0">
       <li v-for="album in albums" :key="album.id">
         <router-link :to="'/' + album.id">
           <figure>
-            <KirbyImage v-if="album.content.cover[0]" :file="album.content.cover[0]" thumb="crop" :params="[800, 1000]" />
+            <KirbyImage v-if="album.content.cover" :file="album.content.cover[0]" thumb="crop" :params="[800, 1000]" />
 
             <figcaption>{{ album.content.title }}</figcaption>
           </figure>
@@ -24,7 +24,7 @@ export default {
   mixins: [page],
   data() {
     return {
-      albums: []
+      albums: null
     }
   },
   async created() {

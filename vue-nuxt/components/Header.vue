@@ -3,7 +3,9 @@
     <nuxt-link to="/" class="logo"> {{ $site.title }} </nuxt-link>
 
     <nav id="menu" class="menu">
-      <nuxt-link v-for="page in $site.children.filter(page => page.isListed)" :key="page.id" :to="'/' + page.id">{{ page.title }} </nuxt-link>
+      <nuxt-link v-for="page in $site.children.filter(page => page.isListed)" :key="page.id" :to="'/' + page.id">
+        {{ page.title }}
+      </nuxt-link>
     </nav>
   </header>
 </template>

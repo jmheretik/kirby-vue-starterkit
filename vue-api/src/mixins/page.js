@@ -8,27 +8,20 @@ export default {
   },
   data() {
     return {
-      page: {},
-      pageId: '',
-      pageLoaded: null
+      page: null,
+      pageId: ''
     }
   },
   created() {
-    // transform current vue-router path to use with Kirby API
-    this.pageId = this.$route.path.substr(1).replace('/', '+') || 'home'
+    // transform route path to pageId for use with api
+    const path = this.$route.path
+    this.pageId = (path.endsWith('/') ? path.slice(0, -1) : path).slice(1).replace('/', '+') || 'home'
 
-    // wait for page to be fetched from API and rendered
-    this.pageLoaded = new Promise(async resolve => {
-      this.page = await this.$api.getPage(this.pageId)
-
-      await this.$nextTick()
-
-      resolve()
-    })
+    this.page = this.$api.getPage(this.pageId).then(page => (this.page = page))
   },
   async activated() {
-    await this.pageLoaded
+    await this.page
 
-    this.$emit('update-title', this.page.title)
+    document.title = `${this.$site.title} | ${this.page.title}`
   }
 }

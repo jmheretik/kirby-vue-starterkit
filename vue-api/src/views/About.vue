@@ -1,14 +1,12 @@
 <template>
   <main>
-    <Intro :pageTitle="page.title" />
+    <Intro :title="page.title" />
 
     <div class="layout">
       <aside>
         <section>
           <h2>Address</h2>
-          <div class="text">
-            <span v-html="page.address"></span>
-          </div>
+          <div class="text" v-html="page.address" />
         </section>
 
         <section>
@@ -28,7 +26,7 @@
           <h2>On the web</h2>
           <div class="text">
             <ul>
-              <li v-for="social in page.social" :key="social.id">
+              <li v-for="social in page.social" :key="social.url">
                 <a :href="social.url">{{ social.platform }}</a>
               </li>
             </ul>
@@ -36,9 +34,7 @@
         </section>
       </aside>
 
-      <div class="text">
-        <span v-html="page.text"></span>
-      </div>
+      <div class="text" v-html="page.text" />
     </div>
   </main>
 </template>
@@ -50,7 +46,7 @@ export default {
   name: 'About',
   mixins: [page],
   async created() {
-    await this.pageLoaded
+    await this.page
     this.page.address = this.page.text = null
 
     const kts = await this.$api.getKirbyText(this.pageId, 'address', 'text')

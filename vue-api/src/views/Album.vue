@@ -2,7 +2,7 @@
   <main class="album">
     <article>
       <header>
-        <figure v-if="page.cover[0]" class="album-cover">
+        <figure v-if="page.cover" class="album-cover">
           <KirbyImage :file="page.cover[0]" thumb="crop" :params="[1024, 768]" />
 
           <figcaption>
@@ -12,12 +12,13 @@
       </header>
 
       <div class="album-text text">
-        <span v-html="page.description"></span>
+        <span v-html="page.description" />
+
         <p v-if="page.tags" class="album-tags tags">{{ tags }}</p>
       </div>
 
-      <ul class="album-gallery" :data-even="gallery.length % 2 === 0" :data-count="gallery.length">
-        <li v-for="image in gallery" :key="image.id">
+      <ul v-if="gallery" class="album-gallery" :data-even="gallery.length % 2 === 0" :data-count="gallery.length">
+        <li v-for="image in gallery" :key="image.url">
           <figure>
             <a :href="image.content.link || image.url">
               <KirbyImage :file="image" thumb="crop" :params="[800, 1000]" />
@@ -38,11 +39,11 @@ export default {
   mixins: [page, tags],
   data() {
     return {
-      gallery: []
+      gallery: null
     }
   },
   async created() {
-    await this.pageLoaded
+    await this.page
     this.page.description = null
 
     const kt = await this.$api.getKirbyText(this.pageId, 'description')
