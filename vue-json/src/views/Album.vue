@@ -3,7 +3,7 @@
     <article>
       <header>
         <figure v-if="page.cover" class="album-cover">
-          <img :src="page.cover.url" :alt="page.cover.alt" />
+          <span v-html="page.cover.html" />
 
           <figcaption>
             <h1>{{ page.headline }}</h1>
@@ -21,7 +21,7 @@
         <li v-for="image in page.gallery" :key="image.url">
           <figure>
             <a :href="image.link">
-              <img :src="image.url" :alt="image.alt" />
+              <span v-html="image.html" />
             </a>
           </figure>
         </li>

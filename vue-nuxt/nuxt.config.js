@@ -49,10 +49,9 @@ export default {
     htmlAttrs: { lang: 'en' },
     title: ssrHeadAttrs.title,
     meta: [
-      ...ssrHeadAttrs.meta,
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+      ...ssrHeadAttrs.meta
     ],
     link: [{ rel: 'icon', href: publicPath + 'favicon.ico' }],
     __dangerouslyDisableSanitizers: ssrHeadAttrs.__dangerouslyDisableSanitizers

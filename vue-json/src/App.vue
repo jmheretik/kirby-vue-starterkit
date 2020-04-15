@@ -4,7 +4,7 @@
       <Header />
 
       <keep-alive>
-        <router-view :key="$route.path" @update-title="updateTitle" />
+        <router-view :key="$route.path" />
       </keep-alive>
     </div>
 
@@ -21,11 +21,6 @@ export default {
   components: {
     Header,
     Footer
-  },
-  methods: {
-    updateTitle(pageTitle) {
-      document.title = `${this.$site.title} | ${pageTitle}`
-    }
   }
 }
 </script>

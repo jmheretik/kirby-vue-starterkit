@@ -19,6 +19,6 @@ export default {
   async activated() {
     await this.page
 
-    this.$emit('update-title', this.page.title)
+    document.title = `${this.$site.title} | ${this.page.title}`
   }
 }

@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-let baseUrl
+let apiUrl
 
 const getPage = async id => {
-  const resp = await axios.get(`${baseUrl}/${id}.json`)
+  const resp = await axios.get(`${apiUrl}/${id}.json`)
 
   return resp.data
 }
@@ -16,7 +16,7 @@ const getFile = async url => {
 
 export default {
   init: url => {
-    baseUrl = url
+    apiUrl = url
 
     return {
       getPage,
