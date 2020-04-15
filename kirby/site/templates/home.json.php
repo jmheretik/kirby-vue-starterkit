@@ -4,7 +4,6 @@ $data = [
   'title' => $page->title()->value(),
   'site' => [
     'title' => $site->title()->value(),
-    'routes' => $site->index()->published()->pluck('id'),
     'children' => array_values($site->children()->published()->map(function ($child) {
       return [
         'id' => $child->id(),

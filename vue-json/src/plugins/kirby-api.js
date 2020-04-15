@@ -2,6 +2,13 @@ import modifyPageHtml from '@/plugins/modify-page-html'
 
 let apiUrl
 
+const getSite = async () => {
+  const resp = await fetch(`${apiUrl}/home.json`)
+  const home = await resp.json()
+
+  return home.site
+}
+
 const getPage = async id => {
   const resp = await fetch(`${apiUrl}/${id}.json`)
   const page = await resp.json()
@@ -21,6 +28,7 @@ export default {
     apiUrl = url
 
     return {
+      getSite,
       getPage
     }
   }

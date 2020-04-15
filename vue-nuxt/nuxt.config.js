@@ -41,7 +41,7 @@ export default {
     publicPath: isProd && injectKirby ? kirby.assetsDir : '/_nuxt/'
   },
   generate: {
-    routes: isStatic ? () => api.getPage('home').then(home => home.site.routes.map(route => '/' + route)) : [],
+    routes: isStatic ? () => api.getSite().then(site => site.routes.map(route => '/' + route)) : [],
     exclude: isStatic ? [] : [/.*/],
     fallback: isStatic ? '404.html' : 'index.html'
   },

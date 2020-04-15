@@ -27,5 +27,5 @@ api.getPage = async id => {
 
 export default async ({ app }, inject) => {
   inject('api', api)
-  inject('site', (await api.getPage('home')).site)
+  inject('site', await api.getSite())
 }
