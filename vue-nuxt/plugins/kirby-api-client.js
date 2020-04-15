@@ -10,7 +10,6 @@ const api = KirbyApi.init(
 const apiGetPage = api.getPage
 
 api.getPage = async id => {
-  console.log()
   // TODO remove once full static generation is supported (https://github.com/nuxt/rfcs/issues/22)
   const page = await (!process.env.isStatic ? apiGetPage(id) : require(`../tmp/${id}.json`))
 
