@@ -12,6 +12,7 @@ import page from '@/mixins/page'
 export default {
   layout: 'default',
   mixins: [page],
+  props: ['error'],
 
   // TODO replace with asyncData once it works at least in error layout (https://github.com/nuxt/nuxt.js/issues/3776)
   data() {
@@ -20,9 +21,7 @@ export default {
     }
   },
   created() {
-    const pageId = !process.env.isStatic ? this.$root.context.app.$pageId : 'error'
-
-    this.page = this.$api.getPage(pageId).then(page => (this.page = page))
+    this.page = !process.env.isStatic ? this.error.page : this.$api.getPage('error').then(page => (this.page = page))
   }
 }
 </script>

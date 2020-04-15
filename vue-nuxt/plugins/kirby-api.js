@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _flattenDeep from 'lodash/flattenDeep'
 
 let apiUrl
 
@@ -6,7 +7,7 @@ const getSite = async () => {
   const resp = await axios.get(`${apiUrl}/home.json`)
   const site = resp.data.site
 
-  site.routes = site.children.map(page => [page.id, page.children.map(child => child.id)]).flat(2)
+  site.routes = _flattenDeep(site.children.map(page => [page.id, page.children.map(child => child.id)]))
 
   return site
 }

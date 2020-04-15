@@ -14,7 +14,10 @@ export default {
     const path = this.$route.path
     const pageId = (path.endsWith('/') ? path.slice(0, -1) : path).slice(1) || 'home'
 
-    this.page = this.$api.getPage(pageId).then(page => (this.page = page))
+    this.page = this.$api
+      .getPage(pageId)
+      .then(page => (this.page = page))
+      .catch(async () => (this.page = await this.$api.getPage('error')))
   },
   async activated() {
     await this.page

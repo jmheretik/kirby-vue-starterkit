@@ -7,7 +7,13 @@ const api = KirbyApi.init(
     : process.env.NUXT_ENV_KIRBY_URL
 )
 
+// overload original api methods
+const apiGetSite = api.getSite
 const apiGetPage = api.getPage
+
+api.getSite = async () => {
+  return await (!process.env.isStatic ? apiGetSite() : require(`../tmp/home.json`).site)
+}
 
 api.getPage = async id => {
   // TODO remove once full static generation is supported (https://github.com/nuxt/rfcs/issues/22)

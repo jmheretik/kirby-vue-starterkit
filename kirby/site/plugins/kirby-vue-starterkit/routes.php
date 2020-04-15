@@ -6,14 +6,8 @@
  */
 return [
     [
-        'pattern' => ['.json', '(:all).json'],
-        'action'  => function ($pageId = 'home') {
-            kirby()->response()->json();
-            return (page($pageId) ?? page('error'))->render([], 'json');
-        }
-    ],
-    [
-        'pattern' => ['(.*)'],
+        // match everything that doesn't end with .json
+        'pattern' => ['', '(.*)(?<!\.json)'],
         'action'  => function ($pageId = 'home') {
             return tpl::load(kirby()->roots()->snippets() . DS . 'vue-index.php', ['site' => site(), 'page' => page($pageId) ?? page('error')], false);
         }

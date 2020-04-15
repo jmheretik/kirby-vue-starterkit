@@ -8,16 +8,14 @@ export default {
     // redirect /home to /
     if (app.$pageId === 'home' && name !== 'index') return redirect('/')
   },
-  validate({ app }) {
-    return app.$site.routes.some(route => route === app.$pageId)
-  },
   components: {
     Intro
   },
-  async asyncData({ app }) {
-    return {
-      page: await app.$api.getPage(app.$pageId)
-    }
+  asyncData({ app, error }) {
+    return app.$api
+      .getPage(app.$pageId)
+      .then(page => ({ page }))
+      .catch(async () => error({ page: await app.$api.getPage('error') }))
   },
   head() {
     return {
