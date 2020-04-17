@@ -10,6 +10,6 @@
 *.sw?
 
 # built files
-kirby/vue-assets
-kirby/site/snippets/vue-index.php
 kirby/favicon.ico
+kirby/vue-assets
+kirby/site/plugins/kirby-vue-starterkit/vue-index.php

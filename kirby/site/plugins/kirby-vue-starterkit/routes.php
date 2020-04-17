@@ -9,7 +9,7 @@ return [
         // match everything that doesn't end with .json
         'pattern' => ['', '(.*)(?<!\.json)'],
         'action'  => function ($pageId = 'home') {
-            return tpl::load(kirby()->roots()->snippets() . DS . 'vue-index.php', ['site' => site(), 'page' => page($pageId) ?? page('error')], false);
+            return tpl::load(kirby()->root('plugins') . '/kirby-vue-starterkit/vue-index.php', ['site' => site(), 'page' => page($pageId) ?? page('error')], false);
         }
     ]
 ];
