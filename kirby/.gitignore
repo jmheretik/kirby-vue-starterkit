@@ -30,6 +30,9 @@ Icon
 /site/accounts/*
 !/site/accounts/index.html
 
+# Read only api account
+!/site/accounts/WLwopRwr
+
 # Sessions
 # ---------------
 
