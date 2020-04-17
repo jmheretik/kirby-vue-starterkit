@@ -2,28 +2,20 @@ const php = require('node-php-server')
 const fs = require('fs-extra')
 const kirby = require('../kirby.config')
 
-const serveKirby = true
-const injectKirby = true
-const publicPath = '/'
-const apiUrl = ''
-
-process.env.VUE_APP_API_URL = apiUrl
-process.env.VUE_APP_KIRBY_URL = apiUrl || `http://${kirby.host}:${kirby.port}`
-
-if (process.env.NODE_ENV === 'development' && serveKirby) kirby.start(php)
-if (process.env.NODE_ENV === 'production' && injectKirby) kirby.cleanAssets(fs)
+if (process.env.NODE_ENV === 'development' && kirby.serve) kirby.start(php)
+if (process.env.NODE_ENV === 'production') fs.emptyDirSync(kirby.inject ? kirby.base + '/' + kirby.assetsDir : 'dist')
 
 module.exports = {
-  outputDir: injectKirby ? kirby.base : 'dist',
-  assetsDir: injectKirby ? kirby.assetsDir : '',
-  indexPath: injectKirby ? kirby.indexPath : 'index.html',
-  publicPath: publicPath,
+  outputDir: kirby.inject ? kirby.base : 'dist',
+  assetsDir: kirby.inject ? kirby.assetsDir : '',
+  indexPath: kirby.inject ? kirby.indexPath : 'index.html',
+  publicPath: process.env.PUBLIC_PATH,
   productionSourceMap: false,
   devServer: {
     proxy: {
       '/*.json': {
         target: process.env.VUE_APP_KIRBY_URL,
-        pathRewrite: { [publicPath]: '/' }
+        pathRewrite: { [process.env.PUBLIC_PATH]: '/' }
       }
     }
   }

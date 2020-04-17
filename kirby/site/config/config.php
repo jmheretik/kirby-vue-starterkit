@@ -13,5 +13,5 @@ return [
         'allowInsecure' => true,
         'basicAuth' => true
     ],
-    'kirby-vue-starterkit.plugin.useVueIndex' => true
+    'kirby-vue-starterkit.plugin.useVueIndex' => false
 ];

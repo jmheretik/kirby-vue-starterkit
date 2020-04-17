@@ -1,11 +1,10 @@
 import KirbyApi from './kirby-api'
 import modifyPageHtml from './modify-page-html'
 
-const api = KirbyApi.init(
-  !process.env.isStatic
-    ? process.env.NUXT_ENV_API_URL || (window.location.origin + process.env.NUXT_ENV_BASE_URL).slice(0, -1)
-    : process.env.NUXT_ENV_KIRBY_URL
-)
+const apiUrl =
+  process.env.NODE_ENV !== 'development' ? process.env.NUXT_ENV_KIRBY_URL : window.location.origin + process.env.NUXT_ENV_BASE_URL.slice(0, -1)
+
+const api = KirbyApi.init(apiUrl)
 
 // overload original api methods
 const apiGetSite = api.getSite
