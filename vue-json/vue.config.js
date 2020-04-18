@@ -3,7 +3,9 @@ const fs = require('fs-extra')
 const kirby = require('../kirby.config')
 
 if (process.env.NODE_ENV === 'development' && kirby.serve) kirby.start(php)
-if (process.env.NODE_ENV === 'production') fs.emptyDirSync(kirby.inject ? kirby.base + '/' + kirby.assetsDir : 'dist')
+if (process.env.NODE_ENV === 'production' && kirby.inject) kirby.clean(fs)
+
+fs.removeSync('dist')
 
 module.exports = {
   outputDir: kirby.inject ? kirby.base : 'dist',

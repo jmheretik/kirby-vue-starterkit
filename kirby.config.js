@@ -19,5 +19,10 @@ module.exports = {
     console.log(`i Kirby running at: http://${module.exports.host}:${module.exports.port}`)
   },
 
-  stop: php => php.close()
+  stop: php => php.close(),
+
+  clean: fs => {
+    fs.removeSync(module.exports.base + '/' + module.exports.assetsDir)
+    fs.removeSync(module.exports.base + '/' + module.exports.indexPath)
+  }
 }
