@@ -1,86 +1,81 @@
-# Kirby API/[JSON](https://github.com/jmheretik/kirby-json-vue-starterkit#kirby-apijson-vue-starterkit) Vue starterkit
+# Kirby + Vue.js starterkit
 
+This project aims to be a starting point for people wanting to use [Vue.js](https://vuejs.org) with [Kirby](https://getkirby.com) as headless CMS.
 
-This is a proof-of-concept project which uses [Kirby](https://getkirby.com/) as a headless CMS at the backend and [Vue.js](https://vuejs.org/) as a UI library at the frontend. The content is fetched using the Kirby's [built-in REST API](https://getkirby.com/docs/guide/api/introduction).
+It's a simple, zero-setup, 1:1 port of the [Kirby 3 starterkit](https://github.com/getkirby/starterkit) frontend (snippets, templates and their corresponding JS/CSS) to Vue.js [single file components](https://vuejs.org/v2/guide/single-file-components.html).
 
-- If you wish to use [JSON content representation](https://getkirby.com/docs/guide/templates/content-representations) instead of the API, check my other project [kirby-json-vue-starterkit](https://github.com/jmheretik/kirby-json-vue-starterkit).
+You can benefit from all the standard tools used in modern frontend development. For more details visit [Vue CLI](https://cli.vuejs.org/).
 
-Snippets, templates and their specific JS/CSS from the Kirby [Starterkit](https://github.com/getkirby/starterkit) have been ported to Vue.js [Single File Components](https://vuejs.org/v2/guide/single-file-components.html).  
-This project is trying to be a simple, zero-setup, straightforward, 1:1 port with the least possible modifications done to the original Starterkit in order to serve as a nice starting point for people wanting to use Vue.js with Kirby.
+---
 
-The project benefits from all the standard tools used in modern frontend development. For more details visit [Vue CLI](https://cli.vuejs.org/).
+The frontend comes in 3 different flavours:
+
+1. **API** - the [vue-api](vue-api) folder. The content is fetched using the Kirby's [built-in REST API](https://getkirby.com/docs/guide/api/introduction). This was made like a proof-of-concept project and needed a few workarounds to work properly.
+
+2. **JSON** - the [vue-json](vue-json) folder. Here, the content is fetched using [JSON content representations](https://getkirby.com/docs/guide/templates/content-representations), which proved to be a much more suitable approach for now.
+
+3. **NUXT** - the [vue-nuxt](vue-nuxt) folder. Finally, this project too uses JSON content representations to fetch the content but also includes many of the goodies [Nuxt.js](https://nuxtjs.org) has to offer (including the static site generation)!
+
 
 ## Demo
 
-https://index.heretik.dev/kirby-api-vue-starterkit (and the original starterkit for comparison is [here](https://index.heretik.dev/kirby-starterkit))
+[API](https://index.heretik.dev/kirby-vue-starterkit/vue-api) • [JSON](https://index.heretik.dev/kirby-vue-starterkit/vue-json) • [NUXT](https://index.heretik.dev/kirby-vue-starterkit/vue-nuxt) • [NUXT static site](https://jmheretik.github.io/kirby-vue-starterkit) (hosted here in gh-pages branch, as a proof :) • [original starterkit](https://index.heretik.dev/kirby-starterkit) (for comparison)
+
+> inspect the network traffic to see the differences
+
 
 ## Requirements
 
-- Node.js with npm is required to install the project
+- Node.js with npm is required to install the projects
 - Kirby runs on PHP 7.1+
   - Kirby is **not** a free software. You can try it for free on your local machine but in order to run Kirby on a public server you must purchase a valid license at https://getkirby.com/buy
+  
 
-## Project setup
+## Setup
 
-### Frontend
-```
-npm install
-```
-- to customize configuration see Vue CLI [Configuration Reference](https://cli.vuejs.org/config/)
+1. choose the frontend variant that suits you best
+2. `cd` into its folder
+3. run `npm install`
 
-### Backend
-
-- out of the box the backend is served using the PHP built-in development server, however:
-  - you can serve it any way you want but remember to specify the `host` and `port` in the [kirby.config.js](kirby.config.js) file
-
-1. if using the built-in server, run it with `npm run serve:backend`
-2. open kirby panel and create a new user with preconfigured read-only role **API**
-3. add its credentials to the [.env.local](.env.local) file
 
 ## Usage
 
-### Serves both backend and frontend
-```
-npm start
-```
+#### Frontend
 
-### Runs Kirby 3 backend using PHP built-in development server
-```
-npm run serve:backend
-```
+Follow the README in the project folder of your chosen variant.
 
-### Compiles Vue frontend and hot-reloads for development
-```
-npm run serve:frontend
-```
+#### Backend
 
-### Lints and fixes files
-```
-npm run lint
-```
+Out of the box the backend is automatically served while developing using the PHP built-in development server.
 
-### Compiles and minifies for production
-Firstly, adjust the `publicPath` in [kirby.config.js](kirby.config.js) file (more info [here](https://cli.vuejs.org/config/#publicpath)). Then run:
 
-```
-npm run build
-```
+## Deploying
 
-This builds the frontend assets in `www/assets` directory and the index file as a kirby snippet in `www/site/snippets/vue-index.php`.
+- don't forget to set `allowInsecure` (if you're deploying to https) and `debug` to **false** in [kirby/site/config/config.php](kirby/site/config/config.php)
 
-### Deploying
+Deploy the contents of `kirby` folder to the production server.
 
-- set `allowInsecure` (if you're deploying to https) and `debug` to **false** in [www/site/config/config.php](www/site/config/config.php)
+> if you're also injecting into Kirby, make sure you build the Vue app *first* so the `kirby` folder contains everything needed
 
-Deploy the contents of `www` folder to the production server at the corresponding publicPath.
+
+## Config
+
+All Kirby related config is found in the [kirby.config.js](kirby.config.js) file:
+- `serve` specifies if you want the backend to be automatically served while developing
+- `host` and `port` specifies the adress where you want it served
+- `inject` specifies if you want the built Vue app to be injected straight to Kirby
+  - this is useful if you want to *replace* Kirby's frontend with your Vue app (e.g. you want your Vue app to reside in the same directory and URL as Kirby and have it handle all your frontend *instead of* Kirby's templates)
+  - if this is **true** remember to also set `kirby-vue-starterkit.plugin.useVueIndex` in [kirby/site/config/config.php](kirby/site/config/config.php) to **true** as well, so that everything is redirected to your Vue app instead of Kirby's templates
+- `base`, `assetsDir` and `indexPath` specify where you want the parts of built Vue app to be injected
+
 
 ## Notes
 
-- Vue.js mixin `page` [src/mixins/page.js](src/mixins/page.js) roughly corresponds to the `$page` object in Kirby, but only the functionality needed in Starterkit is present.
-- Vue.js components in [src/components](src/components) folder correspond to Kirby snippets.
-- Vue.js views in in [src/views](src/views) folder correspond to Kirby templates and the routes are being automatically resolved.
-  - If you add a new page with a new blueprint you also need to manually add a new **View** (exactly as you would add a new **Template** if you were working on a frontend in Kirby).
+I tried to make as little modifications to the original Starterkit as possible and package it all in an optional non-intrusive Kirby plugin. However, here is a list of all the changes made to the original starterkit:
 
-- For now there is no nice way how to get an image's `thumb` or field's `kirbytext` easily using the Kirby REST API so for that the API was extended with some custom endpoints ([www/site/config/config.php](www/site/config/config.php)).
-  - This being the only modification done to the Kirby Starterkit.
-  - It will be removed in future if a nicer solution gets exposed by Kirby.
+- [kirby/site/accounts/WLwopRwr](kirby/site/accounts/WLwopRwr): added a preconfigured API user account with read-only rights
+- [kirby/site/blueprints/users/api.yml](kirby/site/blueprints/users/api.yml): added a read-only API user role
+- [kirby/site/plugins/kirby-vue-starterkit](kirby/site/plugins/kirby-vue-starterkit): added a plugin which adds the neccessary extensions to Kirby
+- [kirby/site/config/config.php](kirby/site/config/config.php): api and kirby-vue-starterkit plugin options configured
+- [kirby/site/snippets/gallery.php](kirby/site/snippets/gallery.php): added data-id attribute to images for nuxt static site generation to work
+- [kirby/site/templates/\*.json.php](kirby/site/templates): added .json templates for JSON content representations to work
