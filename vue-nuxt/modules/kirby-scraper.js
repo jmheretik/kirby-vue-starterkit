@@ -7,8 +7,8 @@ const dom = new JSDOM('<!doctype html><html><body></body></html>')
 const document = dom.window.document
 
 const tmpDir = 'tmp'
-const dataDir = 'static/data'
-const clientDataDir = process.env.NUXT_ENV_BASE_URL + 'data'
+const dataDir = 'static/_data'
+const clientDataDir = process.env.NUXT_ENV_BASE_URL + '_data'
 
 const api = KirbyApi.init(process.env.NUXT_ENV_KIRBY_URL)
 
