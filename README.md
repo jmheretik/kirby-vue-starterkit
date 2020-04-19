@@ -66,7 +66,7 @@ All Kirby related config is found in the [kirby.config.js](kirby.config.js) file
 - `inject` specifies if you want the built Vue app to be injected straight to Kirby
   - this is useful if you want to *replace* Kirby's frontend with your Vue app (e.g. you want your Vue app to reside in the same directory and URL as Kirby and have it handle all your frontend *instead of* Kirby's templates)
   - if this is **true** remember to also set `kirby-vue-starterkit.plugin.useVueIndex` in [kirby/site/config/config.php](kirby/site/config/config.php) to **true** as well, so that everything is redirected to your Vue app instead of Kirby's templates
-- `base`, `assetsDir` and `indexPath` specify where you want the parts of built Vue app to be injected
+- `base`, `assetsDir` and `indexPath` specify where you want to inject the parts of the built Vue app
 
 
 ## Notes

@@ -30,12 +30,14 @@ All the default config is loaded from the [.env](.env) file:
 - `PUBLIC_PATH` see https://cli.vuejs.org/config/#publicpath
 - `VUE_APP_KIRBY_URL` specifies the URL where kirby is hosted (used for dev proxy, rewriting relative links in KirbyText, fetching JSON content...)
 
-As usual, in a Vue.js app, if you need to specify different values for the *production* mode, create a **.env.production** file and values provided there will overwrite the default ones. More info here: https://cli.vuejs.org/guide/mode-and-env.html#environment-variables.
+As usual in a Vue.js app, if you need to specify different values for the *production* mode - create a **.env.production** file and values provided there will overwrite the default ones.
+
+More info here: https://cli.vuejs.org/guide/mode-and-env.html#environment-variables.
 
 
 ## Notes
 
-- Vue.js mixin `page` [src/mixins/page.js](src/mixins/page.js) roughly corresponds to the `$page` object in Kirby, but only the functionality needed in Starterkit is present.
-- Vue.js components in [src/components](src/components) folder correspond to Kirby snippets.
-- Vue.js views in in [src/views](src/views) folder correspond to Kirby templates and the routes are being automatically resolved.
+- Vue.js `page` mixin in the [src/mixins/page.js](src/mixins/page.js) file roughly corresponds to the Kirby's `$page` object, but only the functionality needed for starterkit is present.
+- Vue.js components in the [src/components](src/components) folder correspond to Kirby snippets.
+- Vue.js views in the [src/views](src/views) folder correspond to Kirby templates and the routes are being automatically resolved.
   - If you add a new page in Kirby with a new blueprint you also need to manually add a new **View** here and a new **.json** template in the backend to provide the frontend with the data you require.
