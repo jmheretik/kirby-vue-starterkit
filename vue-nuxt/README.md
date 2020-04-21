@@ -23,7 +23,7 @@ npm run build
 npm run generate
 ```
 
-> Only the SPA build and the statically generated site are supported for now. I'm not sure how should the SSR version look like since all of Kirby is written in PHP.
+> Only the SPA build and the statically generated site are supported for now.
 
 
 ## Deploying
