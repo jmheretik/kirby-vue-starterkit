@@ -23,7 +23,7 @@ npm run build
 npm run generate
 ```
 
-> Only the SPA build and the statically generated site are supported for now.
+> Only the SPA build and the statically generated site are supported. No SSR build for now.
 
 
 ## Deploying
