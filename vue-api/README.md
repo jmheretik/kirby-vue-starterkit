@@ -4,6 +4,12 @@ npm install
 ```
 To customize the configuration see Vue CLI [Configuration Reference](https://cli.vuejs.org/config/).
 
+First run:
+1. start backend (just run `npm run dev` if you decided to serve backend automatically in [kirby.config.js](https://github.com/jmheretik/kirby-vue-starterkit#config))
+2. open kirby panel and create a new user with preconfigured read-only role **API**
+3. add its credentials to the [.env](.env) file
+
+
 
 ## Usage
 
