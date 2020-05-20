@@ -73,7 +73,6 @@ All Kirby related config is found in the [kirby.config.js](kirby.config.js) file
 
 I tried to make as little modifications to the original Starterkit as possible and package it all in an optional non-intrusive Kirby plugin. However, here is a list of all the changes made to the original starterkit:
 
-- [kirby/site/accounts/WLwopRwr](kirby/site/accounts/WLwopRwr): added a preconfigured API user account with read-only rights
 - [kirby/site/blueprints/users/api.yml](kirby/site/blueprints/users/api.yml): added a read-only API user role
 - [kirby/site/plugins/kirby-vue-starterkit](kirby/site/plugins/kirby-vue-starterkit): added a plugin which adds the neccessary extensions to Kirby
 - [kirby/site/config/config.php](kirby/site/config/config.php): api and kirby-vue-starterkit plugin options configured
