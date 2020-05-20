@@ -55,7 +55,7 @@ export default {
     ...(isProd && kirby.inject ? ['modules/kirby-inject'] : [])
   ],
   proxy: {
-    '/*.json': {
+    '**/*.json': {
       target: process.env.NUXT_ENV_KIRBY_URL,
       pathRewrite: { [process.env.NUXT_ENV_BASE_URL]: '/' }
     }
