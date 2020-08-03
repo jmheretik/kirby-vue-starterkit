@@ -5,8 +5,7 @@ import KirbyApi from './plugins/kirby-api'
 const isProd = process.env.NODE_ENV === 'production'
 const isStatic = process.env.NODE_ENV === 'generate'
 
-// parse and merge .env config files
-require('dotenv').config()
+// merge mode specific .env config file
 Object.entries(require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` }).parsed || {}).forEach(([key, value]) => (process.env[key] = value))
 
 const api = KirbyApi.init(process.env.NUXT_ENV_KIRBY_URL)
