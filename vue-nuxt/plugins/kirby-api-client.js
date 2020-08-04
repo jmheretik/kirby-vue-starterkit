@@ -5,7 +5,7 @@ const apiUrl =
 
 export default async ({ app }, inject) => {
   const api = KirbyApi.init(apiUrl)
-  const site = process.env.site ?? (await api.getSite())
+  const site = process.env.isStatic ? process.env.site : await api.getSite()
 
   inject('api', api)
   inject('site', site)

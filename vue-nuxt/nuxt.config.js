@@ -21,11 +21,12 @@ if (isProd && kirby.inject) {
 
 export default async () => {
   const api = KirbyApi.init(process.env.NUXT_ENV_KIRBY_URL)
-  let server, site
+  let server, site, errorPage
 
   if (isStatic) {
     server = await kirby.start(php)
     site = await api.getSite()
+    errorPage = await api.getPage('error')
     server.stop()
   }
 
@@ -36,8 +37,7 @@ export default async () => {
       base: process.env.NUXT_ENV_BASE_URL
     },
     env: {
-      isStatic,
-      ...(isStatic ? { site } : {})
+      ...(isStatic ? { isStatic, site, errorPage } : {})
     },
     build: {
       publicPath: isProd && kirby.inject ? kirby.assetsDir : '/_nuxt/'
