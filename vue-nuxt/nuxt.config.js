@@ -3,7 +3,7 @@ import kirby from '../kirby.config'
 import KirbyApi from './plugins/kirby-api'
 
 const isProd = process.env.NODE_ENV === 'production'
-const isStatic = process.env.NODE_ENV === 'generate'
+const isStatic = process.env.NODE_ENV === 'static'
 
 // merge mode specific .env config file
 Object.entries(require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` }).parsed || {}).forEach(([key, value]) => (process.env[key] = value))

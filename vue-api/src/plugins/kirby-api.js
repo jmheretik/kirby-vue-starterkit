@@ -45,8 +45,8 @@ const getKirbyText = async (page, ...fields) => {
 
   const kt = await get(`pages/${page}/kt?select=${select}`)
 
-  modifyHtml(kt, document, html => {
-    // fix relative links
+  // fix relative links
+  modifyHtml(kt, html => {
     for (const a of html.getElementsByTagName('a')) {
       a.href = a.href.replace(process.env.VUE_APP_KIRBY_URL, process.env.BASE_URL.slice(0, -1))
     }

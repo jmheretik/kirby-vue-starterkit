@@ -13,8 +13,8 @@ const getPage = async id => {
   const resp = await fetch(`${apiUrl}/${id}.json`)
   const page = await resp.json()
 
-  modifyPageHtml(page, document, html => {
-    // fix relative links
+  // fix relative links
+  modifyPageHtml(page, html => {
     for (const a of html.getElementsByTagName('a')) {
       a.href = a.href.replace(process.env.VUE_APP_KIRBY_URL, process.env.BASE_URL.slice(0, -1))
     }

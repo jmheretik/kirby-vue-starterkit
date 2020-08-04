@@ -1,5 +1,5 @@
 // run a provided callback directly on html of nested page objects that contain it
-export default (page, document, callback) => {
+export default (page, callback) => {
   // allows parsing html without loading anything (e.g. img src trigger)
   const virtualDocument = document.implementation.createHTMLDocument()
 
