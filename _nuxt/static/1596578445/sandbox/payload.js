@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/sandbox", {data:[{page:{title:"Sandbox",text:{html:""}}}],fetch:[],mutations:void 0});
