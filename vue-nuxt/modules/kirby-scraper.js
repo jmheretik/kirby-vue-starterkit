@@ -9,7 +9,7 @@ export default function() {
   this.nuxt.hook('generate:before', async () => {
     await fs.emptyDir(imgDir)
 
-    await Promise.all((await this.options.generate.routes()).map(downloadImages))
+    await Promise.all(this.options.generate.routes.map(downloadImages))
 
     console.log('√ Images downloaded')
   })
