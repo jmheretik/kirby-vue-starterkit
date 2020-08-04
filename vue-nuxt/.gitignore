@@ -85,7 +85,3 @@ sw.*
 
 # Vim swap files
 *.swp
-
-# built files
-static/data
-tmp
