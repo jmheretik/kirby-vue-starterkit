@@ -25,6 +25,7 @@ if (!isProd && kirby.serve) kirby.start(php)
 
 export default {
   mode: 'spa',
+  target: isStatic ? 'static' : 'server',
   router: {
     base: process.env.NUXT_ENV_BASE_URL
   },
