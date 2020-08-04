@@ -8,18 +8,18 @@ module.exports = {
   assetsDir: 'vue-assets',
   indexPath: 'site/plugins/kirby-vue-starterkit/vue-index.php',
 
-  start: php => {
-    php.createServer({
+  start: async php => {
+    const server = await php({
       hostname: module.exports.host,
       port: module.exports.port,
       base: module.exports.base,
-      router: 'kirby/router.php'
+      router: module.exports.base + '/kirby/router.php'
     })
 
-    console.log(`i Kirby running at: http://${module.exports.host}:${module.exports.port}`)
-  },
+    console.log('\x1b[36m%s\x1b[0m', 'i', `Kirby running at: ${server.url}`)
 
-  stop: php => php.close(),
+    return server
+  },
 
   clean: fs => {
     fs.removeSync(module.exports.base + '/' + module.exports.assetsDir)

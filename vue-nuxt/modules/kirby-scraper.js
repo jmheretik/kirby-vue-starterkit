@@ -11,7 +11,7 @@ export default function() {
 
     await Promise.all(this.options.generate.routes.map(downloadImages))
 
-    console.log('√ Images downloaded')
+    console.log('\x1b[32m%s\x1b[0m', '√', 'Images scraped from Kirby')
   })
 
   this.nuxt.hook('generate:done', async () => {

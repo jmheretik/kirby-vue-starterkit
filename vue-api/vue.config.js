@@ -1,4 +1,4 @@
-const php = require('node-php-server')
+const php = require('php-server')
 const fs = require('fs-extra')
 const kirby = require('../kirby.config')
 

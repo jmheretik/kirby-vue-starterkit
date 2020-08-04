@@ -1,12 +1,12 @@
-const php = require('node-php-server')
+const php = require('php-server')
 import kirby from '../kirby.config'
 import KirbyApi from './plugins/kirby-api'
 
-const isProd = process.env.NODE_ENV === 'production'
-const isStatic = process.env.NODE_ENV === 'static'
-
 // merge mode specific .env config file
 Object.entries(require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` }).parsed || {}).forEach(([key, value]) => (process.env[key] = value))
+
+const isProd = process.env.NODE_ENV === 'production'
+const isStatic = process.env.NODE_ENV === 'static'
 
 // head attributes that need to be rendered server-side (e.g. Open Graph or Twitter meta tags)
 const ssrHeadAttrs = { title: null, meta: [], __dangerouslyDisableSanitizers: [] }
@@ -19,11 +19,15 @@ if (isProd && kirby.inject) {
   ssrHeadAttrs.__dangerouslyDisableSanitizers.push('title')
 }
 
-if (!isProd && kirby.serve) kirby.start(php)
-
 export default async () => {
   const api = KirbyApi.init(process.env.NUXT_ENV_KIRBY_URL)
-  const site = await api.getSite()
+  let server, site
+
+  if (isStatic) {
+    server = await kirby.start(php)
+    site = await api.getSite()
+    server.stop()
+  }
 
   return {
     mode: 'spa',
@@ -70,10 +74,11 @@ export default async () => {
       }
     },
     hooks: {
-      generate: {
-        done: () => {
-          if (!isProd && kirby.serve) kirby.stop(php)
-        }
+      ready: async () => {
+        if (!isProd && kirby.serve) server = await kirby.start(php)
+      },
+      close: () => {
+        if (!isProd && kirby.serve) server.stop()
       }
     }
   }
