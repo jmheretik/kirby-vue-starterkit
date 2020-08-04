@@ -24,7 +24,7 @@ const downloadImages = async route => {
   const files = []
 
   modifyPageHtml(page, html => {
-    files.push([...html.getElementsByTagName('img')].map(img => outputFile(`${imgDir}/${img.dataset.id}`, img.src)))
+    files.push(...[...html.getElementsByTagName('img')].map(img => outputFile(`${imgDir}/${img.dataset.id}`, img.src)))
   })
 
   return Promise.all(files)
