@@ -44,11 +44,11 @@ The frontend comes in 3 different flavours:
 
 ## Usage
 
-#### Frontend
+#### frontend
 
 ✔️ Make sure to follow the README in the project folder of your chosen variant.
 
-#### Backend
+#### backend
 
 Out of the box the backend is automatically served while developing using the PHP built-in development server.
 
@@ -66,8 +66,9 @@ All Kirby related config is found in the [kirby.config.js](kirby.config.js) file
 
 ## Deploying
 
-1. don't forget to set `debug` and `allowInsecure` (if you're deploying to https) to **false** in [kirby/site/config/config.php](kirby/site/config/config.php)
-2. deploy the contents of [kirby](kirby) folder to the production server
+Deploy the contents of `kirby` folder to the production server.
+
+> ⚠️ don't forget to set `debug` and `allowInsecure` (if you're deploying to https) to **false** in [kirby/site/config/config.php](kirby/site/config/config.php)
 
 > ⚠️ if you're also injecting into Kirby, make sure you build the Vue app *first* so the `kirby` folder contains everything needed
 
