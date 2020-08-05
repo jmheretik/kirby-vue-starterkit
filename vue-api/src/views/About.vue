@@ -49,9 +49,9 @@ export default {
     await this.page
     this.page.address = this.page.text = null
 
-    const kts = await this.$api.getKirbyText(this.page.id, 'address', 'text')
-    this.page.address = kts.address
-    this.page.text = kts.text
+    const { address, text } = await this.$api.getKirbyText(this.page.id, 'address', 'text')
+    this.page.address = address
+    this.page.text = text
   }
 }
 </script>

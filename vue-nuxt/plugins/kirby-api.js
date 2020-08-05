@@ -16,8 +16,7 @@ const getSite = async () => {
 }
 
 const getPage = async path => {
-  const resp = await axios.get(`${apiUrl}/${toPageId(path)}.json`)
-  const page = resp.data
+  const { data: page } = await axios.get(`${apiUrl}/${toPageId(path)}.json`)
   const modifyPageHtml = (await import(`./modify-page-html-${process.client ? 'client' : 'server'}`)).default
 
   // fix relative links and img tags

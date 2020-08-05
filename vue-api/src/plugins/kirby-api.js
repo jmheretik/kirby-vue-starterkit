@@ -23,7 +23,7 @@ const get = async request => {
 const getSite = async () => {
   const site = await get('site?select=title')
   const children = await get('site/children?select=id,title,template,status,hasChildren')
-  const about = await getPage('about')
+  const { social } = await getPage('about')
 
   return {
     ...site,
@@ -33,14 +33,14 @@ const getSite = async () => {
         children: page.hasChildren ? await getChildren(page.id) : []
       }))
     ),
-    social: about.social
+    social
   }
 }
 
 const getPage = async path => {
-  const page = await get(`pages/${toPageId(path)}?select=id,content`)
+  const { id, content } = await get(`pages/${toPageId(path)}?select=id,content`)
 
-  return { id: page.id, ...page.content }
+  return { id, ...content }
 }
 
 const getChildren = path => {

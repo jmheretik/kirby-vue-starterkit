@@ -46,8 +46,8 @@ export default {
     await this.page
     this.page.description = null
 
-    const kt = await this.$api.getKirbyText(this.page.id, 'description')
-    this.page.description = kt.description
+    const { description } = await this.$api.getKirbyText(this.page.id, 'description')
+    this.page.description = description
 
     const files = await this.$api.getFiles(this.page.id)
     this.gallery = files.filter(file => file.type === 'image')
