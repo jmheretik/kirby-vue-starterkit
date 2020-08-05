@@ -19,9 +19,13 @@ The frontend comes in 3 different flavours:
 
 ## Demo
 
-[API](https://index.heretik.dev/kirby-vue-starterkit/vue-api) • [JSON](https://index.heretik.dev/kirby-vue-starterkit/vue-json) • [NUXT](https://index.heretik.dev/kirby-vue-starterkit/vue-nuxt) • [NUXT static site](https://jmheretik.github.io/kirby-vue-starterkit) (hosted here in gh-pages branch, as a proof :) • [original starterkit](https://index.heretik.dev/kirby-starterkit) (for comparison)
+- [API](https://index.heretik.dev/kirby-vue-starterkit/vue-api)
+- [JSON](https://index.heretik.dev/kirby-vue-starterkit/vue-json)
+- [NUXT](https://index.heretik.dev/kirby-vue-starterkit/vue-nuxt)
+- [NUXT static site](https://jmheretik.github.io/kirby-vue-starterkit) (hosted here in gh-pages branch, as a proof :)
+- [original starterkit](https://index.heretik.dev/kirby-starterkit) (for comparison)
 
-> inspect the network traffic to see the differences
+> ℹ️ inspect the network traffic to see the differences
 
 
 ## Requirements
@@ -42,7 +46,7 @@ The frontend comes in 3 different flavours:
 
 #### Frontend
 
-Follow the README in the project folder of your chosen variant.
+✔️ Make sure to follow the README in the project folder of your chosen variant.
 
 #### Backend
 
@@ -55,18 +59,18 @@ Out of the box the backend is automatically served while developing using the PH
 
 Deploy the contents of `kirby` folder to the production server.
 
-> if you're also injecting into Kirby, make sure you build the Vue app *first* so the `kirby` folder contains everything needed
+> ⚠️ if you're also injecting into Kirby, make sure you build the Vue app *first* so the `kirby` folder contains everything needed
 
 
 ## Config
 
 All Kirby related config is found in the [kirby.config.js](kirby.config.js) file:
 - `serve` specifies if you want the backend to be automatically served while developing
-- `host` and `port` specifies the adress where you want it served
+  - `host` and `port` specifies the adress where you want it served
 - `inject` specifies if you want the built Vue app to be injected straight to Kirby
+  - `base`, `assetsDir` and `indexPath` specify where you want to inject the parts of the built Vue app
   - this is useful if you want to *replace* Kirby's frontend with your Vue app (e.g. you want your Vue app to reside in the same directory and URL as Kirby and have it handle all your frontend *instead of* Kirby's templates)
-  - if this is **true** remember to also set `kirby-vue-starterkit.plugin.useVueIndex` in [kirby/site/config/config.php](kirby/site/config/config.php) to **true** as well, so that everything is redirected to your Vue app instead of Kirby's templates
-- `base`, `assetsDir` and `indexPath` specify where you want to inject the parts of the built Vue app
+  - > ⚠️ if this is **true** remember to also set `kirby-vue-starterkit.plugin.useVueIndex` in [kirby/site/config/config.php](kirby/site/config/config.php) to **true** as well, so that everything is redirected to your Vue app instead of Kirby's templates
 
 
 ## Notes
