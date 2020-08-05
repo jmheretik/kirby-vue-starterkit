@@ -12,12 +12,13 @@ permissions:
   access:
     *: false
     panel: true
-    site: true
   pages:
     *: false
     read: true
-  files: false
+  files:
+    *: false
+    read: true
+  languages: false
   site: false
   user: false
   users: false
-

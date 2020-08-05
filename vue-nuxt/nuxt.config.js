@@ -40,7 +40,7 @@ export default async () => {
       ...(isStatic ? { isStatic, site, errorPage } : {})
     },
     build: {
-      publicPath: isProd && kirby.inject ? kirby.assetsDir : '/_nuxt/'
+      ...(isProd && kirby.inject ? { publicPath: kirby.assetsDir } : {})
     },
     generate: {
       ...(isStatic

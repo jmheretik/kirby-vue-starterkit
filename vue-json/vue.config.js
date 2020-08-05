@@ -8,16 +8,20 @@ if (process.env.NODE_ENV === 'production' && kirby.inject) kirby.clean(fs)
 fs.removeSync('dist')
 
 module.exports = {
-  outputDir: kirby.inject ? kirby.base : 'dist',
-  assetsDir: kirby.inject ? kirby.assetsDir : '',
-  indexPath: kirby.inject ? kirby.indexPath : 'index.html',
-  publicPath: process.env.PUBLIC_PATH,
+  ...(kirby.inject
+    ? {
+        outputDir: kirby.base,
+        assetsDir: kirby.assetsDir,
+        indexPath: kirby.indexPath
+      }
+    : {}),
+  publicPath: process.env.VUE_APP_BASE_URL,
   productionSourceMap: false,
   devServer: {
     proxy: {
       '/*.json': {
         target: process.env.VUE_APP_KIRBY_URL,
-        pathRewrite: { [process.env.PUBLIC_PATH]: '/' }
+        pathRewrite: { [process.env.VUE_APP_BASE_URL]: '/' }
       }
     }
   }

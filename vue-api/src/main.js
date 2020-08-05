@@ -6,7 +6,7 @@ import KirbyApi from '@/plugins/kirby-api'
 Vue.config.productionTip = false
 
 const apiUrl =
-  (process.env.NODE_ENV === 'production' ? process.env.VUE_APP_KIRBY_URL : window.location.origin + process.env.BASE_URL.slice(0, -1)) +
+  (process.env.NODE_ENV === 'production' ? process.env.VUE_APP_KIRBY_URL : window.location.origin + process.env.VUE_APP_BASE_URL.slice(0, -1)) +
   process.env.VUE_APP_API_SLUG
 
 // self invoke async initialization

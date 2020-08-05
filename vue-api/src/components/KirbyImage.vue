@@ -12,19 +12,19 @@ export default {
     }
   },
   async created() {
-    let image = {}
+    const image = {}
 
     if (this.file.content) {
       image.alt = this.file.content.alt
     } else {
-      const content = await this.$api.getFile(this.file.link.substr(1))
+      const content = await this.$api.getFile(this.file.link.slice(1))
       image.alt = content.alt
     }
 
     if (!this.thumb) {
       image.src = this.file.url
     } else {
-      image.src = await this.$api.getFileThumb(this.file.link.substr(1), this.thumb, this.params)
+      image.src = await this.$api.getFileThumb(this.file.link.slice(1), this.thumb, this.params)
     }
 
     this.image = image

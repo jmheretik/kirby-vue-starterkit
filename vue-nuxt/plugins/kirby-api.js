@@ -2,6 +2,13 @@ import axios from 'axios'
 
 let apiUrl
 
+const toPageId = path => {
+  if (path.startsWith('/')) path = path.slice(1)
+  if (path.endsWith('/')) path = path.slice(0, -1)
+
+  return path || 'home'
+}
+
 const getSite = async () => {
   const resp = await axios.get(`${apiUrl}/home.json`)
   const site = resp.data.site
@@ -11,8 +18,8 @@ const getSite = async () => {
   return site
 }
 
-const getPage = async id => {
-  const resp = await axios.get(`${apiUrl}/${id}.json`)
+const getPage = async path => {
+  const resp = await axios.get(`${apiUrl}/${toPageId(path)}.json`)
   const page = resp.data
   const modifyPageHtml = (await import(`./modify-page-html-${process.client ? 'client' : 'server'}`)).default
 

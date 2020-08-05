@@ -1,19 +1,15 @@
 import Intro from '@/components/Intro.vue'
 
 export default {
-  middleware({ app, route: { name, path }, redirect }) {
-    // transform route path to pageId for use with api
-    app.$pageId = (path.endsWith('/') ? path.slice(0, -1) : path).slice(1) || 'home'
-
-    // redirect /home to /
-    if (app.$pageId === 'home' && name !== 'index') return redirect('/')
+  middleware({ route, redirect }) {
+    if (route.path === '/home' || route.path === '/home/') return redirect('/')
   },
   components: {
     Intro
   },
-  asyncData({ app, error }) {
+  asyncData({ app, route, error }) {
     return app.$api
-      .getPage(app.$pageId)
+      .getPage(route.path)
       .then(page => ({ page }))
       .catch(async () => error({ page: await app.$api.getPage('error') }))
   },

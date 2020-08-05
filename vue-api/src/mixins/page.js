@@ -12,12 +12,8 @@ export default {
     }
   },
   created() {
-    // transform route path to pageId for use with api
-    const path = this.$route.path
-    const pageId = (path.endsWith('/') ? path.slice(0, -1) : path).slice(1).replace('/', '+') || 'home'
-
     this.page = this.$api
-      .getPage(pageId)
+      .getPage(this.$route.path)
       .then(page => (this.page = page))
       .catch(async () => (this.page = await this.$api.getPage('error')))
   },

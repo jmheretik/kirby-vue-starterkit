@@ -26,12 +26,12 @@ npm run build
 ## Config
 
 All the default config is loaded from the [.env](.env) file:
-- `PUBLIC_PATH` see https://cli.vuejs.org/config/#publicpath
+- `VUE_APP_BASE_URL` see https://cli.vuejs.org/config/#publicpath
 - `VUE_APP_KIRBY_URL` specifies the URL where kirby is hosted (used for dev proxy, rewriting relative links in KirbyText...)
 - `VUE_APP_API_SLUG` together with *VUE_APP_KIRBY_URL* completes the base URL for the REST API
 - `VUE_APP_API_EMAIL` and `VUE_APP_API_PASSWORD` specify credentials for the REST API
 
-As usual in a Vue.js app, if you need to specify different values (usually the `PUBLIC_PATH` and `VUE_APP_KIRBY_URL`) for the *production* mode - create an **.env.production** file and values provided there will overwrite the default ones.
+As usual in a Vue.js app, if you need to specify different values for the *production* mode - create an **.env.production** file and values provided there will overwrite the default ones.
 
 More info here: https://cli.vuejs.org/guide/mode-and-env.html#environment-variables.
 
