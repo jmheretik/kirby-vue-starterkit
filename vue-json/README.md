@@ -7,22 +7,16 @@ To customize the configuration see Vue CLI [Configuration Reference](https://cli
 
 ## Usage
 
-#### serve with hot-reload
+#### serve development build with hot-reload
 ```
 npm run dev
 ```
 
-#### compile for production
+#### compile production build
 ```
 npm run build
 ```
 
-
-## Deploying
-
-Deploy the contents of `dist` folder to the production server at the corresponding publicPath.
-
-> doesn't apply if you're injecting into kirby
 
 ## Config
 
@@ -30,9 +24,16 @@ All the default config is loaded from the [.env](.env) file:
 - `PUBLIC_PATH` see https://cli.vuejs.org/config/#publicpath
 - `VUE_APP_KIRBY_URL` specifies the URL where kirby is hosted (used for dev proxy, rewriting relative links in KirbyText, fetching JSON content...)
 
-As usual in a Vue.js app, if you need to specify different values for the *production* mode - create a **.env.production** file and values provided there will overwrite the default ones.
+As usual in a Vue.js app, if you need to specify different values for the *production* mode - create an **.env.production** file and values provided there will overwrite the default ones.
 
 More info here: https://cli.vuejs.org/guide/mode-and-env.html#environment-variables.
+
+
+## Deploying
+
+Deploy the contents of `dist` folder to the production server at the corresponding publicPath.
+
+> ⚠️ doesn't apply if you're injecting into kirby
 
 
 ## Notes
