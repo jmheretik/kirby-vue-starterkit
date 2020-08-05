@@ -53,15 +53,6 @@ The frontend comes in 3 different flavours:
 Out of the box the backend is automatically served while developing using the PHP built-in development server.
 
 
-## Deploying
-
-- don't forget to set `allowInsecure` (if you're deploying to https) and `debug` to **false** in [kirby/site/config/config.php](kirby/site/config/config.php)
-
-Deploy the contents of `kirby` folder to the production server.
-
-> ⚠️ if you're also injecting into Kirby, make sure you build the Vue app *first* so the `kirby` folder contains everything needed
-
-
 ## Config
 
 All Kirby related config is found in the [kirby.config.js](kirby.config.js) file:
@@ -70,7 +61,15 @@ All Kirby related config is found in the [kirby.config.js](kirby.config.js) file
 - `inject` specifies if you want the built Vue app to be injected straight to Kirby
   - `base`, `assetsDir` and `indexPath` specify where you want to inject the parts of the built Vue app
   - this is useful if you want to *replace* Kirby's frontend with your Vue app (e.g. you want your Vue app to reside in the same directory and URL as Kirby and have it handle all your frontend *instead of* Kirby's templates)
-  - > ⚠️ if this is **true** remember to also set `kirby-vue-starterkit.plugin.useVueIndex` in [kirby/site/config/config.php](kirby/site/config/config.php) to **true** as well, so that everything is redirected to your Vue app instead of Kirby's templates
+  - if this is **true** remember to also set `kirby-vue-starterkit.plugin.useVueIndex` in [kirby/site/config/config.php](kirby/site/config/config.php) to **true** as well, so that everything is redirected to your Vue app instead of Kirby's templates
+
+
+## Deploying
+
+1. don't forget to set `debug` and `allowInsecure` (if you're deploying to https) to **false** in [kirby/site/config/config.php](kirby/site/config/config.php)
+2. deploy the contents of [kirby](kirby) folder to the production server
+
+> ⚠️ if you're also injecting into Kirby, make sure you build the Vue app *first* so the `kirby` folder contains everything needed
 
 
 ## Notes
