@@ -45,7 +45,7 @@ export default async () => {
     generate: {
       ...(isStatic
         ? {
-            routes: site.routes.map(route => '/' + route),
+            routes: site.children.filter(page => !page.isListed).map(page => '/' + page.id),
             fallback: '404.html'
           }
         : {
@@ -64,7 +64,7 @@ export default async () => {
     modules: ['@nuxtjs/proxy'],
     buildModules: [
       '@nuxtjs/eslint-module',
-      ...(isStatic ? ['modules/kirby-scraper'] : []),
+      ...(isStatic ? [['modules/kirby-scraper', { api, site }]] : []),
       ...(isProd && kirby.inject ? ['modules/kirby-inject'] : [])
     ],
     proxy: {

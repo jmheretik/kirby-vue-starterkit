@@ -11,11 +11,8 @@ const toPageId = path => {
 
 const getSite = async () => {
   const resp = await axios.get(`${apiUrl}/home.json`)
-  const site = resp.data.site
 
-  site.routes = site.children.flatMap(page => [page.id, ...page.children.map(child => child.id)])
-
-  return site
+  return resp.data.site
 }
 
 const getPage = async path => {
