@@ -3,9 +3,11 @@
     <Header />
 
     <router-view v-slot="{ Component }">
-      <keep-alive>
-        <component :is="Component" :key="$route.path" />
-      </keep-alive>
+      <Suspense>
+        <keep-alive>
+          <component :is="Component" :key="$route.path" />
+        </keep-alive>
+      </Suspense>
     </router-view>
   </div>
 

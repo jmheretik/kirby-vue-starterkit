@@ -6,7 +6,7 @@
       <li v-for="album in photography.children" :key="album.id">
         <router-link :to="'/' + album.id">
           <figure>
-            <span v-if="album.coverHome" v-html="album.coverHome.html" />
+            <span v-html="album.coverHome.html" />
 
             <figcaption>
               <span>
@@ -21,18 +21,20 @@
 </template>
 
 <script>
-import page from '../mixins/page'
+import Intro from '../components/Intro'
+import getRoot from '../composables/root'
+import usePage from '../composables/page'
 
 export default {
   name: 'Home',
-  mixins: [page],
-  data() {
+  components: { Intro },
+  setup: async () => {
+    const { $api } = getRoot()
+
     return {
-      photography: null
+      page: await usePage(),
+      photography: await $api.getPage('photography')
     }
-  },
-  async created() {
-    this.photography = await this.$api.getPage('photography')
   }
 }
 </script>

@@ -7,17 +7,17 @@
         <p v-if="page.tags" class="note-tags tags">{{ page.tags }}</p>
       </header>
 
-      <div v-if="page.text" class="note-text text" v-html="page.text.html" />
+      <div class="note-text text" v-html="page.text.html" />
     </article>
   </main>
 </template>
 
 <script>
-import page from '../mixins/page'
+import usePage from '../composables/page'
 
 export default {
   name: 'Note',
-  mixins: [page]
+  setup: async () => ({ page: await usePage() })
 }
 </script>
 

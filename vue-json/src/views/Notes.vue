@@ -16,11 +16,13 @@
 </template>
 
 <script>
-import page from '../mixins/page'
+import Intro from '../components/Intro'
+import usePage from '../composables/page'
 
 export default {
   name: 'Notes',
-  mixins: [page]
+  components: { Intro },
+  setup: async () => ({ page: await usePage() })
 }
 </script>
 

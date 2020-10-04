@@ -6,7 +6,7 @@
       <aside>
         <section>
           <h2>Address</h2>
-          <div v-if="page.address" class="text" v-html="page.address.html" />
+          <div class="text" v-html="page.address.html" />
         </section>
 
         <section>
@@ -34,17 +34,19 @@
         </section>
       </aside>
 
-      <div v-if="page.text" class="text" v-html="page.text.html" />
+      <div class="text" v-html="page.text.html" />
     </div>
   </main>
 </template>
 
 <script>
-import page from '../mixins/page'
+import Intro from '../components/Intro'
+import usePage from '../composables/page'
 
 export default {
   name: 'About',
-  mixins: [page]
+  components: { Intro },
+  setup: async () => ({ page: await usePage() })
 }
 </script>
 

@@ -2,11 +2,11 @@
   <main>
     <Intro :title="page.title" />
 
-    <ul v-if="page.children" class="albums" :data-even="page.children.length % 2 === 0">
+    <ul class="albums" :data-even="page.children.length % 2 === 0">
       <li v-for="album in page.children" :key="album.id">
         <router-link :to="'/' + album.id">
           <figure>
-            <span v-if="album.cover" v-html="album.cover.html" />
+            <span v-html="album.cover.html" />
 
             <figcaption>{{ album.title }}</figcaption>
           </figure>
@@ -17,11 +17,13 @@
 </template>
 
 <script>
-import page from '../mixins/page'
+import Intro from '../components/Intro'
+import usePage from '../composables/page'
 
 export default {
   name: 'Photography',
-  mixins: [page]
+  components: { Intro },
+  setup: async () => ({ page: await usePage() })
 }
 </script>
 
