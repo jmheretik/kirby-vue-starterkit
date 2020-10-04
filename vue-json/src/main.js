@@ -1,9 +1,7 @@
-import Vue from 'vue'
-import App from '@/App.vue'
-import Router from '@/router'
-import KirbyApi from '@/plugins/kirby-api'
-
-Vue.config.productionTip = false
+import { createApp } from 'vue'
+import App from './App'
+import Router from './router'
+import KirbyApi from './plugins/kirby-api'
 
 const apiUrl =
   process.env.NODE_ENV === 'production' ? process.env.VUE_APP_KIRBY_URL : window.location.origin + process.env.VUE_APP_BASE_URL.slice(0, -1)
@@ -13,13 +11,11 @@ const apiUrl =
   const api = KirbyApi.init(apiUrl)
   const site = await api.getSite()
   const router = await Router.init(site)
+  const app = createApp(App)
 
   // globals
-  Vue.prototype.$api = api
-  Vue.prototype.$site = site
+  app.config.globalProperties.$api = api
+  app.config.globalProperties.$site = site
 
-  new Vue({
-    router,
-    render: h => h(App)
-  }).$mount('#app')
+  app.use(router).mount('#app')
 })()

@@ -1,8 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Default from '@/views/Default.vue'
-
-Vue.use(VueRouter)
+import { createRouter, createWebHistory } from 'vue-router'
+import Default from '../views/Default'
 
 const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1)
 
@@ -12,11 +9,11 @@ export default {
     const routes = site.children.flatMap(page => [
       {
         path: '/' + page.id,
-        component: () => import(`@/views/${capitalize(page.template)}.vue`).catch(() => Default)
+        component: () => import(`../views/${capitalize(page.template)}`).catch(() => Default)
       },
       ...page.children.map(child => ({
         path: '/' + child.id,
-        component: () => import(`@/views/${capitalize(child.template)}.vue`).catch(() => Default)
+        component: () => import(`../views/${capitalize(child.template)}`).catch(() => Default)
       }))
     ])
 
@@ -25,11 +22,10 @@ export default {
     routes.push({ path: '/home', redirect: '/' })
 
     // catch all fallback
-    routes.push({ path: '*', component: Default })
+    routes.push({ path: '/:pathMatch(.*)*', component: Default })
 
-    return new VueRouter({
-      mode: 'history',
-      base: process.env.VUE_APP_BASE_URL,
+    return createRouter({
+      history: createWebHistory(process.env.VUE_APP_BASE_URL),
       routes
     })
   }

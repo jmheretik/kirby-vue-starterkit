@@ -1,4 +1,4 @@
-import modifyPageHtml from '@/plugins/modify-page-html'
+import modifyPageHtml from '../plugins/modify-page-html'
 
 let apiUrl
 

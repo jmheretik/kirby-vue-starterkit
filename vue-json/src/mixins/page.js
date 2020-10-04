@@ -1,4 +1,4 @@
-import Intro from '@/components/Intro.vue'
+import Intro from '../components/Intro'
 
 export default {
   components: {

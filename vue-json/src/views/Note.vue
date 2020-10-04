@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
+import page from '../mixins/page'
 
 export default {
   name: 'Note',
@@ -34,27 +34,27 @@ export default {
   display: block;
 }
 
-/*  
-    deep selectors for v-html content
-    https://vue-loader.vuejs.org/guide/scoped-css.html#dynamically-generated-content
+/*
+  deep selectors for v-html content
+  https://vue-loader.vuejs.org/guide/scoped-css.html#dynamically-generated-content
 */
-* >>> .gallery {
+:deep(.gallery) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-gap: 1.5rem;
   margin-bottom: 1.5rem;
   padding: 3rem 0;
 }
-* >>> .gallery figure a {
+:deep(.gallery figure a) {
   border: 0;
 }
-* >>> .gallery figure {
+:deep(.gallery figure) {
   margin: 0;
   padding: 0;
 }
 
 @media screen and (min-width: 45rem) {
-  * >>> .gallery {
+  :deep(.gallery) {
     margin-left: -3rem;
     margin-right: -3rem;
   }

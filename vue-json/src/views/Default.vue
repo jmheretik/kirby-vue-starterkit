@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
+import page from '../mixins/page'
 
 export default {
   name: 'Default',
