@@ -21,19 +21,19 @@
 </template>
 
 <script>
+import { usePage } from '../composables/use-page'
+import { useKirby } from '../composables/use-kirby'
 import Intro from '../components/Intro'
-import getRoot from '../composables/root'
-import usePage from '../composables/page'
 
 export default {
   name: 'Home',
   components: { Intro },
   setup: async () => {
-    const { $api } = getRoot()
+    const { getPage } = useKirby()
 
     return {
       page: await usePage(),
-      photography: await $api.getPage('photography')
+      photography: await getPage('photography')
     }
   }
 }

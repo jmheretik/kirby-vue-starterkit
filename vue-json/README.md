@@ -38,7 +38,7 @@ Deploy the contents of `dist` folder to the production server at the correspondi
 
 ## Notes
 
-- Vue.js `page` composable in the [src/composables/page.js](src/composables/page.js) file roughly corresponds to the Kirby's `$page` object, but only the functionality needed for starterkit is present.
+- Vue.js `page` composable in the [src/composables/use-page.js](src/composables/use-page.js) file roughly corresponds to the Kirby's `$page` object, but only the functionality needed for starterkit is present.
 - Vue.js components in the [src/components](src/components) folder correspond to Kirby snippets.
 - Vue.js views in the [src/views](src/views) folder correspond to Kirby templates and the routes are being automatically resolved.
   - If you add a new page in Kirby with a new blueprint you also need to manually add a new **View** here and a new **.json** template in the backend to provide the frontend with the data you require.

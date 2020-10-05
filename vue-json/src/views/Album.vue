@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import usePage from '../composables/page'
+import { usePage } from '../composables/use-page'
 
 export default {
   name: 'Album',

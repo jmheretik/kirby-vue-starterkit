@@ -16,8 +16,8 @@
 </template>
 
 <script>
+import { usePage } from '../composables/use-page'
 import Intro from '../components/Intro'
-import usePage from '../composables/page'
 
 export default {
   name: 'Notes',

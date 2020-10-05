@@ -1,0 +1,39 @@
+import { modifyPageHtml } from '../utils/modify-page-html'
+
+export const useKirby = () => {
+  const baseUrl =
+    process.env.NODE_ENV === 'production' ? process.env.VUE_APP_KIRBY_URL : window.location.origin + process.env.VUE_APP_BASE_URL.slice(0, -1)
+
+  const toPageId = path => {
+    if (path.startsWith('/')) path = path.slice(1)
+    if (path.endsWith('/')) path = path.slice(0, -1)
+
+    return path || 'home'
+  }
+
+  const getSite = async () => {
+    const resp = await fetch(`${baseUrl}/home.json`)
+    const home = await resp.json()
+
+    return home.site
+  }
+
+  const getPage = async path => {
+    const resp = await fetch(`${baseUrl}/${toPageId(path)}.json`)
+    const page = await resp.json()
+
+    // fix relative links
+    modifyPageHtml(page, html => {
+      for (const a of html.getElementsByTagName('a')) {
+        a.href = a.href.replace(process.env.VUE_APP_KIRBY_URL, process.env.VUE_APP_BASE_URL.slice(0, -1))
+      }
+    })
+
+    return page
+  }
+
+  return {
+    getSite,
+    getPage
+  }
+}
