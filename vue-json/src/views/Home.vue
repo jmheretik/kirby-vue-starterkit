@@ -3,8 +3,8 @@
     <Intro :title="page.title" />
 
     <ul v-if="photography" class="grid">
-      <li v-for="album in photography.children" :key="album.id">
-        <router-link :to="'/' + album.id">
+      <li v-for="album in photography.children" :key="album.uri">
+        <router-link :to="'/' + album.uri">
           <figure>
             <span v-html="album.coverHome.html" />
 

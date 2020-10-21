@@ -8,11 +8,11 @@ export const useRouter = async site => {
   // published pages routes
   const routes = site.children.flatMap(page => [
     {
-      path: '/' + page.id,
+      path: '/' + page.uri,
       component: () => import(`../views/${capitalize(page.template)}`).catch(() => Default)
     },
     ...page.children.map(child => ({
-      path: '/' + child.id,
+      path: '/' + child.uri,
       component: () => import(`../views/${capitalize(child.template)}`).catch(() => Default)
     }))
   ])

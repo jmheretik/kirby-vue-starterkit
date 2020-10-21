@@ -3,7 +3,7 @@
     <router-link to="/" class="logo"> {{ $site.title }} </router-link>
 
     <nav id="menu" class="menu">
-      <router-link v-for="page in $site.children.filter(page => page.isListed)" :key="page.id" :to="'/' + page.id">
+      <router-link v-for="page in $site.children.filter(page => page.isListed)" :key="page.uri" :to="'/' + page.uri">
         {{ page.title }}
       </router-link>
     </nav>

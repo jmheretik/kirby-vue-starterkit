@@ -6,13 +6,13 @@ $data = [
     'title' => $site->title()->value(),
     'children' => array_values($site->children()->published()->map(function ($child) {
       return [
-        'id' => $child->id(),
+        'uri' => $child->uri(),
         'title' => $child->title()->value(),
         'template' => $child->intendedTemplate()->name(),
         'isListed' => $child->isListed(),
         'children' => array_values($child->children()->published()->map(function ($grandChild) {
           return [
-            'id' => $grandChild->id(),
+            'uri' => $grandChild->uri(),
             'template' => $grandChild->intendedTemplate()->name()
           ];
         })->data())
