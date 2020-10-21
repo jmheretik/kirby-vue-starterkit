@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useLanguage } from '../composables/use-language'
 import Default from '../views/Default'
 
 export const useRouter = async site => {
@@ -23,8 +24,10 @@ export const useRouter = async site => {
   // catch all fallback
   routes.push({ path: '/:pathMatch(.*)*', component: Default })
 
+  const { prefix } = useLanguage()
+
   return createRouter({
-    history: createWebHistory(process.env.VUE_APP_BASE_URL),
+    history: createWebHistory(process.env.VUE_APP_BASE_URL + prefix),
     routes
   })
 }
