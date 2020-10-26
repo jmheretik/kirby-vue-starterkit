@@ -1,3 +1,3 @@
 import { getCurrentInstance } from 'vue'
 
-export const useRoot = () => getCurrentInstance().ctx
+export const useRoot = () => getCurrentInstance().appContext.config.globalProperties

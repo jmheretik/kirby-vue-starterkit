@@ -2,7 +2,8 @@ import { modifyPageHtml } from '../utils/modify-page-html'
 import { useLanguage } from '../composables/use-language'
 
 export const useKirby = () => {
-  const baseUrl = process.env.NODE_ENV === 'production' ? process.env.VUE_APP_KIRBY_URL : window.location.origin + process.env.VUE_APP_BASE_URL
+  const baseUrl =
+    process.env.NODE_ENV === 'production' ? process.env.VUE_APP_KIRBY_URL : window.location.origin + process.env.VUE_APP_BASE_URL.slice(0, -1)
 
   const toPageId = path => {
     if (path.startsWith('/')) path = path.slice(1)
@@ -12,7 +13,7 @@ export const useKirby = () => {
   }
 
   const getLanguages = async () => {
-    const resp = await fetch(`${baseUrl}languages.json`)
+    const resp = await fetch(`${baseUrl}/languages.json`)
     const languages = await resp.json()
 
     return languages
@@ -21,7 +22,7 @@ export const useKirby = () => {
   const getSite = async () => {
     const { prefix } = useLanguage()
 
-    const resp = await fetch(`${baseUrl}${prefix}/home.json`)
+    const resp = await fetch(`${baseUrl}/${prefix}/home.json`)
     const home = await resp.json()
 
     return home.site
@@ -30,7 +31,7 @@ export const useKirby = () => {
   const getPage = async path => {
     const { prefix } = useLanguage()
 
-    const resp = await fetch(`${baseUrl}${prefix}/${toPageId(path)}.json`)
+    const resp = await fetch(`${baseUrl}/${prefix}/${toPageId(path)}.json`)
     const page = await resp.json()
 
     // fix relative links

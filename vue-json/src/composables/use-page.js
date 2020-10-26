@@ -3,14 +3,14 @@ import { useRoot } from './use-root'
 import { useKirby } from './use-kirby'
 
 export const usePage = async () => {
-  const { $site, $router } = useRoot()
+  const { $site, $route } = useRoot()
   const { getPage } = useKirby()
   let page
 
   onActivated(() => (document.title = `${$site.title} | ${page.title}`))
 
   try {
-    page = await getPage($router.currentRoute.value.path)
+    page = await getPage($route.path)
   } catch {
     page = await getPage('error')
   }
