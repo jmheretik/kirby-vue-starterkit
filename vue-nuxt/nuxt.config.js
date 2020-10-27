@@ -1,9 +1,7 @@
 const php = require('php-server')
 import kirby from '../kirby.config'
 import KirbyApi from './plugins/kirby-api'
-
-// merge mode specific .env config file
-Object.entries(require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` }).parsed || {}).forEach(([key, value]) => (process.env[key] = value))
+require('dotenv-flow').config()
 
 const isProd = process.env.NODE_ENV === 'production'
 const isStatic = process.env.NODE_ENV === 'static'
