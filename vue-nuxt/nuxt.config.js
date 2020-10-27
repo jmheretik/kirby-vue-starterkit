@@ -1,7 +1,7 @@
+require('dotenv-flow').config()
 const php = require('php-server')
 import kirby from '../kirby.config'
 import KirbyApi from './plugins/kirby-api'
-require('dotenv-flow').config()
 
 const isProd = process.env.NODE_ENV === 'production'
 const isStatic = process.env.NODE_ENV === 'static'
