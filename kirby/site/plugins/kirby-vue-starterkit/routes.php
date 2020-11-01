@@ -23,7 +23,7 @@ $routes = [
         'pattern' => 'site.json',
         'language' => '*',
         'action' => function () {
-            return [
+            return Response::json([
                 'title' => site()->title()->value(),
                 'children' => array_values(site()->children()->published()->map(function ($child) {
                   return [
@@ -45,7 +45,7 @@ $routes = [
                     'platform' => $social->platform()->value()
                   ];
                 })->data())
-            ];
+            ]);
         }
     ],
 ];
