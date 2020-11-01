@@ -2,7 +2,7 @@
   <main class="album">
     <article>
       <header>
-        <figure class="album-cover">
+        <figure v-if="page.cover" class="album-cover">
           <span v-html="page.cover.html" />
 
           <figcaption>

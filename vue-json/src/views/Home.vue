@@ -6,7 +6,7 @@
       <li v-for="album in photography.children" :key="album.uri">
         <router-link :to="'/' + album.uri">
           <figure>
-            <span v-html="album.coverHome.html" />
+            <span v-if="album.coverHome" v-html="album.coverHome.html" />
 
             <figcaption>
               <span>
@@ -29,11 +29,11 @@ export default {
   name: 'Home',
   components: { Intro },
   setup: async () => {
-    const { getPage } = useKirby()
+    const [page, photography] = await Promise.all([usePage(), useKirby().getPage('photography')])
 
     return {
-      page: await usePage(),
-      photography: await getPage('photography')
+      page,
+      photography
     }
   }
 }

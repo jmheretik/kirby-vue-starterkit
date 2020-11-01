@@ -3,11 +3,12 @@ import { HtmlUtils } from '../utils/html.utils'
 import { PathUtils } from '../utils/path.utils'
 
 export const useKirby = () => {
+  const { prefix } = useLanguage()
+
   const kirbyUrl =
     process.env.NODE_ENV === 'production' ? process.env.VUE_APP_KIRBY_URL : window.location.origin + process.env.VUE_APP_BASE_URL.slice(0, -1)
 
   const getJson = async uri => {
-    const { prefix } = useLanguage()
     const resp = await fetch(`${kirbyUrl}/${prefix}/${uri}.json`)
 
     return await resp.json()

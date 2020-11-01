@@ -6,7 +6,7 @@
       <li v-for="album in page.children" :key="album.uri">
         <router-link :to="'/' + album.uri">
           <figure>
-            <span v-html="album.cover.html" />
+            <span v-if="album.cover" v-html="album.cover.html" />
 
             <figcaption>{{ album.title }}</figcaption>
           </figure>
