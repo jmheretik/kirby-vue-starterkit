@@ -1,4 +1,4 @@
-let prefix
+let prefix = ''
 
 export const useLanguage = () => {
   const init = languages => {
