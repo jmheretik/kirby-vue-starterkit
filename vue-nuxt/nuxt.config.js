@@ -1,4 +1,4 @@
-require('dotenv-flow').config()
+require('dotenv-flow').config({ purge_dotenv: true })
 const php = require('php-server')
 import kirby from '../kirby.config'
 import KirbyApi from './plugins/kirby-api'

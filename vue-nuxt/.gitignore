@@ -85,3 +85,7 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# local env files
+.env.local
+.env.*.local
