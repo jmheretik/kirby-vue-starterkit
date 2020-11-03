@@ -3,13 +3,15 @@ import { HtmlUtils } from '../utils/html.utils'
 import { PathUtils } from '../utils/path.utils'
 
 export const useKirby = () => {
-  const { prefix } = useLanguage()
-
-  const kirbyUrl =
-    process.env.NODE_ENV === 'production' ? process.env.VUE_APP_KIRBY_URL : window.location.origin + process.env.VUE_APP_BASE_URL.slice(0, -1)
+  const kirbyUrl = PathUtils.strip(
+    process.env.NODE_ENV === 'production' ? process.env.VUE_APP_KIRBY_URL : window.location.origin + process.env.VUE_APP_BASE_URL
+  )
 
   const getJson = async uri => {
-    const resp = await fetch(`${kirbyUrl}/${prefix}/${uri}.json`)
+    const { prefix } = useLanguage()
+
+    const baseUrl = PathUtils.strip(`${kirbyUrl}/${prefix}`)
+    const resp = await fetch(`${baseUrl}/${uri}.json`)
 
     return await resp.json()
   }
@@ -24,7 +26,7 @@ export const useKirby = () => {
     // fix relative links
     HtmlUtils.modifyPageHtml(page, html => {
       for (const a of html.getElementsByTagName('a')) {
-        a.href = a.href.replace(process.env.VUE_APP_KIRBY_URL, process.env.VUE_APP_BASE_URL.slice(0, -1))
+        a.href = a.getAttribute('href').replace(PathUtils.strip(process.env.VUE_APP_KIRBY_URL), '/' + PathUtils.strip(process.env.VUE_APP_BASE_URL))
       }
     })
 

@@ -31,10 +31,7 @@ export default {
   setup: async () => {
     const [page, photography] = await Promise.all([usePage(), useKirby().getPage('photography')])
 
-    return {
-      page,
-      photography
-    }
+    return { page, photography }
   }
 }
 </script>
