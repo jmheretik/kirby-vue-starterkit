@@ -21,15 +21,18 @@ export default async () => {
   return {
     ssr: false,
     target: isStatic ? 'static' : 'server',
-    router: {
-      base: process.env.NUXT_ENV_BASE_URL,
+    router: { base: process.env.NUXT_ENV_BASE_URL },
+    head: {
+      // PHP and Kirby is available (e.g. for values that need to be rendered server-side, such as Open Graph or Twitter meta tags)
+      // please read https://vue-meta.nuxtjs.org/api/#dangerouslydisablesanitizers
+      htmlAttrs: { lang: `<?= kirby()->languages()->isEmpty() ? 'en' : kirby()->language()->code() ?>` },
+      title: '<?= $site->title() ?> | <?= $page->title() ?>',
+      meta: [{ charset: 'utf-8' }, { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],
+      link: [{ rel: 'icon', href: process.env.NUXT_ENV_BASE_URL + 'favicon.ico' }],
+      __dangerouslyDisableSanitizers: ['htmlAttrs', 'title'],
     },
-    env: {
-      ...(isStatic ? { isStatic, site, errorPage } : {}),
-    },
-    build: {
-      ...(isProd && kirby.inject ? { publicPath: kirby.assetsDir } : {}),
-    },
+    env: { ...(isStatic ? { isStatic, site, errorPage } : {}) },
+    build: { ...(isProd && kirby.inject ? { publicPath: kirby.assetsDir } : {}) },
     generate: {
       ...(isStatic
         ? {
@@ -40,15 +43,6 @@ export default async () => {
             exclude: [/.*/],
             fallback: 'index.html',
           }),
-    },
-    // PHP and Kirby is available (e.g. for values that need to be rendered server-side, such as Open Graph or Twitter meta tags)
-    // please read https://vue-meta.nuxtjs.org/api/#dangerouslydisablesanitizers
-    head: {
-      htmlAttrs: { lang: `<?= kirby()->languages()->isEmpty() ? 'en' : kirby()->language()->code() ?>` },
-      title: '<?= $site->title() ?> | <?= $page->title() ?>',
-      meta: [{ charset: 'utf-8' }, { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],
-      link: [{ rel: 'icon', href: process.env.NUXT_ENV_BASE_URL + 'favicon.ico' }],
-      __dangerouslyDisableSanitizers: ['htmlAttrs', 'title'],
     },
     components: true,
     plugins: ['plugins/inject-globals'],
