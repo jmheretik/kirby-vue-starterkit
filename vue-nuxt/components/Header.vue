@@ -3,7 +3,7 @@
     <nuxt-link to="/" class="logo"> {{ $site.title }} </nuxt-link>
 
     <nav id="menu" class="menu">
-      <nuxt-link v-for="page in $site.children.filter(page => page.isListed)" :key="page.id" :to="'/' + page.id">
+      <nuxt-link v-for="page in $site.children.filter((page) => page.isListed)" :key="page.uri" :to="'/' + page.uri">
         {{ page.title }}
       </nuxt-link>
     </nav>
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
 }
 </script>
 

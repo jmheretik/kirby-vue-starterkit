@@ -3,8 +3,8 @@
     <Intro :title="page.title" />
 
     <ul v-if="photography" class="grid">
-      <li v-for="album in photography.children" :key="album.id">
-        <nuxt-link :to="'/' + album.id">
+      <li v-for="album in photography.children" :key="album.uri">
+        <nuxt-link :to="'/' + album.uri">
           <figure>
             <span v-if="album.coverHome" v-html="album.coverHome.html" />
 
@@ -22,15 +22,14 @@
 
 <script>
 import mergeAsyncData from 'nuxt-merge-asyncdata'
-import page from '@/mixins/page'
+import page from '../mixins/page'
+import { useKirby } from '../composables/use-kirby'
 
 export default mergeAsyncData({
   mixins: [page],
   async asyncData({ app }) {
-    return {
-      photography: await app.$api.getPage('photography')
-    }
-  }
+    return { photography: await useKirby().getPage('photography') }
+  },
 })
 </script>
 

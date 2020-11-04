@@ -7,27 +7,29 @@
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=static nuxt start",
     "generate": "cross-env NODE_ENV=static nuxt generate --universal",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "npm run lint:js"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/proxy": "^2.0.1",
-    "axios": "^0.19.2",
-    "nuxt": "^2.14.0",
+    "core-js": "^3.6.5",
+    "nuxt": "^2.14.7",
     "nuxt-merge-asyncdata": "^0.1.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-module": "^2.0.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.2",
     "dotenv-flow": "^3.2.0",
-    "eslint": "^7.6.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "jsdom": "^16.3.0",
+    "jsdom": "^16.4.0",
     "php-server": "^0.2.1",
-    "prettier": "^1.19.1"
+    "prettier": "^2.1.2"
   },
   "eslintConfig": {
     "root": true,
@@ -45,6 +47,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
+    "plugins": [
+      "prettier"
+    ],
     "rules": {
       "vue/no-v-html": "off",
       "vue/require-prop-types": "off"

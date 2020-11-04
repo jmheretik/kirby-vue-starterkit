@@ -1,75 +1,68 @@
-require('dotenv-flow').config({ purge_dotenv: true })
-const php = require('php-server')
+import php from 'php-server'
 import kirby from '../kirby.config'
-import KirbyApi from './plugins/kirby-api'
+import { useKirby } from './composables/use-kirby'
+require('dotenv-flow').config({ purge_dotenv: true })
 
 const isProd = process.env.NODE_ENV === 'production'
 const isStatic = process.env.NODE_ENV === 'static'
 
-// head attributes that need to be rendered server-side (e.g. Open Graph or Twitter meta tags)
-const ssrHeadAttrs = { title: null, meta: [], __dangerouslyDisableSanitizers: [] }
-
-if (isProd && kirby.inject) {
-  // PHP and Kirby is available
-  ssrHeadAttrs.title = '<?= $site->title() . " | " . $page->title() ?>'
-
-  // please read https://vue-meta.nuxtjs.org/api/#dangerouslydisablesanitizers
-  ssrHeadAttrs.__dangerouslyDisableSanitizers.push('title')
-}
-
 export default async () => {
-  const api = KirbyApi.init(process.env.NUXT_ENV_KIRBY_URL)
   let server, site, errorPage
 
   if (isStatic) {
+    const { getSite, getPage } = useKirby()
+
     server = await kirby.start(php)
-    site = await api.getSite()
-    errorPage = await api.getPage('error')
+    site = await getSite()
+    errorPage = await getPage('error')
     server.stop()
   }
 
   return {
-    mode: 'spa',
+    ssr: false,
     target: isStatic ? 'static' : 'server',
     router: {
-      base: process.env.NUXT_ENV_BASE_URL
+      base: process.env.NUXT_ENV_BASE_URL,
     },
     env: {
-      ...(isStatic ? { isStatic, site, errorPage } : {})
+      ...(isStatic ? { isStatic, site, errorPage } : {}),
     },
     build: {
-      ...(isProd && kirby.inject ? { publicPath: kirby.assetsDir } : {})
+      ...(isProd && kirby.inject ? { publicPath: kirby.assetsDir } : {}),
     },
     generate: {
       ...(isStatic
         ? {
-            routes: site.children.filter(page => !page.isListed).map(page => '/' + page.id),
-            fallback: '404.html'
+            routes: site.children.filter((page) => !page.isListed).map((page) => '/' + page.uri),
+            fallback: '404.html',
           }
         : {
             exclude: [/.*/],
-            fallback: 'index.html'
-          })
+            fallback: 'index.html',
+          }),
     },
+    // PHP and Kirby is available (e.g. for values that need to be rendered server-side, such as Open Graph or Twitter meta tags)
+    // please read https://vue-meta.nuxtjs.org/api/#dangerouslydisablesanitizers
     head: {
-      htmlAttrs: { lang: 'en' },
-      title: ssrHeadAttrs.title,
-      meta: [{ charset: 'utf-8' }, { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }, ...ssrHeadAttrs.meta],
+      htmlAttrs: { lang: `<?= kirby()->languages()->isEmpty() ? 'en' : kirby()->language()->code() ?>` },
+      title: '<?= $site->title() ?> | <?= $page->title() ?>',
+      meta: [{ charset: 'utf-8' }, { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],
       link: [{ rel: 'icon', href: process.env.NUXT_ENV_BASE_URL + 'favicon.ico' }],
-      __dangerouslyDisableSanitizers: ssrHeadAttrs.__dangerouslyDisableSanitizers
+      __dangerouslyDisableSanitizers: ['htmlAttrs', 'title'],
     },
-    plugins: ['plugins/kirby-api-client'],
+    components: true,
+    plugins: ['plugins/inject-globals'],
     modules: ['@nuxtjs/proxy'],
     buildModules: [
       '@nuxtjs/eslint-module',
-      ...(isStatic ? [['modules/kirby-scraper', { api, site }]] : []),
-      ...(isProd && kirby.inject ? ['modules/kirby-inject'] : [])
+      ...(isStatic ? [['modules/kirby-scraper', { site }]] : []),
+      ...(isProd && kirby.inject ? ['modules/kirby-inject'] : []),
     ],
     proxy: {
       '**/*.json': {
         target: process.env.NUXT_ENV_KIRBY_URL,
-        pathRewrite: { [process.env.NUXT_ENV_BASE_URL]: '/' }
-      }
+        pathRewrite: { [process.env.NUXT_ENV_BASE_URL]: '/' },
+      },
     },
     hooks: {
       ready: async () => {
@@ -77,7 +70,7 @@ export default async () => {
       },
       close: () => {
         if (!isProd && kirby.serve) server.stop()
-      }
-    }
+      },
+    },
   }
 }

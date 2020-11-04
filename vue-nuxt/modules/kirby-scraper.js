@@ -1,28 +1,32 @@
 import fs from 'fs-extra'
-import modifyPageHtml from '../plugins/modify-page-html-server'
+import { useKirby } from '../composables/use-kirby'
+import { HtmlUtils } from '../utils/html.utils'
 
-export default function({ api, site }) {
+export default function ({ site }) {
+  const { getPage, getFile } = useKirby()
+
   const imgDir = `static/${process.env.NUXT_ENV_IMG_DIR}`
 
   this.nuxt.hook('generate:before', async () => {
     await fs.emptyDir(imgDir)
 
-    const routes = site.children.flatMap(page => [page.id, ...page.children.map(child => child.id)])
+    const routes = site.children.flatMap((page) => [page.uri, ...page.children.map((child) => child.uri)])
 
     await Promise.all(routes.map(downloadImages))
 
-    console.log('\x1b[32m%s\x1b[0m', '√', 'Images scraped from Kirby')
+    // eslint-disable-next-line no-console
+    console.log('\x1B[32m%s\x1B[0m', '√', 'Images scraped from Kirby')
   })
 
   this.nuxt.hook('generate:done', async () => {
     await fs.remove(imgDir)
   })
 
-  const downloadImages = async route => {
-    const page = await api.getPage(route)
+  const downloadImages = async (route) => {
+    const page = await getPage(route)
     const files = []
 
-    modifyPageHtml(page, html => {
+    HtmlUtils.modifyPageHtml(page, (html) => {
       for (const img of html.getElementsByTagName('img')) {
         files.push(outputFile(`${imgDir}/${img.dataset.id}`, img.src))
       }
@@ -34,8 +38,8 @@ export default function({ api, site }) {
   const outputFile = async (path, url) => {
     if (await fs.pathExists(path)) return
 
-    const [file] = await Promise.all([api.getFile(url), fs.ensureFile(path)])
+    const [file] = await Promise.all([getFile(url), fs.ensureFile(path)])
 
-    return new Promise(resolve => file.pipe(fs.createWriteStream(path)).on('finish', resolve))
+    return new Promise((resolve) => file.pipe(fs.createWriteStream(path)).on('finish', resolve))
   }
 }

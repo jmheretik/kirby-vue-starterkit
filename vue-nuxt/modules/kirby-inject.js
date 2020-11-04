@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import kirby from '../../kirby.config'
 
-export default function() {
+export default function () {
   this.nuxt.hook('generate:before', () => {
     kirby.clean(fs)
   })
@@ -11,11 +11,12 @@ export default function() {
     await Promise.all([
       fs.copy('static', `${kirby.base}`),
       fs.copy(`dist/${kirby.assetsDir}`, `${kirby.base}/${kirby.assetsDir}`),
-      fs.copy('dist/index.html', `${kirby.base}/${kirby.indexPath}`)
+      fs.copy('dist/index.html', `${kirby.base}/${kirby.indexPath}`),
     ])
 
     await fs.remove('dist')
 
-    console.log('\x1b[32m%s\x1b[0m', '√', 'Built files injected to Kirby')
+    // eslint-disable-next-line no-console
+    console.log('\x1B[32m%s\x1B[0m', '√', 'Built files injected to Kirby')
   })
 }

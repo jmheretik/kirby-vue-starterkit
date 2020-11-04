@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
+import page from '../../mixins/page'
 
 export default {
-  mixins: [page]
+  mixins: [page],
 }
 </script>
 
@@ -34,8 +34,8 @@ export default {
 }
 
 /*  
-    deep selectors for v-html content
-    https://vue-loader.vuejs.org/guide/scoped-css.html#dynamically-generated-content
+  deep selectors for v-html content
+  https://vue-loader.vuejs.org/guide/scoped-css.html#dynamically-generated-content
 */
 * >>> .gallery {
   display: grid;
