@@ -4,7 +4,7 @@ import { PathUtils } from '../utils/path.utils'
 
 export const useKirby = () => {
   const kirbyUrl = PathUtils.strip(
-    process.env.NODE_ENV === 'production' ? process.env.VUE_APP_KIRBY_URL : window.location.origin + process.env.VUE_APP_BASE_URL
+    process.env.NODE_ENV === 'development' ? window.location.origin + process.env.VUE_APP_BASE_URL : process.env.VUE_APP_KIRBY_URL
   )
 
   const getJson = async uri => {
