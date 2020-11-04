@@ -7,18 +7,14 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
+import { usePage } from '../composables/use-page'
+import { useKirby } from '../composables/use-kirby'
+import Intro from '../components/Intro'
 
 export default {
   name: 'Default',
-  mixins: [page],
-  async created() {
-    await this.page
-    this.page.text = null
-
-    const { text } = await this.$api.getKirbyText(this.page.id, 'text')
-    this.page.text = text
-  }
+  components: { Intro },
+  setup: async () => ({ page: Object.assign({}, ...(await Promise.all([usePage(), useKirby().getKirbyText('text')]))) })
 }
 </script>
 

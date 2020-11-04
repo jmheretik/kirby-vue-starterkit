@@ -3,14 +3,14 @@
     <Intro :title="page.title" />
 
     <ul v-if="photography" class="grid">
-      <li v-for="album in photography" :key="album.id">
-        <router-link :to="'/' + album.id">
+      <li v-for="album in photography" :key="album.slug">
+        <router-link :to="`/${$site.children.find(({ template }) => template === 'photography').slug}/${album.slug}`">
           <figure>
-            <KirbyImage v-if="album.content.cover" :file="album.content.cover[0]" thumb="resize" :params="[1024, 1024]" />
+            <Suspense> <KirbyImage v-if="album.cover" :file="album.cover[0]" thumb="resize" :params="[1024, 1024]" /> </Suspense>
 
             <figcaption>
               <span>
-                <span class="example-name">{{ album.content.title }}</span>
+                <span class="example-name">{{ album.title }}</span>
               </span>
             </figcaption>
           </figure>
@@ -21,19 +21,21 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
+import { usePage } from '../composables/use-page'
+import { useKirby } from '../composables/use-kirby'
+import Intro from '../components/Intro'
+import KirbyImage from '../components/KirbyImage'
 
 export default {
   name: 'Home',
-  mixins: [page],
-  data() {
+  components: { Intro, KirbyImage },
+  setup: async () => {
+    const [page, photography] = await Promise.all([usePage(), useKirby().getChildren('photography')])
+
     return {
-      photography: null
+      page,
+      photography: photography.filter(album => album.status === 'listed')
     }
-  },
-  async created() {
-    const photography = await this.$api.getChildren('photography')
-    this.photography = photography.filter(album => album.status === 'listed')
   }
 }
 </script>
