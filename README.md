@@ -40,13 +40,21 @@ The frontend comes in 3 different flavours:
 
 ## Usage
 
-#### frontend
+#### Frontend
 
 ✔️ Make sure to follow the README in the project folder of your chosen variant.
 
-#### backend
+#### Backend
 
 Out of the box the backend is automatically served while developing using the PHP built-in development server.
+
+#### Multi-language site
+
+Simply follow this guide on how to enable multiple languages in Kirby: https://getkirby.com/docs/guide/languages/introduction, and don't forget to provide [some way](https://getkirby.com/docs/guide/languages/switching-languages) for your users to switch between those languages :)
+
+ℹ️ I recommend adding new languages using the panel because of this nifty little detail:
+
+> The Panel automatically renames all existing content and file meta data files and includes the language extension.
 
 ## Config
 
