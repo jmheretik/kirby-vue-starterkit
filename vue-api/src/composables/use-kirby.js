@@ -40,13 +40,18 @@ export const useKirby = () => {
   }
 
   const getSite = async () => {
-    const { title } = await get('site?select=title')
-    const children = await get('site/children?select=slug,title,template,status,hasChildren')
-    const { social } = await getPage('about')
-
-    for await (let page of children) {
-      page.childTemplate = page.hasChildren ? (await get(`pages/${toPageSlug(page.slug)}/children?limit=1&select=template`))[0].template : null
-    }
+    const [{ title }, children, { social }] = await Promise.all([
+      get('site?select=title'),
+      get('site/children?select=slug,title,template,status,hasChildren').then(children =>
+        Promise.all(
+          children.map(async page => ({
+            ...page,
+            childTemplate: page.hasChildren ? (await get(`pages/${toPageSlug(page.slug)}/children?limit=1&select=template`))[0].template : null
+          }))
+        )
+      ),
+      getPage('about')
+    ])
 
     return { title, children, social }
   }

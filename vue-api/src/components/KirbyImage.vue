@@ -12,10 +12,12 @@ export default {
     const { getFile, getFileThumb } = useKirby()
     const link = props.file.fileLink ?? props.file.link
 
-    return {
-      src: !props.thumb ? props.file.url : await getFileThumb(link, props.thumb, props.params),
-      alt: props.file.alt ?? (await getFile(link)).alt
-    }
+    const [src, alt] = await Promise.all([
+      !props.thumb ? props.file.url : getFileThumb(link, props.thumb, props.params),
+      props.file.alt ?? getFile(link).then(file => file.alt)
+    ])
+
+    return { src, alt }
   }
 }
 </script>

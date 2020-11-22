@@ -12,7 +12,7 @@ import App from './App'
   useLanguage().init(languages)
 
   const site = await getSite()
-  const router = await useRouter(site)
+  const router = useRouter(site)
   const app = createApp(App)
 
   // globals

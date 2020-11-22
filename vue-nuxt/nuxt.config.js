@@ -13,8 +13,7 @@ export default async () => {
     const { getSite, getPage } = useKirby()
 
     server = await kirby.start(php)
-    site = await getSite()
-    errorPage = await getPage('error')
+    ;[site, errorPage] = await Promise.all([getSite(), getPage('error')])
     server.stop()
   }
 

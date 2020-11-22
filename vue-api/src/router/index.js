@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useLanguage } from '../composables/use-language'
 import Default from '../views/Default'
 
-export const useRouter = async site => {
+export const useRouter = site => {
   const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1)
 
   // published pages routes
