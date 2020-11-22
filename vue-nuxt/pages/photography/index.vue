@@ -4,13 +4,13 @@
 
     <ul class="albums" :data-even="page.children.length % 2 === 0">
       <li v-for="album in page.children" :key="album.uri">
-        <router-link :to="'/' + album.uri">
+        <nuxt-link :to="'/' + album.uri">
           <figure>
             <span v-if="album.cover" v-html="album.cover.html" />
 
             <figcaption>{{ album.title }}</figcaption>
           </figure>
-        </router-link>
+        </nuxt-link>
       </li>
     </ul>
   </main>

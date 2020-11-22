@@ -1,14 +1,17 @@
 import axios from 'axios'
 import { PathUtils } from '../utils/path.utils'
 import { HtmlUtils } from '../utils/html.utils'
+import { useLanguage } from './use-language'
 
-export const useKirby = () => {
+export const useKirby = (language) => {
   const kirbyUrl = PathUtils.strip(
     process.client && process.env.NODE_ENV === 'development' ? window.location.origin + process.env.NUXT_ENV_BASE_URL : process.env.NUXT_ENV_KIRBY_URL
   )
 
   const getJson = async (uri) => {
-    const baseUrl = PathUtils.strip(`${kirbyUrl}`)
+    const { prefix } = useLanguage()
+
+    const baseUrl = PathUtils.strip(`${kirbyUrl}/${prefix}`)
     const { data } = await axios.get(`${baseUrl}/${uri}.json`)
 
     return data

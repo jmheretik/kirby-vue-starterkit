@@ -3,8 +3,6 @@ import { useLanguage } from '../composables/use-language'
 import Default from '../views/Default'
 
 export const useRouter = async site => {
-  const { prefix } = useLanguage()
-
   const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1)
 
   // published pages routes
@@ -27,7 +25,7 @@ export const useRouter = async site => {
   routes.push({ path: '/:pathMatch(.*)*', component: Default })
 
   return createRouter({
-    history: createWebHistory(process.env.VUE_APP_BASE_URL + prefix),
+    history: createWebHistory(process.env.VUE_APP_BASE_URL + useLanguage().prefix),
     routes
   })
 }

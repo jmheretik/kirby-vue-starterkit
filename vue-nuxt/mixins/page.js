@@ -1,9 +1,6 @@
 import { useKirby } from '../composables/use-kirby'
 
 export default {
-  middleware({ route, redirect }) {
-    if (route.path === '/home' || route.path === '/home/') return redirect('/')
-  },
   async asyncData({ route, error }) {
     const { getPage } = useKirby()
 

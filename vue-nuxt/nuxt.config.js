@@ -25,11 +25,10 @@ export default async () => {
     head: {
       // PHP and Kirby is available (e.g. for values that need to be rendered server-side, such as Open Graph or Twitter meta tags)
       // please read https://vue-meta.nuxtjs.org/api/#dangerouslydisablesanitizers
-      htmlAttrs: { lang: `<?= kirby()->languages()->isEmpty() ? 'en' : kirby()->language()->code() ?>` },
       title: '<?= $site->title() ?> | <?= $page->title() ?>',
       meta: [{ charset: 'utf-8' }, { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],
       link: [{ rel: 'icon', href: process.env.NUXT_ENV_BASE_URL + 'favicon.ico' }],
-      __dangerouslyDisableSanitizers: ['htmlAttrs', 'title'],
+      __dangerouslyDisableSanitizers: ['title'],
     },
     env: { ...(isStatic ? { isStatic, site, errorPage } : {}) },
     build: { ...(isProd && kirby.inject ? { publicPath: kirby.assetsDir } : {}) },
@@ -49,6 +48,7 @@ export default async () => {
     modules: ['@nuxtjs/proxy'],
     buildModules: [
       '@nuxtjs/eslint-module',
+      ['@nuxtjs/router', { path: 'router', fileName: 'index.js', keepDefaultRouter: true }],
       ...(isStatic ? [['modules/kirby-scraper', { site }]] : []),
       ...(isProd && kirby.inject ? ['modules/kirby-inject'] : []),
     ],

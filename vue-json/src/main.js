@@ -7,10 +7,9 @@ import App from './App'
 // self invoke async initialization
 ;(async () => {
   const { getLanguages, getSite } = useKirby()
-  const { init } = useLanguage()
 
   const languages = await getLanguages()
-  init(languages)
+  useLanguage().init(languages)
 
   const site = await getSite()
   const router = await useRouter(site)
