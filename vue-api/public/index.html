@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="<?= kirby()->languages()->isEmpty() ? 'en' : kirby()->language()->code() ?>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <link rel="icon" href="<%= VUE_APP_BASE_URL %>favicon.ico">
 
     <!-- PHP and Kirby is available (e.g. for values that need to be rendered server-side, such as Open Graph or Twitter meta tags) -->
-    <title><?= $site->title() . ' | ' . $page->title() ?></title>
+    <title><?= $site->title() ?> | <?= $page->title() ?></title>
   </head>
   <body>
     <noscript>

@@ -3,7 +3,7 @@
     <article class="note">
       <header class="note-header intro">
         <h1>{{ page.title }}</h1>
-        <time class="note-date">{{ page.date | format('day month year') }}</time>
+        <time class="note-date">{{ format(page.date, 'day month year') }}</time>
         <p v-if="page.tags" class="note-tags tags">{{ tags }}</p>
       </header>
 
@@ -13,18 +13,21 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
-import { tags, formatDateTime } from '@/mixins/general'
+import { usePage } from '../composables/use-page'
+import { useKirby } from '../composables/use-kirby'
+import { useTags } from '../composables/use-tags'
+import { DateTimeUtils } from '../utils/datetime.utils'
 
 export default {
   name: 'Note',
-  mixins: [page, tags, formatDateTime],
-  async created() {
-    await this.page
-    this.page.text = null
+  setup: async () => {
+    const page = Object.assign({}, ...(await Promise.all([usePage(), useKirby().getKirbyText('text')])))
 
-    const { text } = await this.$api.getKirbyText(this.page.id, 'text')
-    this.page.text = text
+    return {
+      page,
+      tags: useTags(page),
+      format: DateTimeUtils.format
+    }
   }
 }
 </script>
@@ -43,26 +46,26 @@ export default {
 }
 
 /*  
-    deep selectors for v-html content
-    https://vue-loader.vuejs.org/guide/scoped-css.html#dynamically-generated-content
+  deep selectors for v-html content
+  https://vue-loader.vuejs.org/guide/scoped-css.html#dynamically-generated-content
 */
-* >>> .gallery {
+:deep(.gallery) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-gap: 1.5rem;
   margin-bottom: 1.5rem;
   padding: 3rem 0;
 }
-* >>> .gallery figure a {
+:deep(.gallery figure a) {
   border: 0;
 }
-* >>> .gallery figure {
+:deep(.gallery figure) {
   margin: 0;
   padding: 0;
 }
 
 @media screen and (min-width: 45rem) {
-  * >>> .gallery {
+  :deep(.gallery) {
     margin-left: -3rem;
     margin-right: -3rem;
   }

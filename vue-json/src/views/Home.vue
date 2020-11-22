@@ -3,8 +3,8 @@
     <Intro :title="page.title" />
 
     <ul v-if="photography" class="grid">
-      <li v-for="album in photography.children" :key="album.id">
-        <router-link :to="'/' + album.id">
+      <li v-for="album in photography.children" :key="album.uri">
+        <router-link :to="'/' + album.uri">
           <figure>
             <span v-if="album.coverHome" v-html="album.coverHome.html" />
 
@@ -21,18 +21,17 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
+import { usePage } from '../composables/use-page'
+import { useKirby } from '../composables/use-kirby'
+import Intro from '../components/Intro'
 
 export default {
   name: 'Home',
-  mixins: [page],
-  data() {
-    return {
-      photography: null
-    }
-  },
-  async created() {
-    this.photography = await this.$api.getPage('photography')
+  components: { Intro },
+  setup: async () => {
+    const [page, photography] = await Promise.all([usePage(), useKirby().getPage('photography')])
+
+    return { page, photography }
   }
 }
 </script>

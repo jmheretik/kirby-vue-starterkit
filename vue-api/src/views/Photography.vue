@@ -2,13 +2,13 @@
   <main>
     <Intro :title="page.title" />
 
-    <ul v-if="albums" class="albums" :data-even="albums.length % 2 === 0">
-      <li v-for="album in albums" :key="album.id">
-        <router-link :to="'/' + album.id">
+    <ul class="albums" :data-even="albums.length % 2 === 0">
+      <li v-for="album in albums" :key="album.slug">
+        <router-link :to="`/${page.slug}/${album.slug}`">
           <figure>
-            <KirbyImage v-if="album.content.cover" :file="album.content.cover[0]" thumb="crop" :params="[800, 1000]" />
+            <Suspense> <KirbyImage v-if="album.cover" :file="album.cover[0]" thumb="crop" :params="[800, 1000]" /> </Suspense>
 
-            <figcaption>{{ album.content.title }}</figcaption>
+            <figcaption>{{ album.title }}</figcaption>
           </figure>
         </router-link>
       </li>
@@ -17,21 +17,21 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
+import { usePage } from '../composables/use-page'
+import { useKirby } from '../composables/use-kirby'
+import Intro from '../components/Intro'
+import KirbyImage from '../components/KirbyImage'
 
 export default {
   name: 'Photography',
-  mixins: [page],
-  data() {
-    return {
-      albums: null
-    }
-  },
-  async created() {
-    await this.page
+  components: { Intro, KirbyImage },
+  setup: async () => {
+    const [page, albums] = await Promise.all([usePage(), useKirby().getChildren()])
 
-    const albums = await this.$api.getChildren(this.page.id)
-    this.albums = albums.filter(album => album.status === 'listed')
+    return {
+      page,
+      albums: albums.filter(album => album.status === 'listed')
+    }
   }
 }
 </script>

@@ -16,11 +16,11 @@ return [
                 $fields = explode(',', get('select'));
 
                 if ($page = page($pageId)) {
-                    return ['data' => 
+                    return Response::json(['data' => 
                         array_combine($fields, array_map(function($field) use ($page) {
                             return $page->$field()->kt()->value();
                         },  $fields))
-                    ];
+                    ]);
                 }
             }
         ],
@@ -36,7 +36,7 @@ return [
 
                 if ($page = page($pageId)) {
                     if ($file = $page->file($fileId)) {
-                        return ['data' => $file->$method(...$params)->url()];
+                        return Response::json(['data' => $file->$method(...$params)->url()]);
                     }
                 }
             }

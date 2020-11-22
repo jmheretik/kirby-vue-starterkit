@@ -1,20 +1,22 @@
 <template>
-  <div id="app">
-    <div class="page">
-      <Header />
+  <div class="page">
+    <Header />
 
-      <keep-alive>
-        <router-view :key="$route.path" />
-      </keep-alive>
-    </div>
-
-    <Footer />
+    <router-view v-slot="{ Component }">
+      <Suspense>
+        <keep-alive>
+          <component :is="Component" :key="$route.path" />
+        </keep-alive>
+      </Suspense>
+    </router-view>
   </div>
+
+  <Footer />
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 export default {
   name: 'App',

@@ -2,25 +2,25 @@
   <main>
     <Intro :title="page.title" />
 
-    <ul v-if="page.children" class="albums" :data-even="page.children.length % 2 === 0">
-      <li v-for="album in page.children" :key="album.id">
-        <router-link :to="'/' + album.id">
+    <ul class="albums" :data-even="page.children.length % 2 === 0">
+      <li v-for="album in page.children" :key="album.uri">
+        <nuxt-link :to="'/' + album.uri">
           <figure>
             <span v-if="album.cover" v-html="album.cover.html" />
 
             <figcaption>{{ album.title }}</figcaption>
           </figure>
-        </router-link>
+        </nuxt-link>
       </li>
     </ul>
   </main>
 </template>
 
 <script>
-import page from '@/mixins/page'
+import page from '../../mixins/page'
 
 export default {
-  mixins: [page]
+  mixins: [page],
 }
 </script>
 

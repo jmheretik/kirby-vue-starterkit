@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
+import page from '../mixins/page'
 
 export default {
   layout: 'default',
@@ -15,7 +15,7 @@ export default {
   props: ['error'],
   created() {
     this.page = process.env.isStatic ? process.env.errorPage : this.error.page
-  }
+  },
 }
 </script>
 

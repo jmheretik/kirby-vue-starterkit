@@ -2,16 +2,18 @@
   <main>
     <Intro :title="page.title" />
 
-    <div v-if="page.text" class="text" v-html="page.text.html" />
+    <div class="text" v-html="page.text.html" />
   </main>
 </template>
 
 <script>
-import page from '@/mixins/page'
+import { usePage } from '../composables/use-page'
+import Intro from '../components/Intro'
 
 export default {
   name: 'Default',
-  mixins: [page]
+  components: { Intro },
+  setup: async () => ({ page: await usePage() })
 }
 </script>
 

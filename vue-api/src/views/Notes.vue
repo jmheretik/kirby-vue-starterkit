@@ -3,11 +3,11 @@
     <Intro :title="page.title" />
 
     <div class="notes">
-      <article v-for="note in notes" :key="note.id" class="note">
+      <article v-for="note in notes" :key="note.slug" class="note">
         <header class="note-header">
-          <router-link :to="'/' + note.id">
-            <h2>{{ note.content.title }}</h2>
-            <time>{{ note.content.date | format('day month year') }}</time>
+          <router-link :to="`/${page.slug}/${note.slug}`">
+            <h2>{{ note.title }}</h2>
+            <time>{{ format(note.date, 'day month year') }}</time>
           </router-link>
         </header>
       </article>
@@ -16,22 +16,22 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
-import { formatDateTime } from '@/mixins/general'
+import { usePage } from '../composables/use-page'
+import { useKirby } from '../composables/use-kirby'
+import { DateTimeUtils } from '../utils/datetime.utils'
+import Intro from '../components/Intro'
 
 export default {
   name: 'Notes',
-  mixins: [page, formatDateTime],
-  data() {
-    return {
-      notes: null
-    }
-  },
-  async created() {
-    await this.page
+  components: { Intro },
+  setup: async () => {
+    const [page, notes] = await Promise.all([usePage(), useKirby().getChildren()])
 
-    const notes = await this.$api.getChildren(this.page.id)
-    this.notes = notes.filter(note => note.status === 'listed').sort((a, b) => new Date(b.content.date) - new Date(a.content.date))
+    return {
+      page,
+      notes: notes.filter(note => note.status === 'listed').sort((a, b) => new Date(b.date) - new Date(a.date)),
+      format: DateTimeUtils.format
+    }
   }
 }
 </script>

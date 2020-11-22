@@ -3,7 +3,7 @@
     <article>
       <header>
         <figure v-if="page.cover" class="album-cover">
-          <KirbyImage :file="page.cover[0]" thumb="crop" :params="[1024, 768]" />
+          <Suspense> <KirbyImage :file="page.cover[0]" thumb="crop" :params="[1024, 768]" /> </Suspense>
 
           <figcaption>
             <h1>{{ page.headline || page.title }}</h1>
@@ -17,11 +17,11 @@
         <p v-if="page.tags" class="album-tags tags">{{ tags }}</p>
       </div>
 
-      <ul v-if="gallery" class="album-gallery" :data-even="gallery.length % 2 === 0" :data-count="gallery.length">
+      <ul class="album-gallery" :data-even="gallery.length % 2 === 0" :data-count="gallery.length">
         <li v-for="image in gallery" :key="image.url">
           <figure>
-            <a :href="image.content.link || image.url">
-              <KirbyImage :file="image" thumb="crop" :params="[800, 1000]" />
+            <a :href="image.link || image.url">
+              <Suspense> <KirbyImage :file="image" thumb="crop" :params="[800, 1000]" /> </Suspense>
             </a>
           </figure>
         </li>
@@ -31,26 +31,23 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
-import { tags } from '@/mixins/general'
+import { usePage } from '../composables/use-page'
+import { useKirby } from '../composables/use-kirby'
+import { useTags } from '../composables/use-tags'
+import KirbyImage from '../components/KirbyImage'
 
 export default {
   name: 'Album',
-  mixins: [page, tags],
-  data() {
+  components: { KirbyImage },
+  setup: async () => {
+    const { getKirbyText, getFiles } = useKirby()
+    const [page, kt, files] = await Promise.all([usePage(), getKirbyText('description'), getFiles()])
+
     return {
-      gallery: null
+      page: { ...page, ...kt },
+      tags: useTags(page),
+      gallery: files.filter(file => file.type === 'image')
     }
-  },
-  async created() {
-    await this.page
-    this.page.description = null
-
-    const { description } = await this.$api.getKirbyText(this.page.id, 'description')
-    this.page.description = description
-
-    const files = await this.$api.getFiles(this.page.id)
-    this.gallery = files.filter(file => file.type === 'image')
   }
 }
 </script>

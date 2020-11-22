@@ -3,9 +3,9 @@
     <Intro :title="page.title" />
 
     <div class="notes">
-      <article v-for="note in page.children" :key="note.id" class="note">
+      <article v-for="note in page.children" :key="note.uri" class="note">
         <header class="note-header">
-          <router-link :to="'/' + note.id">
+          <router-link :to="'/' + note.uri">
             <h2>{{ note.title }}</h2>
             <time>{{ note.date }}</time>
           </router-link>
@@ -16,11 +16,13 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
+import { usePage } from '../composables/use-page'
+import Intro from '../components/Intro'
 
 export default {
   name: 'Notes',
-  mixins: [page]
+  components: { Intro },
+  setup: async () => ({ page: await usePage() })
 }
 </script>
 

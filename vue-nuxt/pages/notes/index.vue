@@ -3,9 +3,9 @@
     <Intro :title="page.title" />
 
     <div class="notes">
-      <article v-for="note in page.children" :key="note.id" class="note">
+      <article v-for="note in page.children" :key="note.uri" class="note">
         <header class="note-header">
-          <nuxt-link :to="'/' + note.id">
+          <nuxt-link :to="'/' + note.uri">
             <h2>{{ note.title }}</h2>
             <time>{{ note.date }}</time>
           </nuxt-link>
@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import page from '@/mixins/page'
+import page from '../../mixins/page'
 
 export default {
-  mixins: [page]
+  mixins: [page],
 }
 </script>
 

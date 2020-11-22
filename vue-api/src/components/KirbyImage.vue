@@ -1,33 +1,23 @@
 <template>
-  <img :src="image.src" :alt="image.alt" />
+  <img :src="src" :alt="alt" />
 </template>
 
 <script>
+import { useKirby } from '../composables/use-kirby'
+
 export default {
   name: 'KirbyImage',
   props: ['file', 'thumb', 'params'],
-  data() {
-    return {
-      image: {}
-    }
-  },
-  async created() {
-    const image = {}
+  setup: async props => {
+    const { getFile, getFileThumb } = useKirby()
+    const link = props.file.fileLink ?? props.file.link
 
-    if (this.file.content) {
-      image.alt = this.file.content.alt
-    } else {
-      const content = await this.$api.getFile(this.file.link.slice(1))
-      image.alt = content.alt
-    }
+    const [src, alt] = await Promise.all([
+      !props.thumb ? props.file.url : getFileThumb(link, props.thumb, props.params),
+      props.file.alt ?? getFile(link).then(file => file.alt)
+    ])
 
-    if (!this.thumb) {
-      image.src = this.file.url
-    } else {
-      image.src = await this.$api.getFileThumb(this.file.link.slice(1), this.thumb, this.params)
-    }
-
-    this.image = image
+    return { src, alt }
   }
 }
 </script>

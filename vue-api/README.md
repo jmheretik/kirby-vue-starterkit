@@ -47,7 +47,7 @@ Deploy the contents of `dist` folder to the production server at the correspondi
 
 ## Notes
 
-- Vue.js `page` mixin in the [src/mixins/page.js](src/mixins/page.js) file roughly corresponds to the Kirby's `$page` object, but only the functionality needed for starterkit is present.
+- Vue.js `page` composable in the [src/composables/use-page.js](src/composables/use-page.js) file roughly corresponds to the Kirby's `$page` object, but only the functionality needed for starterkit is present.
 - Vue.js components in the [src/components](src/components) folder correspond to Kirby snippets.
 - Vue.js views in the [src/views](src/views) folder correspond to Kirby templates and the routes are being automatically resolved.
 
