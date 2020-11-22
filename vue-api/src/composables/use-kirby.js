@@ -36,20 +36,17 @@ export const useKirby = () => {
 
     languages?.forEach(language => (language.url = PathUtils.strip(language.url.replace(process.env.VUE_APP_KIRBY_URL, ''))))
 
-    return languages
+    return languages ?? []
   }
 
   const getSite = async () => {
     const { title } = await get('site?select=title')
-    let children = await get('site/children?select=slug,title,template,status,hasChildren')
+    const children = await get('site/children?select=slug,title,template,status,hasChildren')
     const { social } = await getPage('about')
 
-    children = await Promise.all(
-      children.map(async child => ({
-        ...child,
-        children: child.hasChildren ? await get(`pages/${toPageSlug(child.slug)}/children?select=slug,template`) : []
-      }))
-    )
+    for await (let page of children) {
+      page.childTemplate = page.hasChildren ? (await get(`pages/${toPageSlug(page.slug)}/children?limit=1&select=template`))[0].template : null
+    }
 
     return { title, children, social }
   }

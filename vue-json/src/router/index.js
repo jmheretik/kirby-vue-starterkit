@@ -6,16 +6,18 @@ export const useRouter = async site => {
   const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1)
 
   // published pages routes
-  const routes = site.children.flatMap(page => [
-    {
+  const routes = [
+    ...site.children.map(page => ({
       path: '/' + page.uri,
       component: () => import(`../views/${capitalize(page.template)}`).catch(() => Default)
-    },
-    ...page.children.map(child => ({
-      path: '/' + child.uri,
-      component: () => import(`../views/${capitalize(child.template)}`).catch(() => Default)
-    }))
-  ])
+    })),
+    ...site.children
+      .filter(page => page.childTemplate)
+      .map(page => ({
+        path: '/' + page.uri + '/:id',
+        component: () => import(`../views/${capitalize(page.childTemplate)}`).catch(() => Default)
+      }))
+  ]
 
   // home route / instead of /home
   routes.find(route => route.path === '/home').path = '/'

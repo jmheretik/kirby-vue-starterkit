@@ -29,14 +29,9 @@ $routes = [
                   return [
                     'uri' => $child->uri(),
                     'title' => $child->title()->value(),
-                    'template' => $child->intendedTemplate()->name(),
                     'isListed' => $child->isListed(),
-                    'children' => array_values($child->children()->published()->map(function ($grandChild) {
-                      return [
-                        'uri' => $grandChild->uri(),
-                        'template' => $grandChild->intendedTemplate()->name()
-                      ];
-                    })->data())
+                    'template' => $child->intendedTemplate()->name(),
+                    'childTemplate' => $child->hasChildren() ? $child->children()->first()->intendedTemplate()->name() : null
                   ];
                 })->data()),
                 'social' => array_values(page('about')->social()->toStructure()->map(function ($social) {
@@ -48,6 +43,13 @@ $routes = [
             ]);
         }
     ],
+    [
+      'pattern' => 'routes.json',
+      'language' => '*',
+      'action' => function () {
+          return Response::json(site()->index()->pluck('uri'));
+      }
+  ]
 ];
 
 return array_merge($routes, option('kirby-vue-starterkit.plugin.useVueIndex') ? [

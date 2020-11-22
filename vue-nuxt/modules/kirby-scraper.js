@@ -2,15 +2,15 @@ import fs from 'fs-extra'
 import { useKirby } from '../composables/use-kirby'
 import { HtmlUtils } from '../utils/html.utils'
 
-export default function ({ site }) {
-  const { getPage, getFile } = useKirby()
+export default function () {
+  const { getRoutes, getPage, getFile } = useKirby()
 
   const imgDir = `static/${process.env.NUXT_ENV_IMG_DIR}`
 
   this.nuxt.hook('generate:before', async () => {
     await fs.emptyDir(imgDir)
 
-    const routes = site.children.flatMap((page) => [page.uri, ...page.children.map((child) => child.uri)])
+    const routes = await getRoutes()
 
     await Promise.all(routes.map(downloadImages))
 

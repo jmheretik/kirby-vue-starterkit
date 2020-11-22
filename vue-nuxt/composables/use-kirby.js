@@ -3,7 +3,7 @@ import { PathUtils } from '../utils/path.utils'
 import { HtmlUtils } from '../utils/html.utils'
 import { useLanguage } from './use-language'
 
-export const useKirby = (language) => {
+export const useKirby = () => {
   const kirbyUrl = PathUtils.strip(
     process.client && process.env.NODE_ENV === 'development' ? window.location.origin + process.env.NUXT_ENV_BASE_URL : process.env.NUXT_ENV_KIRBY_URL
   )
@@ -20,6 +20,8 @@ export const useKirby = (language) => {
   const getLanguages = async () => await getJson('languages')
 
   const getSite = async () => await getJson('site')
+
+  const getRoutes = async () => await getJson('routes')
 
   const getPage = async (path) => {
     const page = await getJson(PathUtils.toPageUri(path))
@@ -45,6 +47,7 @@ export const useKirby = (language) => {
   return {
     getLanguages,
     getSite,
+    getRoutes,
     getPage,
     getFile,
   }

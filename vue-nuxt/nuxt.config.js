@@ -49,7 +49,7 @@ export default async () => {
     buildModules: [
       '@nuxtjs/eslint-module',
       ['@nuxtjs/router', { path: 'router', fileName: 'index.js', keepDefaultRouter: true }],
-      ...(isStatic ? [['modules/kirby-scraper', { site }]] : []),
+      ...(isStatic ? [['modules/kirby-scraper']] : []),
       ...(isProd && kirby.inject ? ['modules/kirby-inject'] : []),
     ],
     proxy: {

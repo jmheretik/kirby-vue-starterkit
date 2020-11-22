@@ -9,8 +9,10 @@ export async function createRouter(ssrContext, createDefaultRouter, routerOption
   const options = routerOptions || createDefaultRouter(ssrContext).options
   options.routes.splice(options.routes.length - 1, 0, { path: '/home', redirect: '/' })
 
-  const languages = await useKirby().getLanguages()
-  useLanguage().init(languages)
+  if (!process.env.isStatic) {
+    const languages = await useKirby().getLanguages()
+    useLanguage().init(languages)
+  }
 
   return new Router({
     ...options,
