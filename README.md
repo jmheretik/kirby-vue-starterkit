@@ -2,7 +2,7 @@
 
 This project aims to be a starting point for people wanting to use [Vue.js](https://vuejs.org) with [Kirby](https://getkirby.com) as headless CMS.
 
-It's a simple, zero-setup, 1:1 port of the [Kirby 3 starterkit](https://github.com/getkirby/starterkit) frontend (snippets, templates and their corresponding JS/CSS) to Vue.js [single file components](https://vuejs.org/v2/guide/single-file-components.html).
+It's a simple, zero-setup, 1:1 port of the [Kirby 3 starterkit](https://github.com/getkirby/starterkit) frontend (snippets, templates and their corresponding JS/CSS) to Vue.js [single file components](https://v3.vuejs.org/guide/single-file-component.html).
 
 You can benefit from all the standard tools used in modern frontend development. For more details visit [Vue CLI](https://cli.vuejs.org/).
 
