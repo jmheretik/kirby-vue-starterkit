@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { useRouter } from './router'
 import { useKirby } from './composables/use-kirby'
 import { useLanguage } from './composables/use-language'
-import App from './App'
+import App from './App.vue'
 
 // self invoke async initialization
 ;(async () => {

@@ -41,7 +41,7 @@
 
 <script>
 import { usePage } from '../composables/use-page'
-import Intro from '../components/Intro'
+import Intro from '../components/Intro.vue'
 
 export default {
   name: 'About',

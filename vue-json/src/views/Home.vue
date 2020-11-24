@@ -23,7 +23,7 @@
 <script>
 import { usePage } from '../composables/use-page'
 import { useKirby } from '../composables/use-kirby'
-import Intro from '../components/Intro'
+import Intro from '../components/Intro.vue'
 
 export default {
   name: 'Home',
