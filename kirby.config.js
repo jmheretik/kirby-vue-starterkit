@@ -1,4 +1,4 @@
-const fs = require('./vue/node_modules/fs-extra')
+const fs = require('./vue-json/node_modules/fs-extra')
 
 module.exports = {
   serve: true,
