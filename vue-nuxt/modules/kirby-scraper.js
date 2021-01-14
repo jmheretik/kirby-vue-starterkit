@@ -8,7 +8,7 @@ export default function () {
   const imgDir = `static/${process.env.NUXT_ENV_IMG_DIR}`
 
   this.nuxt.hook('generate:before', async () => {
-    const routes = await Promise.all([getRoutes(), fs.emptyDir(imgDir)])
+    const [routes] = await Promise.all([getRoutes(), fs.emptyDir(imgDir)])
 
     await Promise.all(routes.map(downloadImages))
 
